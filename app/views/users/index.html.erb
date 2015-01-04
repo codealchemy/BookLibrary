@@ -1,4 +1,4 @@
-<% if current_user.admin? %>
+<% if current_user.try(:admin?) %>
   <%= render :partial => "users/user_list" %> 
 <% else %>
   <meta HTTP-EQUIV="REFRESH" content="0; url=<%= books_path %>">

@@ -9,7 +9,7 @@ class Book < ActiveRecord::Base
     elsif author_last_name
       author_last_name
     else
-      "No author name given for this book"
+      "No author name given"
     end
   end
 

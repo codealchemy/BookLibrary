@@ -11,4 +11,16 @@ class User < ActiveRecord::Base
   def remove_admin
     update_attribute(:admin, false)
   end
+
+  def name
+    if first_name && last_name
+      first_name + " " + last_name
+    elsif last_name
+      first_name
+    elsif last_name
+      last_name
+    else
+      "No name"
+    end
+  end
 end

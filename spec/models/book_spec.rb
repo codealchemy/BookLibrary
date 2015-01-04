@@ -25,18 +25,20 @@ RSpec.describe Book, :type => :model do
       expect(book.author_name).to eq("Alex Schmitt")
     end
 
-    it "pulls the first name of the author" do
+    it "pulls the first name of the author if last name doesn't exist" do
       expect(book_with_first_name.author_first_name).to eq("Alex")
+      expect(book_with_first_name.author_last_name).to eq(nil)
       expect(book_with_first_name.author_name).to eq("Alex")
     end
 
     it "pulls the last name of the author" do 
       expect(book_with_last_name.author_last_name).to eq("Schmitt")
+      expect(book_with_last_name.author_first_name).to eq(nil)
       expect(book_with_last_name.author_name).to eq("Schmitt")
     end
 
     it "returns a message for no author" do 
-      expect(book_no_author.author_name).to eq("No author name given for this book")
+      expect(book_no_author.author_name).to eq("No author name given")
     end
   end
 end
