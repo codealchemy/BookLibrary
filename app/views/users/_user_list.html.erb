@@ -5,18 +5,30 @@
       <th>Name</th>
       <th>Email</th>
       <th>Last signed in</th>
+      <th>Books contributed</th>
       <th>Books checked out</th>
       <th>Books overdue</th>
       <th>Is admin?</th>
+      <th></th>
     </tr>
-    <% @users.each do |u| %>
+    <% @users.each do |user| %>
     <tr>
       <td></td>
-      <td><%= u.email %></td>
-      <td><%= time_ago_in_words(u.last_sign_in_at) %></td>
+      <td><%= user.email %></td>
+      <td><%= time_ago_in_words(user.last_sign_in_at) %></td>
       <td></td>
       <td></td>
-      <td><%= u.admin? %></td>
+      <td></td>
+      <td><%= user.admin? %></td>
+      <td>
+        <% if user.admin? %>
+          <% unless user == current_user %>
+            <%= link_to "Remove admin" %>
+          <% end %>
+        <% else %>
+          <%= link_to "Make admin" %>
+        <% end %>
+      </td>
     </tr>
     <% end %>
   </table>

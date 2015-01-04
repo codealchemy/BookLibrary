@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_filter 
 
   def index
     if current_user.admin?
