@@ -34,6 +34,7 @@ GEM
     autoprefixer-rails (4.0.1.1)
       execjs
     awesome_print (1.2.0)
+    bcrypt (3.1.9)
     bootstrap-sass (3.3.1.0)
       sass (~> 3.2)
     builder (3.2.2)
@@ -45,9 +46,18 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
+    devise (3.4.1)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      responders
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.2.2)
+    formtastic (3.1.2)
+      actionpack (>= 3.2.13)
     hike (1.2.3)
     i18n (0.7.0)
     jbuilder (2.2.6)
@@ -66,6 +76,7 @@ GEM
     multi_json (1.10.1)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
+    orm_adapter (0.5.0)
     pg (0.18.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -94,6 +105,8 @@ GEM
     rake (10.4.2)
     rdoc (4.2.0)
       json (~> 1.4)
+    responders (1.1.2)
+      railties (>= 3.2, < 4.2)
     rspec-core (3.1.7)
       rspec-support (~> 3.1.0)
     rspec-expectations (3.1.2)
@@ -141,6 +154,8 @@ GEM
     uglifier (2.6.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    warden (1.2.3)
+      rack (>= 1.0)
 
 PLATFORMS
   ruby
@@ -151,6 +166,8 @@ DEPENDENCIES
   awesome_print
   bootstrap-sass (~> 3.3.1)
   coffee-rails (~> 4.0.0)
+  devise
+  formtastic
   jbuilder (~> 2.0)
   jquery-rails
   pg
