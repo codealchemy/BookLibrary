@@ -12,4 +12,31 @@ RSpec.describe Book, :type => :model do
       expect(book.valid?).to be(true)
     end
   end
+
+  context "#author names" do
+    let(:book) { Book.create(author_first_name: "Alex", author_last_name: "Schmitt", isbn: "123-45-6789-01", title: "Tests and more...") }
+    let(:book_with_first_name) { Book.create(author_first_name: "Alex", isbn: "123-45-6789-01", title: "Tests and more...") }
+    let(:book_with_last_name) { Book.create(author_last_name: "Schmitt", isbn: "123-45-6789-01", title: "Tests and more...") }
+    let(:book_no_author) { Book.create(isbn: "123-45-6789-01", title: "Tests and more...") }
+
+    it "pulls the first and last name of the author" do 
+      expect(book.author_first_name).to eq("Alex")
+      expect(book.author_last_name).to eq("Schmitt")
+      expect(book.author_name).to eq("Alex Schmitt")
+    end
+
+    it "pulls the first name of the author" do
+      expect(book_with_first_name.author_first_name).to eq("Alex")
+      expect(book_with_first_name.author_name).to eq("Alex")
+    end
+
+    it "pulls the last name of the author" do 
+      expect(book_with_last_name.author_last_name).to eq("Schmitt")
+      expect(book_with_last_name.author_name).to eq("Schmitt")
+    end
+
+    it "returns a message for no author" do 
+      expect(book_no_author.author_name).to eq("No author name given for this book")
+    end
+  end
 end
