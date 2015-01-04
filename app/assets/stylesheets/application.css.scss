@@ -1,6 +1,13 @@
 /*
+ *= require formtastic
+ *= require my_formtastic_changes
  *= require_tree .
  *= require_self
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.label {
+    color: black;
+    font-size: 100%; 
+}

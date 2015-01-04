@@ -1,0 +1,22 @@
+<%= semantic_form_for @book do |f| %>
+  <div class="field">
+    <%= f.inputs :name => "New Book", class: "text-center" do %>
+    <br>
+      <%= f.input :title, placeholder: "Title", class: "form-control" %>
+      <%= f.input :author_first_name, placeholder: "Author First Name", class: "form-control" %>
+      <%= f.input :author_last_name, placeholder: "Author Last Name", class: "form-control" %>
+      <%= f.input :isbn, placeholder: "ISBN", class: "form-control" %>
+      <%= f.input :description, placeholder: "Description", class: "form-control" %>
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= f.actions do %>
+      <%= f.action :submit, :as => :button, button_html: { class: "btn btn-default" }  %>
+      <%= f.action :cancel, :as => :link %>
+    <% end %>
+  </div>
+<% end %>
+<footer>
+  <p>* designates a required field </p>
+</footer>
+<br>
