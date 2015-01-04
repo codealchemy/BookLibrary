@@ -1,23 +1,5 @@
-<h2 class="text-center">All users</h2>
-<div class="panel panel-default">
-  <table class="table">
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Last signed in</th>
-      <th>Books checked out</th>
-      <th>Books overdue</th>
-      <th>Is admin?</th>
-    </tr>
-    <% @users.each do |u| %>
-    <tr>
-      <td></td>
-      <td><%= u.email %></td>
-      <td><%= time_ago_in_words(u.last_sign_in_at) %></td>
-      <td></td>
-      <td></td>
-      <td><%= u.admin? %></td>
-    </tr>
-    <% end %>
-  </table>
-</div>
+<% if current_user.admin? %>
+  <%= render :partial => "users/user_list" %> 
+<% else %>
+  <meta HTTP-EQUIV="REFRESH" content="0; url=<%= books_path %>">
+<% end %>

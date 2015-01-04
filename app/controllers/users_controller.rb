@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     if current_user.admin?
       @users = User.all
     else
-      @users = nil
+      @users = []
     end
   end
 
