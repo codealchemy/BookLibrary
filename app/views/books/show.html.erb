@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-md-8">
+    <h1 class="text-center"><%= @book.title %></h1>
+    <h3 class="text-center"><%= @book.subtitle %></h3>
+    <br>
+    <h3><%= @book.author_name %></h3>
+    <blockquote>
+      <p><%= @book.description %></p>
+    </blockquote>
+  </div>
+  <div class="col-md-4">
+    <img src="http://undermyappletree.files.wordpress.com/2012/01/htmlcss.jpg" width="320px" height="400px">
+    <h5>ISBN: <%= @book.isbn %></h5>
+    <h5>Reviews</h5>
+    <h5>Buy on Amazon</h5>
+  </div>
+</div>
+  
