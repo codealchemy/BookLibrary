@@ -5,7 +5,14 @@ class UserNotifier < ActionMailer::Base
   def send_signup_email(user)
     @user = user
     mail( to: @user.email,
-          subject: 'Thanks for signing up for my amazing app' 
-        )
+          subject: 'Your account is ready to go!' 
+      )
+  end
+
+  def send_overdue_email(user)
+    @user = user
+    mail( to: @user.email,
+          subject: 'You have an overdue book'
+      )
   end
 end

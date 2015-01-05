@@ -4,10 +4,8 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Thanks for signing up, <%= @user.name %>!</h1>
-    <p>Thanks for joining and have a great day! Now sign in and do
-awesome things!</p>
+    <h1>Howdy <%= @user.first_name %>!</h1>
+    <p>You've been granted an account over at the library (like to read much?). Check it out here: <%= link_to root_url %></p>
     <br>
-    <%= books_path %>
   </body>
 </html>
