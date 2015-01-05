@@ -5,11 +5,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   def make_admin
-    update_attribute(:admin, true)
+    update(admin: true)
   end
 
   def remove_admin
-    update_attribute(:admin, false)
+    update(admin: false)
   end
 
   def send_signup_email
@@ -21,14 +21,7 @@ class User < ActiveRecord::Base
   end
 
   def name
-    if first_name && last_name
-      first_name + " " + last_name
-    elsif last_name
-      first_name
-    elsif last_name
-      last_name
-    else
-      "No name"
-    end
+    name = [first_name, last_name].map(&:to_s).join(" ").strip
+    name.empty? ? "No name" : name
   end
 end
