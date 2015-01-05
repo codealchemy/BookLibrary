@@ -5,11 +5,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   def make_admin
-    update_attribute(:admin, true)
+    update(admin: true)
   end
 
   def remove_admin
-    update_attribute(:admin, false)
+    update(admin: false)
   end
 
   def send_signup_email
