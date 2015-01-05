@@ -12,6 +12,14 @@ class User < ActiveRecord::Base
     update_attribute(:admin, false)
   end
 
+  def send_signup_email
+    UserNotifier.send_signup_email(self).deliver
+  end
+
+  def send_overdue_email
+    UserNotifier.send_overdue_email(self).deliver
+  end
+
   def name
     if first_name && last_name
       first_name + " " + last_name
