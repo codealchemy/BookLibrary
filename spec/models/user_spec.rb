@@ -9,7 +9,7 @@ RSpec.describe User, :type => :model do
   end
 
   context "#emails" do
-    let(:user) { User.create(email: 'alchemitt@example.com', encrypted_password: 'rogerrabbit') }
+    let(:user) { User.create(email: 'alchemitt@example.com', password: 'rogerrabbit') }
 
     it "sends a signup email" do
       expect { user.send_signup_email }.to change { ActionMailer::Base.deliveries.count }.by(1)
