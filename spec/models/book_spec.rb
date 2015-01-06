@@ -41,4 +41,24 @@ RSpec.describe Book, :type => :model do
       expect(book_no_author.author_name).to eq("No author name given")
     end
   end
+
+  context "#owner" do 
+    let(:user1) { User.create(email: 'alex@example.com', password: 'abc1das23456') }
+    let(:user2) { User.create(email: 'bobbie@example.com', password: 'anotherpw') }
+    let(:book) { user1.books.create(title: "A new start", isbn: "234-432-55-123") }
+
+    it "returns the owner of a book" do 
+      expect(book.owner).to eq(user1)
+    end
+
+    it "changes the owner" do 
+      book.change_owner(user2)
+      expect(book.owner).to eq(user2)
+    end
+
+    it "doesn't change owner without argument" do
+      book.change_owner
+      expect(book.owner).to eq(user1)
+    end
+  end
 end

@@ -7,4 +7,14 @@ class Book < ActiveRecord::Base
     name.empty? ? "No author name given" : name
   end
 
+  def owner
+    User.find(self.user_id)
+  end
+
+  def change_owner(user=nil)
+    return unless user
+    self.user = user
+    save
+  end
+
 end
