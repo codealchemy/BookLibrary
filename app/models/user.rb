@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
 
   has_many :books_owned, class_name: "Book", foreign_key: :user_id
   has_many :loans
-  has_many :books, through: :loans
-
+  has_many :books_borrowed, class_name: "Loan", foreign_key: :user_id
+  
   def make_admin
     update(admin: true)
   end
