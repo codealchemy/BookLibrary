@@ -1,7 +1,9 @@
 class Book < ActiveRecord::Base
   validates :title, :isbn, presence: true
   belongs_to :user
-  
+  has_many :loans
+  has_many :users, through: :loans
+
   def author_name
     name = [author_first_name, author_last_name].map(&:to_s).join(" ").strip
     name.empty? ? "No author name given" : name

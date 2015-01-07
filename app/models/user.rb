@@ -4,7 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :books
+  has_many :books_owned, class_name: "Book", foreign_key: :user_id
+  has_many :loans
+  has_many :books, through: :loans
 
   def make_admin
     update(admin: true)
