@@ -33,4 +33,8 @@ class Book < ActiveRecord::Base
     return books
   end
 
+  def self.available_books
+    books = []
+    Book.find_each { |book| book.is_borrowed? ? next : books << book}
+  end
 end
