@@ -14,5 +14,10 @@ RSpec.describe Loan, :type => :model do
       loan = Loan.new(book: book)
       expect(loan.valid?).to eq(false)
     end
+
+    it "is valid with both user and book" do
+      loan = Loan.new(book: book, user: user)
+      expect(loan.valid?).to eq(true)
+    end
   end
 end
