@@ -36,4 +36,12 @@ class User < ActiveRecord::Base
     end
     return books
   end
+
+  def check_out(book)
+    self.loans.create(book: book)
+  end
+
+  def check_in(book)
+    Loan.where(user: self, book: book).first.update(checked_in_at: Time.now)
+  end
 end
