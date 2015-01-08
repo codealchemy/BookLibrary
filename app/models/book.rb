@@ -19,4 +19,18 @@ class Book < ActiveRecord::Base
     save
   end
 
+  def is_borrowed?
+    Loan.where(book: self, checked_in_at: nil).empty? ? false : true
+  end
+
+  def borrower
+    Loan.where(book: self, checked_in_at: nil).empty? ? nil : Loan.where(book: self, checked_in_at: nil).last.user
+  end
+
+  def self.checked_out_books
+    books = []
+    Book.find_each { |book| book.is_borrowed? ? books << book : next }
+    return books
+  end
+
 end

@@ -64,28 +64,25 @@ RSpec.describe Book, :type => :model do
 
   context "#borrowing" do
     let(:user1) { User.create(email: 'alex@example.com', password: 'abc1das23456') }
-    let(:user2) { User.create(email: 'bobbie@example.com', password: 'anotherpw') }
     let(:book) { Book.create(title: "A new start", isbn: "234-432-55-123") }
+    let(:loan) { user1.loans.create(book: book) }
 
-    it "loans a book to a user" do
-      loan = user1.loans.new(book: book)
-      expect(loan.user).to eq(user)
+    it "loans a book to a user and includes them in borrowed books list" do
+      expect(loan.user).to eq(user1)
       expect(loan.book).to eq(book)
-      expect(user.books_borrowed).to include(book)
       expect(book.borrower).to eq(user1)
+      expect(user1.borrowed_books).to include(book)
     end
 
     it "shows a book as available if not loaned out" do
-      expect(book.is_loaned?).to eq(false)
-      expect(book.is_available?).to eq(true)
-      expect(Book.loaned).to !include(book)
+      expect(book.is_borrowed?).to eq(false)
+      expect(Book.checked_out_books).not_to include(book)
     end
 
     it "shows a book as unavailable if it is loaned out" do
       loan = user1.loans.create(book: book)
-      expect(book.is_loaned?).to eq(true)
-      expect(book.is_available?).to eq(false)
-      expect(Book.loaned).to include(book)
+      expect(book.is_borrowed?).to eq(true)
+      expect(Book.checked_out_books).to include(book)
     end
   end
 end

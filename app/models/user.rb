@@ -28,4 +28,12 @@ class User < ActiveRecord::Base
     name = [first_name, last_name].map(&:to_s).join(" ").strip
     name.empty? ? "No name" : name
   end
+
+  def borrowed_books
+    books = []
+    Book.checked_out_books.each do |book|
+      books << book if book.borrower == self
+    end
+    return books
+  end
 end
