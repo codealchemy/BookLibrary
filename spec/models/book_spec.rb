@@ -45,7 +45,7 @@ RSpec.describe Book, :type => :model do
   context "#owner" do 
     let(:user1) { User.create(email: 'alex@example.com', password: 'abc1das23456') }
     let(:user2) { User.create(email: 'bobbie@example.com', password: 'anotherpw') }
-    let(:book) { user1.books.create(title: "A new start", isbn: "234-432-55-123") }
+    let(:book) { user1.books_owned.create(title: "A new start", isbn: "234-432-55-123") }
 
     it "returns the owner of a book" do 
       expect(book.owner).to eq(user1)
@@ -59,6 +59,33 @@ RSpec.describe Book, :type => :model do
     it "doesn't change owner without argument" do
       book.change_owner
       expect(book.owner).to eq(user1)
+    end
+  end
+
+  context "#borrowing" do
+    let(:user1) { User.create(email: 'alex@example.com', password: 'abc1das23456') }
+    let(:user2) { User.create(email: 'bobbie@example.com', password: 'anotherpw') }
+    let(:book) { Book.create(title: "A new start", isbn: "234-432-55-123") }
+
+    it "loans a book to a user" do
+      loan = user1.loans.new(book: book)
+      expect(loan.user).to eq(user)
+      expect(loan.book).to eq(book)
+      expect(user.books_borrowed).to include(book)
+      expect(book.borrower).to eq(user1)
+    end
+
+    it "shows a book as available if not loaned out" do
+      expect(book.is_loaned?).to eq(false)
+      expect(book.is_available?).to eq(true)
+      expect(Book.loaned).to !include(book)
+    end
+
+    it "shows a book as unavailable if it is loaned out" do
+      loan = user1.loans.create(book: book)
+      expect(book.is_loaned?).to eq(true)
+      expect(book.is_available?).to eq(false)
+      expect(Book.loaned).to include(book)
     end
   end
 end
