@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   end
 
   def check_out(book)
-    self.loans.create(book: book)
+    self.loans.create(book: book, checked_out_at: Time.now)
   end
 
   def check_in(book)
