@@ -19,4 +19,19 @@ RSpec.describe User, :type => :model do
       expect { user.send_overdue_email }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
+
+  context "#borrowing" do
+    let(:user) { User.create(email: 'alchemitt@example.com', password: 'rogerrabbit') }
+    let(:book) { Book.create(title: "A new start", isbn: "234-432-55-123") }
+
+    it "borrows a book" do 
+      user.loans.create(book: book)
+      expect(book.borrower).to eq(user)
+    end
+
+    it "pulls a list of borrowed books for user" do
+      user.loans.create(book: book)
+      expect(user.borrowed_books).to include(book)
+    end
+  end
 end
