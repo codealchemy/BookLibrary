@@ -1,27 +1,32 @@
-<div class="panel panel-default">
-  <!-- Default panel contents -->
-  <div class="panel-heading">Books</div>
-  <div class="panel-body">
-    <p>Here is a listing of the books that are available to check out</p>
-  </div>
+  <p>Here is some information on the library</p>
+  <br>
 
-  <!-- Table -->
-  <table class="table">
-    <tr>
-      <th>Genre</th>
+<% if current_user.admin? %>
+<%= render :partial => "books/admin_panel" %>
+<div class="panel panel-default col-md-10">
+<% else %>
+<div class="panel panel-default">
+<% end %>
+  <table class="table table-hover">
+    <tr class="active">
       <th>Title (<small>and subtitle</small>)</th>
       <th>Author</th>
       <th>Description</th>
-      <th>Checked out?</th>
+      <th>Status?</th>
     </tr>
     <% @books.each do |book| %>
     <tr>
-      <td></td>
       <td><%= link_to book.title, book_path(book.id) %><br>
       <small><%= book.subtitle %></small></td>
       <td><%= book.author_name %></td>
       <td width="60%"><%= truncate(book.description, length: 100) %></td>
-      <td><%= book.is_borrowed? %></td>
+      <td>
+        <% if book.is_borrowed? %>
+          Borrowed
+        <% else %>
+          Available
+        <% end %>
+      </td>
     </tr>
     <% end %>
   </table>
