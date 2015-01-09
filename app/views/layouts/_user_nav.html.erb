@@ -3,12 +3,17 @@
     <li><%= link_to "Books", books_path %><span class="sr-only">(current)</span></li>
     <!-- <li><a href="#">Checked-out Books</a></li> -->
   </ul>
-  <form class="navbar-form navbar-left" role="search">
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Search Titles">
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-  </form>
+  <div class="navbar-form navbar-left" role="search">
+    <%= form_tag books_path, method: "get" do %>
+      <div class="form-group">
+      <%= text_field_tag :query, params[:query], class: "form-control", placeholder: 'Book titles', autocomplete: "off" %>
+      </div>
+      <%= submit_tag "Search", class: "btn btn-default" %>
+      <% if params[:query].present? %>
+        <%= link_to "Clear", books_path %>
+      <% end %>
+    <% end %>
+  </div>
   <ul class="nav navbar-nav navbar-right">
     <p class="navbar-text">Signed in as <%= current_user.name %></p>
     <li><%= link_to "Log out", destroy_user_session_path, method: :delete %></li>

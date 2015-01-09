@@ -3,7 +3,11 @@ class BooksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @books = Book.all
+    if params[:query].present?
+      @books = Book.search(params[:query]).results
+    else 
+      @books = Book.all
+    end
   end
 
   def new
