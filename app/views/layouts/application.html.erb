@@ -1,18 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>BookLibrary</title>
+  <title>Book Library</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <%= favicon_link_tag 'book.ico' %>
 </head>
-  <%= render :partial => "layouts/user_nav" if user_signed_in? && current_user.try(:admin?) == false %> 
-  <%= render :partial => "layouts/admin_nav" if user_signed_in? && current_user.try(:admin?) %>
-  <%= render :partial => "layouts/loggedout_nav" if !user_signed_in? %>
+<header>
+  <div class="container-fluid">
+    <nav class="navbar">
+    <div class="container-fluid">
+
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar" style="background-color: grey"></span>
+          <span class="icon-bar" style="background-color: grey"></span>
+          <span class="icon-bar" style="background-color: grey"></span>
+        </button>
+        <a class="navbar-brand" href="#">Library</a>
+      </div>
+      <% if user_signed_in? %>
+        <%= render :partial => "layouts/user_nav" %> 
+      <% else %>
+        <%= render :partial => "layouts/loggedout_nav" %>
+      <% end %>
+    </div><!-- /.container-fluid -->
+    </nav>
+  </div>
+</header>
 <body>
   <div class="container-fluid">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <%= render partial: 'layouts/flash' %>
     <%= yield %>
   </div>
 </body>

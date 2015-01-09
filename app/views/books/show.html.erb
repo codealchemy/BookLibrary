@@ -13,6 +13,10 @@
     <h5>ISBN: <%= @book.isbn %></h5>
     <h5>Reviews</h5>
     <h5>Buy on Amazon</h5>
+    <% if @book.owner %>
+    <h5><%= @book.owner.name %> contributed this book to the library</h5>
+    <% end %>
+    <h5></h5>
   </div>
 </div>
   
