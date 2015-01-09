@@ -13,7 +13,7 @@
     </tr>
     <% @users.each do |user| %>
     <tr>
-      <td></td>
+      <td><%= user.name %></td>
       <td><%= user.email %></td>
       <td><%= time_ago_in_words(user.last_sign_in_at) %></td>
       <td></td>
