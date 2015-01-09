@@ -10,7 +10,7 @@ class Book < ActiveRecord::Base
   end
 
   def owner
-    User.find(self.user_id)
+    User.find(self.user_id) if self.user_id
   end
 
   def change_owner(user=nil)
@@ -33,4 +33,8 @@ class Book < ActiveRecord::Base
     return books
   end
 
+  def self.available_books
+    books = []
+    Book.find_each { |book| book.is_borrowed? ? next : books << book}
+  end
 end

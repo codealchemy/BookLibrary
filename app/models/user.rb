@@ -36,4 +36,17 @@ class User < ActiveRecord::Base
     end
     return books
   end
+
+  def self.with_books
+    checked_out_books = Loan.where(checked_in_at: nil).pluck(:user_id)
+    User.find(checked_out_books)
+  end
+
+  def check_out(book)
+    self.loans.create(book: book, checked_out_at: Time.now)
+  end
+
+  def check_in(book)
+    self.loans.where(book: book).last.update(checked_in_at: Time.now)
+  end
 end

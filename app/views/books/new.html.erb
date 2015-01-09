@@ -1,12 +1,13 @@
-<%= semantic_form_for @book do |f| %>
-  <div class="field">
+<%= semantic_form_for @book, html: {class: "form-group"} do |f| %>
+  <div class="form-group">
     <%= f.inputs :name => "New Book", class: "text-center" do %>
     <br>
-      <%= f.input :title, placeholder: "Title", class: "form-control" %>
+      <%= f.input :title, placeholder: "Title (required)", class: "form-control" %>
       <%= f.input :author_first_name, placeholder: "Author First Name", class: "form-control" %>
       <%= f.input :author_last_name, placeholder: "Author Last Name", class: "form-control" %>
-      <%= f.input :isbn, placeholder: "ISBN", class: "form-control" %>
+      <%= f.input :isbn, placeholder: "ISBN (required)", class: "form-control" %>
       <%= f.input :description, placeholder: "Description", class: "form-control" %>
+      <%= f.input :owner, :as => :datalist, collection: users_full_names, label: "Owner" %>
     <% end %>
   </div>
   <div class="actions">
