@@ -10,7 +10,7 @@ class Book < ActiveRecord::Base
   end
 
   def owner
-    User.find(self.user_id)
+    User.find(self.user_id) if self.user_id
   end
 
   def change_owner(user=nil)
