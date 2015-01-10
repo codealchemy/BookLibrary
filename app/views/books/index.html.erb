@@ -1,6 +1,5 @@
   <p>Here is some information on the library</p>
   <br>
-
 <% if current_user.admin? %>
 <%= render :partial => "books/admin_panel" %>
 <div class="panel panel-default col-md-9">
@@ -34,4 +33,7 @@
     </tr>
     <% end %>
   </table>
+</div>
+<div class="text-center">
+  <%= paginate @books %>
 </div>

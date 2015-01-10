@@ -4,6 +4,7 @@
       <%= f.inputs :name => "New Book", class: "text-center" do %>
       <br>
         <%= f.input :title, placeholder: "Title (required)", label: false, input_html: { class: "form-control" } %>
+        <%= f.input :subtitle, placeholder: "Subtitle", label: false, input_html: { class: "form-control" } %>
         <%= f.input :author_first_name, placeholder: "Author First Name", label: false, input_html: { class: "form-control" } %>
         <%= f.input :author_last_name, placeholder: "Author Last Name", label: false, input_html: { class: "form-control" } %>
         <%= f.input :isbn, placeholder: "ISBN (required)", label: false, input_html: { class: "form-control" } %>

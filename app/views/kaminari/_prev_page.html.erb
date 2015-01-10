@@ -1,0 +1,7 @@
+<li>
+<% if current_page.first? %>
+  <%= content_tag :a, raw(t 'views.pagination.previous'), rel: 'prev', disabled: true %>
+<% else %>
+  <%= link_to raw(t 'views.pagination.previous'), url, :rel => 'prev', :remote => remote %>
+<% end %>
+</li>
