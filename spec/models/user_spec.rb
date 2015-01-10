@@ -46,7 +46,7 @@ RSpec.describe User, type: :model do
 
     it 'checks out a book' do
       user.check_out(book)
-      expect(book.is_borrowed?).to eq(true)
+      expect(book.borrowed?).to eq(true)
       expect(book.borrower).to eq(user)
       expect { user.check_out(book) }.to change { Loan.count }.by(1)
     end

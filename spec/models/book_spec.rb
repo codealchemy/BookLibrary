@@ -99,12 +99,12 @@ RSpec.describe Book, type: :model do
     end
 
     it 'shows a book as available if not loaned out' do
-      expect(book.is_borrowed?).to eq(false)
+      expect(book.borrowed?).to eq(false)
       expect(Book.checked_out_books).not_to include(book)
     end
 
     it 'shows a book as unavailable if it is loaned out' do
-      expect(loan.book.is_borrowed?).to eq(true)
+      expect(loan.book.borrowed?).to eq(true)
       expect(Book.checked_out_books).to include(book)
     end
   end
