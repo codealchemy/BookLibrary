@@ -27,12 +27,10 @@
       <td class="text-center"><%= user.overdue_books.count %></td>
       <td><%= user.admin? %></td>
       <td>
-        <% if user.admin? %>
-          <% unless user == current_user %>
-            <%= button_to "Remove admin", method: 'remove_admin' %>
-          <% end %>
-        <% else %>
-          <%= link_to "Make admin", method: 'make_admin', class: "btn btn-default" %>
+        <% if user.admin? && user != current_user %>
+          <%= button_to "Remove admin", action: :remove_admin, user_id: user.id, method: :post %>
+        <% elsif user.admin? == false %>
+          <%= button_to "Make admin", action: :make_admin, user_id: user.id, method: :post %>
         <% end %>
       </td>
     </tr>

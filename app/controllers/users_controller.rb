@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :find_user, only: [:show, :make_admin]
+  before_filter :find_user, only: [:show, :make_admin, :remove_admin]
   before_filter :authorize_admin
 
   def index
@@ -21,12 +21,18 @@ class UsersController < ApplicationController
 
   def make_admin
     @user.make_admin
+    redirect_to users_admin_index_path, notice: "#{@user.name} is now an admin"
+  end
+
+  def remove_admin
+    @user.remove_admin
+    redirect_to users_admin_index_path, notice: "#{@user.name} is no longer an admin"
   end
 
   private
 
   def find_user
-    @user = User.find(params[:id])
+    @user = User.find(params[:user_id])
   end
 
   def user_params

@@ -2,7 +2,10 @@ Rails.application.routes.draw do
 
   root "books#index"
 
-  resources :users_admin, controller: 'users'
+  resources :users_admin, controller: 'users' do
+    post :make_admin, on: :collection
+    post :remove_admin, on: :collection
+  end
   devise_for :users, controllers: { sessions: 'users/sessions' }  
   resources :books
 
