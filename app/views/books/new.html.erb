@@ -2,12 +2,12 @@
   <div class="form-group">
     <%= f.inputs :name => "New Book", class: "text-center" do %>
     <br>
-      <%= f.input :title, placeholder: "Title (required)", class: "form-control" %>
-      <%= f.input :author_first_name, placeholder: "Author First Name", class: "form-control" %>
-      <%= f.input :author_last_name, placeholder: "Author Last Name", class: "form-control" %>
-      <%= f.input :isbn, placeholder: "ISBN (required)", class: "form-control" %>
-      <%= f.input :description, placeholder: "Description", class: "form-control" %>
-      <%= f.input :owner, :as => :datalist, collection: users_full_names, label: "Owner" %>
+      <%= f.input :title, placeholder: "Title (required)", input_html: { class: "form-control" } %>
+      <%= f.input :author_first_name, placeholder: "Author First Name", input_html: { class: "form-control" } %>
+      <%= f.input :author_last_name, placeholder: "Author Last Name", input_html: { class: "form-control" } %>
+      <%= f.input :isbn, placeholder: "ISBN (required)", input_html: { class: "form-control" } %>
+      <%= f.input :description, placeholder: "Description", input_html: { class: "form-control" } %>
+      <%= f.input :owner, :as => :datalist, collection: users_full_names, placeholder: "Owner", input_html: { class: "form-control" }  %>
     <% end %>
   </div>
   <div class="actions">

@@ -2,9 +2,8 @@ Rails.application.routes.draw do
 
   root "books#index"
 
+  resources :users_admin, controller: 'users'
   devise_for :users, controllers: { sessions: 'users/sessions' }  
-
-  resources :users, only: [:index, :show] 
   resources :books
 
   # The priority is based upon order of creation: first created -> highest priority.
