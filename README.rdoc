@@ -1,28 +1,20 @@
-== README
+== README {<img src="https://travis-ci.org/codealchemy/BookLibrary.svg" alt="Build Status" />}[https://travis-ci.org/codealchemy/BookLibrary]
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+BookLibrary is a Ruby on Rails application to manage a library of items that are checked out and in by users. 
 
-Things you may want to cover:
+Application basics:
 
-* Ruby version
-
-* System dependencies
+* Ruby version: <tt>2.1.2</tt>
+* Rails version: <tt>4.1.8</tt>
 
 * Configuration
+- Postgres Database
+- Sendgrid for ActionMailer (sendgrid gem) https://github.com/stephenb/sendgrid
+- Elasticsearch for queries (searchkick gem) https://github.com/ankane/searchkick
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
+* Database creation - to set up the database:
+- run <tt>rake db:create</tt>
+- then <tt>rake db:migrate</tt>
 
 * Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+- keep private keys in a <tt>local_env.yml</tt> file in the config directory (do not include in commits)
