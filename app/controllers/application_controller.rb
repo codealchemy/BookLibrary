@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def authorize_admin
-    redirect_to root_path, alert: 'That\'s off limits!' unless current_user.admin?
+    flash[:alert] = 'That\'s off limits!' unless current_user.admin?
+    redirect_to root_path
   end
 end
