@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   def borrowed_books_count
     Book.checked_out_books.count
   end
@@ -23,5 +22,4 @@ module ApplicationHelper
   def human_boolean(boolean)
     boolean ? 'Yes' : 'No'
   end
-
 end

@@ -30,7 +30,7 @@
         <% if user.admin? && user != current_user %>
           <%= button_to "Remove admin", { action: :remove_admin, user_id: user.id, method: :post }, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary' %>
         <% elsif user.admin? == false %>
-          <%= button_to "Make admin", { action: :make_admin, user_id: user.id, method: :post }, data: { confirm: 'Are you sure? This give\'s them the ability to create books and change admin perissions (even yours!)' }, class: 'btn btn-danger' %>
+          <%= button_to "Make admin", { action: :make_admin, user_id: user.id, method: :post }, data: { confirm: 'Are you sure? This gives them the ability to create books and change admin perissions (even yours!)' }, class: 'btn btn-danger' %>
         <% end %>
       </td>
     </tr>

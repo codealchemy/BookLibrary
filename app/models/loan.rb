@@ -3,5 +3,4 @@ class Loan < ActiveRecord::Base
   belongs_to :book
 
   validates :user, :book, presence: true
-
 end
