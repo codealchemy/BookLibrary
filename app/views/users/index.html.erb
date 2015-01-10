@@ -17,7 +17,7 @@
       <th>Is admin?</th>
       <th>Options</th>
     </tr>
-    <% @users.each do |user| %>
+    <% @users.sort.each do |user| %>
     <tr>
       <td><%= user.name %></td>
       <td><%= user.email %></td>
@@ -25,12 +25,12 @@
       <td class="text-center"><%= user.books_owned.count %></td>
       <td class="text-center"><%= user.borrowed_books.count %></td>
       <td class="text-center"><%= user.overdue_books.count %></td>
-      <td><%= user.admin? %></td>
+      <td><%= human_boolean(user.admin?) %></td>
       <td>
         <% if user.admin? && user != current_user %>
-          <%= button_to "Remove admin", action: :remove_admin, user_id: user.id, method: :post %>
+          <%= button_to "Remove admin", { action: :remove_admin, user_id: user.id, method: :post }, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary' %>
         <% elsif user.admin? == false %>
-          <%= button_to "Make admin", action: :make_admin, user_id: user.id, method: :post %>
+          <%= button_to "Make admin", { action: :make_admin, user_id: user.id, method: :post }, data: { confirm: 'Are you sure? This give\'s them the ability to create books and change admin perissions (even yours!)' }, class: 'btn btn-danger' %>
         <% end %>
       </td>
     </tr>

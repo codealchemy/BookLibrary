@@ -15,4 +15,8 @@ module ApplicationHelper
   def total_user_count
     User.count
   end
+
+  def human_boolean(boolean)
+    boolean ? 'Yes' : 'No'
+  end
 end

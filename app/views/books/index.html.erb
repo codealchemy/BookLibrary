@@ -24,9 +24,9 @@
         <% if book.is_borrowed? && book.borrower != current_user%>
           Borrowed
         <% elsif book.borrower == current_user %>
-          <%= button_to 'Return book', action: :check_in, id: book, method: :post %>
+          <%= button_to 'Return book', { action: :check_in, id: book, method: :post }, class: 'btn btn-default' %>
         <% else %>
-          <%= button_to "Check out", action: :check_out, id: book, method: :post %>
+          <%= button_to "Check out", { action: :check_out, id: book, method: :post }, class: 'btn btn-primary' %>
         <% end %>
       </td>
     </tr>
