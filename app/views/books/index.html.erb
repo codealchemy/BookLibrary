@@ -21,10 +21,12 @@
       <td><%= book.author_name %></td>
       <td width="60%"><%= truncate(book.description, length: 100) %></td>
       <td>
-        <% if book.is_borrowed? %>
+        <% if book.is_borrowed? && book.borrower != current_user%>
           Borrowed
+        <% elsif book.borrower == current_user %>
+          <%= button_to 'Return book', action: :check_in, id: book, method: :post %>
         <% else %>
-          Available
+          <%= button_to "Check out", action: :check_out, id: book, method: :post %>
         <% end %>
       </td>
     </tr>

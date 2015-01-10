@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_filter :find_book, only: [:show]
+  before_filter :find_book, only: [:show, :check_out, :check_in]
   before_action :authenticate_user!
 
   def index
@@ -24,6 +24,16 @@ class BooksController < ApplicationController
   end
 
   def show
+  end
+
+  def check_out
+    current_user.check_out(@book)
+    redirect_to books_path, notice: "You have checked out #{@book.title}, hope you enjoy it!"
+  end
+
+  def check_in
+    current_user.check_in(@book)
+    redirect_to books_path, notice: "You have checked in #{@book.title}, thanks!"
   end
 
   private
