@@ -14,52 +14,52 @@
 ActiveRecord::Schema.define(version: 20150107060214) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "books", force: true do |t|
-    t.string   "title"
-    t.string   "subtitle"
-    t.string   "author_first_name"
-    t.string   "author_last_name"
-    t.string   "publisher"
-    t.string   "isbn",              limit: 18
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
+  create_table 'books', force: true do |t|
+    t.string   'title'
+    t.string   'subtitle'
+    t.string   'author_first_name'
+    t.string   'author_last_name'
+    t.string   'publisher'
+    t.string   'isbn',              limit: 18
+    t.text     'description'
+    t.datetime 'created_at'
+    t.datetime 'updated_at'
+    t.integer  'user_id'
   end
 
-  create_table "loans", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "book_id"
-    t.datetime "checked_out_at"
-    t.datetime "checked_in_at"
-    t.datetime "due_date"
-    t.datetime "updated_at"
+  create_table 'loans', force: true do |t|
+    t.integer  'user_id'
+    t.integer  'book_id'
+    t.datetime 'checked_out_at'
+    t.datetime 'checked_in_at'
+    t.datetime 'due_date'
+    t.datetime 'updated_at'
   end
 
-  add_index "loans", ["book_id"], name: "index_loans_on_book_id", using: :btree
-  add_index "loans", ["user_id"], name: "index_loans_on_user_id", using: :btree
+  add_index 'loans', ['book_id'], name: 'index_loans_on_book_id', using: :btree
+  add_index 'loans', ['user_id'], name: 'index_loans_on_user_id', using: :btree
 
-  create_table "users", force: true do |t|
-    t.string   "email",                  default: "",    null: false
-    t.string   "encrypted_password",     default: "",    null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,     null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "admin",                  default: false
-    t.string   "first_name"
-    t.string   "last_name"
+  create_table 'users', force: true do |t|
+    t.string   'email',                  default: '',    null: false
+    t.string   'encrypted_password',     default: '',    null: false
+    t.string   'reset_password_token'
+    t.datetime 'reset_password_sent_at'
+    t.datetime 'remember_created_at'
+    t.integer  'sign_in_count',          default: 0,     null: false
+    t.datetime 'current_sign_in_at'
+    t.datetime 'last_sign_in_at'
+    t.inet     'current_sign_in_ip'
+    t.inet     'last_sign_in_ip'
+    t.datetime 'created_at'
+    t.datetime 'updated_at'
+    t.boolean  'admin',                  default: false
+    t.string   'first_name'
+    t.string   'last_name'
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index 'users', ['email'], name: 'index_users_on_email', unique: true, using: :btree
+  add_index 'users', ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true, using: :btree
 
 end
