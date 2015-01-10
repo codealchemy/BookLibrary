@@ -7,7 +7,7 @@
 </div>
 <div class="panel panel-default">
   <table class="table">
-    <tr>
+    <thead class="active">
       <th>Name</th>
       <th>Email</th>
       <th>Last signed in</th>
@@ -16,14 +16,14 @@
       <th class="text-center">Books overdue</th>
       <th>Is admin?</th>
       <th>Options</th>
-    </tr>
+    </thead>
     <% @users.sort.each do |user| %>
-    <tr>
-      <td><%= user.name %></td>
+    <tbody>
+      <td><%= link_to user.name, users_admin_path(user.id) %></td>
       <td><%= user.email %></td>
       <td><%= time_ago_in_words(user.last_sign_in_at) if user.last_sign_in_at %></td>
       <td class="text-center"><%= user.books_owned.count %></td>
-      <td class="text-center"><%= user.borrowed_books.count %></td>
+      <td class="text-center"><%= user.books_borrowed.count %></td>
       <td class="text-center"><%= user.overdue_books.count %></td>
       <td><%= human_boolean(user.admin?) %></td>
       <td>
@@ -33,7 +33,7 @@
           <%= button_to "Make admin", { action: :make_admin, user_id: user.id, method: :post }, data: { confirm: 'Are you sure? This gives them the ability to create books and change admin perissions (even yours!)' }, class: 'btn btn-danger' %>
         <% end %>
       </td>
-    </tr>
+    </tbody>
     <% end %>
   </table>
 </div>

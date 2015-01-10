@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-md-8">
+  <h1 class="text-center">Book currently checked out</h1>
+  <br>
+    <table class="table table- well">
+      <thead>
+        <tr>
+          <th>Title and subtitle</th>
+          <th>Author</th>
+          <th>Checked out</th>
+          <th>Time with book</th>
+        </tr>
+      </thead>
+      <% @user.books_checked_out.each do |book| %>
+      <tbody>
+        <tr>
+          <td><%= link_to book.title, book_path(book.id) %></td>
+          <td><%= book.author_name %></td>
+          <td><%= time_tag(loan(@user, book).checked_out_at) %></td>
+          <td><%= time_with_book(@user, book) %></td>
+        </tr>
+      </tbody>
+      <% end %>
+    </table>
+    <br>
+    <h2 class="text-center">Check out history</h2>
+    <br>
+    <table class="table table-hover well">
+      <thead>
+        <tr>
+          <th>Title and subtitle</th>
+          <th>Author</th>
+          <th>Checked out</th>
+          <th>Checked in</th>
+        </tr>
+      </thead>
+      <% @user.books_borrowed.each do |book| %>
+      <tbody>
+        <tr>
+          <td><%= link_to book.title, book_path(book.id) %></td>
+          <td><%= book.author_name %></td>
+          <td><%= time_tag(loan(@user, book).checked_out_at) %></td>
+          <td><%= loan(@user, book).checked_in_at? ? time_tag(loan(@user, book).checked_in_at) : 'Still reading...' %></td>
+        </tr>
+      </tbody>
+      <% end %>
+    </table>
+  </div>
+  <div class="col-md-4 text-center">
+    <h2 class="text-center"><%= link_to @user.name, edit_users_admin_path %></h2>
+    <h4 class="text-center"><%= @user.email %></h4><br>
+    <div class="well">
+      <h4>Books contributed:</h4>
+      <% @user.books_owned.each do |book| %>
+        <p><%= link_to book.title, book_path(book.id) %> by <%= book.author_name %></p>
+      <% end %>
+    </div>
+  </div>
+</div>

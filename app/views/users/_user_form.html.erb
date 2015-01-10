@@ -1,0 +1,21 @@
+<div class="col-md-4 col-md-offset-4 text-center">
+  <%= semantic_form_for(@user, url: users_admin_index_path, class: 'formtastic') do |f| %>
+    <div class="form-group">
+      <%= f.inputs name: "User", class: "text-center" do %>
+      <br>
+        <%= f.input :first_name, placeholder: " First Name", label: false, input_html: { class: "form-control" } %>
+        <%= f.input :last_name, placeholder: " Last Name", label: false, input_html: { class: "form-control" } %>
+        <%= f.input :email, placeholder: " Email (required)", label: false, input_html: { class: "form-control" }, required: true %>
+        <%= f.input :password, placeholder: " Password (required)", label: false, input_html: { class: "form-control" }, required: true %>
+        <%= f.input :password_confrimation, placeholder: " Password Confirmation (required)", label: false, input_html: { class: "form-control" }, required: true %>
+        <%= f.input :admin, as: :boolean, html: { class: 'radio-inline' } %>
+      <% end %>
+    </div>
+    <div class="actions">
+      <%= f.actions do %>
+        <%= f.action :submit, as: :button, button_html: { class: "btn btn-default" }, action: :create %>
+        <%= f.action :cancel, as: :link %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
