@@ -1,4 +1,5 @@
 class Book < ActiveRecord::Base
+  searchkick
   validates :title, :isbn, presence: true
   belongs_to :user
   has_many :loans
@@ -36,5 +37,9 @@ class Book < ActiveRecord::Base
   def self.available_books
     books = []
     Book.find_each { |book| book.is_borrowed? ? next : books << book}
+  end
+
+  def search_data
+    as_json only: [:title]
   end
 end

@@ -37,6 +37,11 @@ class User < ActiveRecord::Base
     return books
   end
 
+  def overdue_books
+    book_ids = Loan.where(user: self).where('due_date IS NOT NULL AND due_date < current_date').pluck(:book_id)
+    Book.find(book_ids)
+  end
+
   def self.with_books
     checked_out_books = Loan.where(checked_in_at: nil).pluck(:user_id)
     User.find(checked_out_books)

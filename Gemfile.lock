@@ -55,11 +55,22 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    elasticsearch (1.0.6)
+      elasticsearch-api (= 1.0.6)
+      elasticsearch-transport (= 1.0.6)
+    elasticsearch-api (1.0.6)
+      multi_json
+    elasticsearch-transport (1.0.6)
+      faraday
+      multi_json
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.2.2)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
     formtastic (3.1.2)
       actionpack (>= 3.2.13)
+    hashie (3.3.2)
     hike (1.2.3)
     i18n (0.7.0)
     jbuilder (2.2.6)
@@ -76,6 +87,7 @@ GEM
     mini_portile (0.6.1)
     minitest (5.5.0)
     multi_json (1.10.1)
+    multipart-post (2.0.0)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
     orm_adapter (0.5.0)
@@ -99,6 +111,11 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.8)
       sprockets-rails (~> 2.0)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.2)
+    rails_stdout_logging (0.0.3)
     railties (4.1.8)
       actionpack (= 4.1.8)
       activesupport (= 4.1.8)
@@ -135,6 +152,10 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    searchkick (0.8.5)
+      activemodel
+      elasticsearch (>= 1)
+      hashie
     sendgrid (1.2.0)
       json
     slop (3.6.0)
@@ -181,9 +202,11 @@ DEPENDENCIES
   pg
   pry-rails
   rails (= 4.1.8)
+  rails_12factor
   rspec-rails (~> 3.0)
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
+  searchkick
   sendgrid
   spring
   thin

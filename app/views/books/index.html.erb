@@ -12,6 +12,7 @@
       <th>Title (<small>and subtitle</small>)</th>
       <th>Author</th>
       <th>Description</th>
+      <th>Borrower</th>
       <th>Status?</th>
     </tr>
     <% @books.each do |book| %>
@@ -20,11 +21,14 @@
       <small><%= book.subtitle %></small></td>
       <td><%= book.author_name %></td>
       <td width="60%"><%= truncate(book.description, length: 100) %></td>
+      <td><%= book.borrower.name if book.is_borrowed? %></td>
       <td>
-        <% if book.is_borrowed? %>
+        <% if book.is_borrowed? && book.borrower != current_user%>
           Borrowed
+        <% elsif book.borrower == current_user %>
+          <%= button_to 'Return book', { action: :check_in, id: book, method: :post }, class: 'btn btn-default' %>
         <% else %>
-          Available
+          <%= button_to "Check out", { action: :check_out, id: book, method: :post }, class: 'btn btn-primary' %>
         <% end %>
       </td>
     </tr>

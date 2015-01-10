@@ -1,9 +1,13 @@
 class BooksController < ApplicationController
-  before_filter :find_book, only: [:show]
+  before_filter :find_book, only: [:show, :check_out, :check_in]
   before_action :authenticate_user!
 
   def index
-    @books = Book.all
+    if params[:query].present?
+      @books = Book.search(params[:query]).results
+    else 
+      @books = Book.all
+    end
   end
 
   def new
@@ -22,6 +26,16 @@ class BooksController < ApplicationController
   def show
   end
 
+  def check_out
+    current_user.check_out(@book)
+    redirect_to books_path, notice: "You have checked out #{@book.title}, hope you enjoy it!"
+  end
+
+  def check_in
+    current_user.check_in(@book)
+    redirect_to books_path, notice: "You have checked in #{@book.title}, thanks!"
+  end
+
   private
 
   def find_book
@@ -34,7 +48,8 @@ class BooksController < ApplicationController
         :isbn,
         :author_first_name,
         :author_last_name,
-        :description
+        :description,
+        :user_id
       )
   end
 

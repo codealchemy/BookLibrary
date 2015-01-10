@@ -1,5 +1,39 @@
-<% if current_user.try(:admin?) %>
-  <%= render :partial => "users/user_list" %> 
-<% else %>
-  <meta HTTP-EQUIV="REFRESH" content="0; url=<%= books_path %>">
-<% end %>
+<div class="text-center">
+  <div class="row">
+  <h2 class="col-md-4 col-md-offset-4">All users</h2>
+  <br>
+  <%= link_to "Add user", new_users_admin_path, class: "btn btn-default text-right" %>
+  </div>
+</div>
+<div class="panel panel-default">
+  <table class="table">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Last signed in</th>
+      <th class="text-center">Books contributed</th>
+      <th class="text-center">Books checked out</th>
+      <th class="text-center">Books overdue</th>
+      <th>Is admin?</th>
+      <th>Options</th>
+    </tr>
+    <% @users.sort.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= time_ago_in_words(user.last_sign_in_at) if user.last_sign_in_at %></td>
+      <td class="text-center"><%= user.books_owned.count %></td>
+      <td class="text-center"><%= user.borrowed_books.count %></td>
+      <td class="text-center"><%= user.overdue_books.count %></td>
+      <td><%= human_boolean(user.admin?) %></td>
+      <td>
+        <% if user.admin? && user != current_user %>
+          <%= button_to "Remove admin", { action: :remove_admin, user_id: user.id, method: :post }, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary' %>
+        <% elsif user.admin? == false %>
+          <%= button_to "Make admin", { action: :make_admin, user_id: user.id, method: :post }, data: { confirm: 'Are you sure? This give\'s them the ability to create books and change admin perissions (even yours!)' }, class: 'btn btn-danger' %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>
