@@ -5,9 +5,9 @@
       <th>Name</th>
       <th>Email</th>
       <th>Last signed in</th>
-      <th>Books contributed</th>
-      <th>Books checked out</th>
-      <th>Books overdue</th>
+      <th class="text-center">Books contributed</th>
+      <th class="text-center">Books checked out</th>
+      <th class="text-center">Books overdue</th>
       <th>Is admin?</th>
       <th></th>
     </tr>
@@ -16,9 +16,9 @@
       <td><%= user.name %></td>
       <td><%= user.email %></td>
       <td><%= time_ago_in_words(user.last_sign_in_at) %></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td class="text-center"><%= user.books_owned.count %></td>
+      <td class="text-center"><%= user.borrowed_books.count %></td>
+      <td class="text-center"><%= user.overdue_books.count %></td>
       <td><%= user.admin? %></td>
       <td>
         <% if user.admin? %>
