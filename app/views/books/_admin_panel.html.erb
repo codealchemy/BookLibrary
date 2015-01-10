@@ -8,8 +8,10 @@
     <li><%= link_to "Add user", new_users_admin_path, class: "btn btn-default" %></li><br>
     <li><%= link_to "Edit users", users_admin_index_path, class: "btn btn-default" %></li>
     <br>
-    <li>Books checked out <span class="badge"><%= borrowed_books_count %>/<%= total_book_count %></span></li>
+    <li>Books checked out</li>
+    <span class="badge"><%= borrowed_books_count %>/<%= total_book_count %></span>
     <br>
-    <li>Users with books <span class="badge"><%= users_with_books_count %>/<%= total_user_count %></span></li>
+    <li>Users with books</li>
+    <span class="badge"><%= users_with_books_count %>/<%= total_user_count %></span>
   </ul>
 </div>
