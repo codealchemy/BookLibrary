@@ -48,7 +48,8 @@ class BooksController < ApplicationController
         :isbn,
         :author_first_name,
         :author_last_name,
-        :description
+        :description,
+        :user_id
       )
   end
 
