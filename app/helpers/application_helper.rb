@@ -8,6 +8,10 @@ module ApplicationHelper
     User.with_books.count
   end
 
+  def all_users
+    User.all
+  end
+
   def total_book_count
     Book.count
   end
@@ -19,4 +23,5 @@ module ApplicationHelper
   def human_boolean(boolean)
     boolean ? 'Yes' : 'No'
   end
+
 end
