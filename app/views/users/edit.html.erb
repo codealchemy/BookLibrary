@@ -1,0 +1,27 @@
+<div class="col-md-12 text-center">
+  <h2>
+    <p><%= @user.name %>'s Profile</p>  
+  </h2><br>
+  <%= form_for( @user, url: users_admin_path(@user), html: { method: :put, class: "col-md-4 col-md-offset-1" }) do |f| %>
+    <br>
+    <div class="form-group">
+      <%= f.text_field :first_name, autofocus: true, placeholder: "First Name", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.text_field :last_name, placeholder: "Last Name", class: "form-control" %>
+    </div>    
+    <div class="form-group">
+      <%= f.email_field :email, placeholder: "Email", class: "form-control" %>
+    </div>
+    <br>
+    <div class="actions">
+      <%= f.submit "Update", class: "btn btn-default" %>
+    </div>
+  <% end %>
+  <h3>Delete account</h3>
+  <p>
+    <%= button_to "Delete account", users_admin_path(@user), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-default" %>
+  </p>
+  <br>
+  <%= link_to "Back", :back %>
+</div>

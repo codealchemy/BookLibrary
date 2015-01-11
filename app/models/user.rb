@@ -4,10 +4,10 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :books_owned, class_name: "Book", foreign_key: :user_id
-  has_many :loans
-  has_many :books_borrowed, class_name: "Loan", foreign_key: :user_id
-  
+  has_many :books_owned, class_name: 'Book', foreign_key: :user_id, dependent: :destroy
+  has_many :loans, dependent: :destroy
+  has_many :books, through: :loans
+
   def make_admin
     update(admin: true)
   end
@@ -25,20 +25,23 @@ class User < ActiveRecord::Base
   end
 
   def name
-    name = [first_name, last_name].map(&:to_s).join(" ").strip
-    name.empty? ? "No name" : name
+    name = [first_name, last_name].map(&:to_s).join(' ').strip
+    name.empty? ? 'No name' : name
   end
 
-  def borrowed_books
-    books = []
-    Book.checked_out_books.each do |book|
-      books << book if book.borrower == self
-    end
-    return books
+  def books_borrowed
+    self.books
+  end
+
+  def books_checked_out
+    book_ids = Loan.where(user: self, checked_in_at: nil).pluck(:book_id)
+    Book.find(book_ids)
   end
 
   def overdue_books
-    book_ids = Loan.where(user: self).where('due_date IS NOT NULL AND due_date < current_date').pluck(:book_id)
+    loans = Loan.where(user: self)
+    loans = loans.where('due_date IS NOT NULL AND due_date < current_date')
+    book_ids = loans.pluck(:book_id)
     Book.find(book_ids)
   end
 
@@ -48,10 +51,10 @@ class User < ActiveRecord::Base
   end
 
   def check_out(book)
-    self.loans.create(book: book, checked_out_at: Time.now)
+    loans.create(book: book, checked_out_at: Time.now)
   end
 
   def check_in(book)
-    self.loans.where(book: book).last.update(checked_in_at: Time.now)
+    loans.where(book: book).last.update(checked_in_at: Time.now)
   end
 end

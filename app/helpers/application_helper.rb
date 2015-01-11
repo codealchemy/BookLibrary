@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   def borrowed_books_count
     Book.checked_out_books.count
   end
@@ -24,4 +23,7 @@ module ApplicationHelper
     boolean ? 'Yes' : 'No'
   end
 
+  def loan(user, book)
+    Loan.where(user: user, book: book).last
+  end
 end

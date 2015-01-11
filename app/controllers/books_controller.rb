@@ -1,12 +1,13 @@
 class BooksController < ApplicationController
-  before_filter :find_book, only: [:show, :check_out, :check_in]
+  before_filter :find_book, only: [:show, :check_out, :check_in, :edit, :update]
   before_action :authenticate_user!
 
   def index
     if params[:query].present?
-      @books = Book.search(params[:query]).results
-    else 
-      @books = Book.all
+      books = Book.search(params[:query])
+      @books = Kaminari.paginate_array(books.results).page(params[:page]).per(15)
+    else
+      @books = Book.order(:created_at).page(params[:page]).per(15)
     end
   end
 
@@ -16,24 +17,42 @@ class BooksController < ApplicationController
 
   def create
     @book = Book.new(book_params)
-      if @book.save
-        redirect_to books_path, notice: "Book saved"
-      else
-        redirect_to new_book_path, alert: "There's an error - please check the required fields"
-      end
+    if @book.save
+      flash[:notice] = 'Book saved'
+      redirect_to books_path
+    else
+      flash[:alert] = 'There\'s an error - please check the required fields'
+      redirect_to new_book_path
+    end
   end
 
   def show
   end
 
+  def edit
+  end
+
+  def update
+    @book.update(book_params)
+    if @book.save
+      flash[:notice] = 'Book saved'
+      redirect_to books_path
+    else
+      flash[:alert] = 'There\'s an error - please check the required fields'
+      redirect_to new_book_path
+    end
+  end
+
   def check_out
     current_user.check_out(@book)
-    redirect_to books_path, notice: "You have checked out #{@book.title}, hope you enjoy it!"
+    flash[:notice] = "You have checked out #{@book.title}, hope you enjoy it!"
+    redirect_to books_path
   end
 
   def check_in
     current_user.check_in(@book)
-    redirect_to books_path, notice: "You have checked in #{@book.title}, thanks!"
+    flash[:notice] = "You have checked in #{@book.title}, thanks!"
+    redirect_to books_path
   end
 
   private
@@ -45,6 +64,7 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(
         :title,
+        :subtitle,
         :isbn,
         :author_first_name,
         :author_last_name,
@@ -52,5 +72,4 @@ class BooksController < ApplicationController
         :user_id
       )
   end
-
 end
