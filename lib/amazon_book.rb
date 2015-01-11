@@ -62,6 +62,7 @@ class AmazonBook
   end
 
   def validate_isbn(isbn)
-    isbn if isbn.to_s.strip.length == 10
+    length = isbn.to_s.strip.length
+    isbn if  length == 10 || length == 13
   end
 end
