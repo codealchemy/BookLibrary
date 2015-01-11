@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_filter :find_book, only: [:show, :check_out, :check_in, :edit, :update]
+  before_filter :find_book, only: [:show, :check_out, :check_in, :edit, :update, :destroy]
   before_action :authenticate_user!
 
   def index
@@ -32,6 +32,12 @@ class BooksController < ApplicationController
   def edit
   end
 
+  def destroy
+    @book.destroy
+    flash[:alert] = 'Book has been deleted'
+    redirect_to books_path
+  end
+
   def update
     @book.update(book_params)
     if @book.save
@@ -59,6 +65,7 @@ class BooksController < ApplicationController
 
   def find_book
     @book = Book.find(params[:id])
+    @links = AmazonBook.search_by_isbn(@book.isbn)
   end
 
   def book_params

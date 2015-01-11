@@ -4,6 +4,7 @@ class Book < ActiveRecord::Base
   belongs_to :user
   has_many :loans
   has_many :borrowers, class_name: 'Loan', foreign_key: :book_id
+  after_destroy :delete_associated_loans
 
   def author_name
     name = [author_first_name, author_last_name].map(&:to_s).join(' ').strip
@@ -42,6 +43,10 @@ class Book < ActiveRecord::Base
     books = []
     Book.find_each { |book| book.borrowed? ? next : books << book }
     books
+  end
+
+  def delete_associated_loans
+    Loan.where(book: self).destroy_all
   end
 
   def search_data
