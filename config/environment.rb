@@ -13,4 +13,9 @@ ActionMailer::Base.smtp_settings = {
     :authentication => :plain,
     :enable_starttls_auto => true
   }
-  
+
+Amazon::Ecs.options = {
+ associate_tag: ENV['AMAZON_ASSOCIATE_TAG'],
+ AWS_access_key_id: ENV['AMAZON_KEY_ID'],
+ AWS_secret_key: ENV['AMAZON_SECRET_ID']
+}
