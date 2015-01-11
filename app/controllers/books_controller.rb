@@ -5,7 +5,7 @@ class BooksController < ApplicationController
   def index
     if params[:query].present?
       books = Book.search(params[:query])
-      @books = books.results.page(params[:page]).per(15)
+      @books = Kaminari.paginate_array(books.results).page(params[:page]).per(15)
     else
       @books = Book.order(:created_at).page(params[:page]).per(15)
     end

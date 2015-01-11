@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :books_owned, class_name: 'Book', foreign_key: :user_id
+  has_many :books_owned, class_name: 'Book', foreign_key: :user_id, dependent: :destroy
   has_many :loans, dependent: :destroy
   has_many :books, through: :loans
 

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :find_user, only: [:show, :make_admin, :remove_admin]
-  before_filter :authorize_admin
+  before_filter :find_user, only: [:show, :edit, :make_admin, :remove_admin, :destroy, :update]
+  before_filter :authorize_admin, only: [:edit, :create, :new, :index, :update]
 
   def index
     @users = User.all.page(params[:page]).per(15)
@@ -8,6 +8,17 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+  end
+
+  def update
+    @user.update_attributes(update_user_params)
+    if @user.save
+      flash[:notice] = 'User saved'
+      redirect_to users_admin_path(@user)
+    else
+      flash[:alert] = 'There\'s an error - please check the required fields'
+      redirect_to users_admin_path(@user)
+    end
   end
 
   def create
@@ -33,6 +44,12 @@ class UsersController < ApplicationController
     redirect_to users_admin_index_path
   end
 
+  def destroy
+    @user.destroy
+    flash[:notice] = 'User has been deleted'
+    redirect_to users_admin_index_path
+  end
+
   private
 
   def find_user
@@ -46,7 +63,13 @@ class UsersController < ApplicationController
       :email,
       :password,
       :password_confirmation,
-      :admin
-    )
+      :admin)
+  end
+
+  def update_user_params
+    params.require(:user).permit(
+      :first_name,
+      :last_name,
+      :email).permit!
   end
 end
