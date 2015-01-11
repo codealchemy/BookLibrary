@@ -3,7 +3,7 @@ class AmazonBook
                 :isbn, :item
 
   def initialize(isbn)
-    @isbn = isbn
+    @isbn = validate_isbn(isbn)
     @item = item_lookup
     collect_links
   end
@@ -59,5 +59,9 @@ class AmazonBook
   def retrieve_reviews_link
     raw_link = item.get_array('ItemLink').select{|i| i =~ /reviews/i }.first
     link = raw_link.match(/<URL>(.*?)<\/URL>/)[1] if raw_link
+  end
+
+  def validate_isbn(isbn)
+    isbn if isbn.to_s.strip.length == 10
   end
 end
