@@ -41,7 +41,7 @@ RSpec.describe User, type: :model do
 
     it 'pulls a list of borrowed books for user' do
       user.loans.create(book: book)
-      expect(user.borrowed_books).to include(book)
+      expect(user.books_borrowed).to include(book)
     end
 
     it 'checks out a book' do

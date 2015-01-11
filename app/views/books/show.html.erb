@@ -2,6 +2,14 @@
   <div class="col-md-8">
     <h1 class="text-center"><%= @book.title %></h1>
     <h3 class="text-center"><%= @book.subtitle %></h3>
+    <% if current_user.admin? %>
+    <div class="text-center">
+      <div class="btn-group">
+        <%= link_to 'Edit book details', edit_book_path(@book), class: 'btn btn-default' %>
+        <%= link_to 'Delete', book_path(@book), method: :delete, class: 'btn btn-danger' %>
+      </div>
+    </div>
+    <% end %>
     <br>
     <h3><%= @book.author_name %></h3>
     <blockquote>
@@ -14,9 +22,9 @@
     <h5>Reviews</h5>
     <h5>Buy on Amazon</h5>
     <% if @book.owner %>
-    <h5><%= @book.owner.name %> contributed this book to the library</h5>
+    <h5><%= link_to @book.owner.name, users_admin_path(@book.owner) %> contributed this book to the library</h5>
     <% end %>
-    <h5></h5>
+    <br>
   </div>
 </div>
   

@@ -95,7 +95,7 @@ RSpec.describe Book, type: :model do
       expect(loan.user).to eq(user1)
       expect(loan.book).to eq(book)
       expect(book.borrower).to eq(user1)
-      expect(user1.borrowed_books).to include(book)
+      expect(user1.books_borrowed).to include(book)
     end
 
     it 'shows a book as available if not loaned out' do

@@ -1,5 +1,11 @@
-  <p>Here is some information on the library</p>
-  <br>
+<% if current_user.sign_in_count <= 2 %>
+<div class="alert jumbotron text-center fade in row"> 
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <div class="col-xs-4 col-md-2"><%= image_tag('giraffe.png') %></div>
+  <div class="col-xs-8 col-md-10"><p>Welcome to the library! Check out all the books that people have contributed below (and on the bookshelf) - to add any books, please get in touch with your friendly community librarian.</p></div>
+</div>
+<% end %>
+<br>
 <% if current_user.admin? %>
 <%= render :partial => "books/admin_panel" %>
 <div class="panel panel-default col-md-9">
@@ -7,20 +13,22 @@
 <div class="panel panel-default">
 <% end %>
   <table class="table table-hover">
-    <tr class="active">
-      <th width="25%">Title (<small>and subtitle</small>)</th>
+    <thead class="active">
+      <th width="15%">Title (<small>and subtitle</small>)</th>
       <th width="15%">Author</th>
       <th width="30%">Description</th>
-      <th width="20%">Borrower</th>
+      <th width="10%">Owner</th>
+      <th width="10%">Borrower</th>
       <th width="10%">Status?</th>
-    </tr>
+    </thead>
     <% @books.each do |book| %>
-    <tr>
+    <tbody>
       <td><%= link_to book.title, book_path(book.id) %><br>
       <small><%= book.subtitle %></small></td>
       <td><%= book.author_name %></td>
-      <td width="60%"><%= truncate(book.description, length: 100) %></td>
-      <td><%= book.borrower.name if book.borrowed? %></td>
+      <td width="30%"><%= truncate(book.description, length: 100) %></td>
+      <td><%= link_to book.owner.name, users_admin_path(book.owner) if book.owner %></td>
+      <td><%= link_to book.borrower.name, users_admin_path(book.borrower) if book.borrowed? %></td>
       <td>
         <% if book.borrowed? && book.borrower != current_user%>
           Borrowed
@@ -30,7 +38,7 @@
           <%= button_to "Check out", { action: :check_out, id: book, method: :post }, class: 'btn btn-primary' %>
         <% end %>
       </td>
-    </tr>
+    </tbody>
     <% end %>
   </table>
 </div>
