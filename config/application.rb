@@ -22,6 +22,8 @@ module BookLibrary
         end
       end
     end
+
+    config.autoload_paths << "#{Rails.root}/lib"
     config.time_zone = 'Pacific Time (US & Canada)'
     config.action_mailer.default_url_options = { host: ENV['DEFAULT_URL'] }
   end

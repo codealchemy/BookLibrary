@@ -5,13 +5,13 @@ require File.expand_path('../application', __FILE__)
 Rails.application.initialize!
 
 ActionMailer::Base.smtp_settings = {
-  :user_name => ENV["SENDGRID_USERNAME"],
-  :password => ENV["SENDGRID_PASSWORD"],
-  :domain => ENV["SENDGRID_DOMAIN"],
-  :address => 'smtp.sendgrid.net',
-  :port => 587,
-  :authentication => :plain,
-  :enable_starttls_auto => true
+  user_name: ENV['SENDGRID_USERNAME'],
+  password: ENV['SENDGRID_PASSWORD'],
+  domain: ENV['SENDGRID_DOMAIN'],
+  address: 'smtp.sendgrid.net',
+  port: 587,
+  authentication: :plain,
+  enable_starttls_auto: true
 }
 
 Amazon::Ecs.options = {
@@ -19,3 +19,5 @@ Amazon::Ecs.options = {
  AWS_access_key_id: ENV['AMAZON_KEY_ID'],
  AWS_secret_key: ENV['AMAZON_SECRET_ID']
 }
+
+AMZ = Amazon::Ecs
