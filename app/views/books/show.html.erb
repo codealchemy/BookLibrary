@@ -19,6 +19,8 @@
   <div class="col-md-4">
     <% if @links.image_link %>
       <%= image_tag @links.image_link %>
+    <% else %>
+      <%= image_tag "http://i312.photobucket.com/albums/ll323/Ghostdog1315/NecronomiconSidebar.jpg" %>
     <% end %>
     <h5>ISBN: <%= @book.isbn %></h5>
     <% if @links.reviews_link %>

@@ -62,7 +62,7 @@ class AmazonBook
   end
 
   def validate_isbn(isbn)
-    length = isbn.to_s.strip.length
-    isbn if  length == 10 || length == 13
+    length = isbn.to_s.gsub(/\D/,'').length
+    isbn if length == 10 || length == 13
   end
 end
