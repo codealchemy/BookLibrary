@@ -17,14 +17,21 @@
     </blockquote>
   </div>
   <div class="col-md-4">
-    <img src="http://undermyappletree.files.wordpress.com/2012/01/htmlcss.jpg" width="320px" height="400px">
+    <% if @links.image_link %>
+      <%= image_tag @links.image_link %>
+    <% else %>
+      <%= image_tag "http://i312.photobucket.com/albums/ll323/Ghostdog1315/NecronomiconSidebar.jpg" %>
+    <% end %>
     <h5>ISBN: <%= @book.isbn %></h5>
-    <h5>Reviews</h5>
-    <h5>Buy on Amazon</h5>
+    <% if @links.reviews_link %>
+      <h5><a href= <%= @links.reviews_link %> target='new_window'> Reviews</a></h5>
+    <% end %>
+    <% if @links.marketplace_link %>
+      <h5><a href= <%= @links.marketplace_link %> target='new_window'>Buy on Amazon</a></h5>
+    <% end %>
     <% if @book.owner %>
     <h5><%= link_to @book.owner.name, users_admin_path(@book.owner) %> contributed this book to the library</h5>
     <% end %>
     <br>
   </div>
 </div>
-  
