@@ -59,6 +59,7 @@ class BooksController < ApplicationController
 
   def find_book
     @book = Book.find(params[:id])
+    @links = AmazonBook.search_by_isbn(@book.isbn)
   end
 
   def book_params
