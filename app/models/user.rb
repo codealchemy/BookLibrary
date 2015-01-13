@@ -7,8 +7,6 @@ class User < ActiveRecord::Base
   has_many :books_owned, class_name: 'Book', foreign_key: :user_id, dependent: :destroy
   has_many :loans, dependent: :destroy
   has_many :books, through: :loans
-  after_create :add_new_account_tag_in_nation
-  before_destroy :add_delete_account_tag_in_nation
 
   def make_admin
     update(admin: true)
@@ -24,14 +22,6 @@ class User < ActiveRecord::Base
 
   def send_overdue_email
     UserNotifier.send_overdue_email(self).deliver
-  end
-
-  def add_new_account_tag_in_nation
-    NbService.new_account(email)
-  end
-
-  def add_delete_account_tag_in_nation
-    NbService.delete_account(email)
   end
 
   def name
@@ -62,12 +52,12 @@ class User < ActiveRecord::Base
 
   def check_out(book)
     loan = loans.create(book: book, checked_out_at: Time.now)
-    NbService.check_out_contact(loan)
+    Resque.enqueue(NationContacter, loan.id, 'out')
   end
 
   def check_in(book)
-    loan = loans.where(book: book).last
+    loan = loans.where(book: book, checked_in_at: nil).first
     loan.update(checked_in_at: Time.now)
-    NbService.check_in_contact(loan)
+    Resque.enqueue(NationContacter, loan.id, 'in')
   end
 end

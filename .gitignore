@@ -16,3 +16,5 @@
 /tmp
 
 config/local_env.yml
+
+*.rdb

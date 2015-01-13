@@ -8,43 +8,33 @@ class NbService
     match['person'] ? @user_nbid = match['person']['id'] : @user_nbid = nil
   end
 
-  def self.check_out_contact(loan)
+  def self.find_checkout_id(in_or_out)
+    if in_or_out == 'in'
+      @type_id = ENV['NATION_CHECKIN_ID']
+    elsif in_or_out == 'out'
+      @type_id = ENV['NATION_CHECKOUT_ID']
+    end
+  end
+
+  def self.borrow_contact(loan, in_or_out)
     find_nbid_in_nation(loan.user)
+    find_checkout_id(in_or_out)
+
     CLIENT.call(:contacts, :create, person_id: @user_nbid, contact:
     {
       sender_id: ENV['NATION_SENDER_ID'],
       broadcaster_id: ENV['NATION_BROADCASTER_ID'],
       method: 'other',
-      type_id: ENV['NATION_CHECKOUT_ID'],
-      note: "Checked out book '#{loan.book.title}' at #{loan.checked_out_at}"
+      type_id: @type_id,
+      note: "Checked #{in_or_out} book '#{loan.book.title}' at #{loan.checked_in_at}"
     })
   end
 
-  def self.check_in_contact(loan)
-    find_nbid_in_nation(loan.user)
-    CLIENT.call(:contacts, :create, person_id: @user_nbid, contact:
-    {
-      sender_id: ENV['NATION_SENDER_ID'],
-      broadcaster_id: ENV['NATION_BROADCASTER_ID'],
-      method: 'other',
-      type_id: ENV['NATION_CHECKIN_ID'],
-      note: "Checked in book '#{loan.book.title}' at #{loan.checked_in_at}"
-    })
-  end
-
-  def self.new_account(user_email)
+  def self.account_tag(user_email, status)
     CLIENT.call(:people, :push, person:
     {
       email: user_email,
-      tags: 'Active library account'
-    })
-  end
-
-  def self.delete_account(user_email)
-    CLIENT.call(:people, :push, person:
-    {
-      email: user_email,
-      tags: 'Library account deleted'
+      tags: "Library account #{status}"
     })
   end
 end

@@ -12,7 +12,7 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
-gem 'resque', require: 'resque/server'
+gem 'resque', "~> 1.22.0", require: 'resque/server'
 gem 'nationbuilder-rb'
 gem 'newrelic_rpm'
 gem 'kaminari'
