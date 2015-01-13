@@ -52,12 +52,12 @@ class User < ActiveRecord::Base
 
   def check_out(book)
     loan = loans.create(book: book, checked_out_at: Time.now)
-    Resque.enqueue(NationContacter, loan.id, 'out')
+    NbService.borrow_contact(loan, 'out')
   end
 
   def check_in(book)
     loan = loans.where(book: book, checked_in_at: nil).first
     loan.update(checked_in_at: Time.now)
-    Resque.enqueue(NationContacter, loan.id, 'in')
+    NbService.borrow_contact(loan, 'in')
   end
 end

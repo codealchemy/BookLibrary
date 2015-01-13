@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      Resque.enqueue(NationTagger, @user.id, 'active')
+      NbService.account_tag(@user.email, 'active')
       flash[:notice] = 'User saved'
       redirect_to users_admin_index_path
     else
@@ -35,14 +35,14 @@ class UsersController < ApplicationController
 
   def make_admin
     @user.make_admin
-    Resque.enqueue(NationTagger, @user.id, 'admin')
+    NbService.account_tag(@user.email, 'admin')
     flash[:notice] = "#{@user.name} is now an admin"
     redirect_to users_admin_index_path
   end
 
   def remove_admin
     @user.remove_admin
-    Resque.enqueue(NationTagger, @user.id, 'admin removed')
+    NbService.account_tag(@user.email, 'admin removed')
     flash[:notice] = "#{@user.name} is no longer an admin"
     redirect_to users_admin_index_path
   end
