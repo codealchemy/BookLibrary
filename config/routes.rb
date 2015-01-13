@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-
+  require 'resque/server'
+  
   root 'books#index'
 
   devise_for :users, controllers: { sessions: 'users/sessions' }
@@ -13,4 +14,7 @@ Rails.application.routes.draw do
     post :make_admin, on: :collection
     post :remove_admin, on: :collection
   end
+
+  mount Resque::Server.new, at: "/resque"
+
 end
