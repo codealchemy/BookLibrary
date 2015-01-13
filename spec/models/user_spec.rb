@@ -34,21 +34,23 @@ RSpec.describe User, type: :model do
     end
     let(:book) { Book.create(title: 'A new start', isbn: '234-432-55-123') }
 
-    it 'borrows a book' do
-      user.loans.create(book: book)
-      expect(book.borrower).to eq(user)
+    before do 
+      user.check_out(book)
     end
 
     it 'pulls a list of borrowed books for user' do
-      user.loans.create(book: book)
       expect(user.books_borrowed).to include(book)
     end
 
     it 'checks out a book' do
-      user.check_out(book)
       expect(book.borrowed?).to eq(true)
       expect(book.borrower).to eq(user)
       expect { user.check_out(book) }.to change { Loan.count }.by(1)
+    end
+
+    it 'checks in a book' do
+      user.check_in(book)
+      expect(book.borrowed?).to eq(false)
     end
   end
 end

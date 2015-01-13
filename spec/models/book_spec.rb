@@ -82,6 +82,12 @@ RSpec.describe Book, type: :model do
       book.change_owner
       expect(book.owner).to eq(user1)
     end
+
+    it 'deletes associated books when owner is deleted' do
+      user_id = user1.id
+      user1.destroy
+      expect(Book.where(user_id: user_id).empty?).to eq(true)
+    end
   end
 
   context '#borrowing' do
@@ -106,6 +112,12 @@ RSpec.describe Book, type: :model do
     it 'shows a book as unavailable if it is loaned out' do
       expect(loan.book.borrowed?).to eq(true)
       expect(Book.checked_out_books).to include(book)
+    end
+
+    it 'deletes associated loans when book is deleted' do
+      book_id = book.id
+      book.destroy
+      expect(Loan.where(book_id: book_id).empty?).to eq(true)
     end
   end
 end

@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_filter :find_book, only: [:show, :check_out, :check_in, :edit, :update]
+  before_filter :find_book, only: [:show, :check_out, :check_in, :edit, :update, :destroy]
   before_action :authenticate_user!
 
   def index
@@ -30,6 +30,12 @@ class BooksController < ApplicationController
   end
 
   def edit
+  end
+
+  def destroy
+    @book.destroy
+    flash[:alert] = 'Book has been deleted'
+    redirect_to books_path
   end
 
   def update

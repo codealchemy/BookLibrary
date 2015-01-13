@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :find_user, only: [:show, :edit, :make_admin, :remove_admin, :destroy, :update]
+  before_filter :find_user, except: [:new, :create, :index]
   before_filter :authorize_admin, only: [:edit, :create, :new, :index, :update]
 
   def index
@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      NbService.account_tag(@user.email, 'active')
       flash[:notice] = 'User saved'
       redirect_to users_admin_index_path
     else
@@ -34,12 +35,14 @@ class UsersController < ApplicationController
 
   def make_admin
     @user.make_admin
+    NbService.account_tag(@user.email, 'admin')
     flash[:notice] = "#{@user.name} is now an admin"
     redirect_to users_admin_index_path
   end
 
   def remove_admin
     @user.remove_admin
+    NbService.account_tag(@user.email, 'admin removed')
     flash[:notice] = "#{@user.name} is no longer an admin"
     redirect_to users_admin_index_path
   end
@@ -70,6 +73,6 @@ class UsersController < ApplicationController
     params.require(:user).permit(
       :first_name,
       :last_name,
-      :email).permit!
+      :email)
   end
 end

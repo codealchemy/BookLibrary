@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   end
 
   def books_borrowed
-    self.books
+    books
   end
 
   def books_checked_out
@@ -51,10 +51,13 @@ class User < ActiveRecord::Base
   end
 
   def check_out(book)
-    loans.create(book: book, checked_out_at: Time.now)
+    loan = loans.create(book: book, checked_out_at: Time.now)
+    NbService.borrow_contact(loan, 'out')
   end
 
   def check_in(book)
-    loans.where(book: book).last.update(checked_in_at: Time.now)
+    loan = loans.where(book: book, checked_in_at: nil).first
+    loan.update(checked_in_at: Time.now)
+    NbService.borrow_contact(loan, 'in')
   end
 end
