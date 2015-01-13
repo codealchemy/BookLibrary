@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_filter :find_book, except: [:index, :destroy, :create, :new]
+  before_filter :find_book, except: [:index, :create, :new]
   before_action :authenticate_user!
 
   def index
