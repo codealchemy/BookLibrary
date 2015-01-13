@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_filter :find_book, only: [:show, :check_out, :check_in, :edit, :update, :destroy]
+  before_filter :find_book, except: [:index, :create, :new]
   before_action :authenticate_user!
 
   def index
@@ -51,12 +51,16 @@ class BooksController < ApplicationController
 
   def check_out
     current_user.check_out(@book)
+    loan = Loan.where(user: current_user, book: @book, checked_in_at: nil).last
+    NbService.borrow_contact(loan, 'out')
     flash[:notice] = "You have checked out #{@book.title}, hope you enjoy it!"
     redirect_to books_path
   end
 
   def check_in
     current_user.check_in(@book)
+    loan = Loan.where(user: current_user, book: @book).last
+    NbService.borrow_contact(loan, 'in')
     flash[:notice] = "You have checked in #{@book.title}, thanks!"
     redirect_to books_path
   end

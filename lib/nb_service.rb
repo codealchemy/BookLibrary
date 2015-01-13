@@ -11,20 +11,17 @@ class NbService
   end
 
   def self.find_checkout_id(in_or_out)
-    background do
-      if in_or_out == 'in'
-        @type_id = ENV['NATION_CHECKIN_ID']
-      elsif in_or_out == 'out'
-        @type_id = ENV['NATION_CHECKOUT_ID']
-      end
+    if in_or_out =~ /in/
+      @type_id = ENV['NATION_CHECKIN_ID']
+    else
+      @type_id = ENV['NATION_CHECKOUT_ID']
     end
   end
 
   def self.borrow_contact(loan, in_or_out)
+    find_nbid_in_nation(loan.user)
+    find_checkout_id(in_or_out)
     background do
-      find_nbid_in_nation(loan.user)
-      find_checkout_id(in_or_out)
-
       CLIENT.call(:contacts, :create, person_id: @user_nbid, contact:
       {
         sender_id: ENV['NATION_SENDER_ID'],
