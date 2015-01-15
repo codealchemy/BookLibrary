@@ -1,11 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  context '#author names' do
-    it 'pulls the first and last name of the user'
-    it 'pulls the first name of the user if no last name exists'
-    it 'pulls the last name of the user if no first name exists'
-    it 'returns a message for no name for the user'
+  context '#user names' do
+    let(:user) do
+      User.create(first_name: 'Roger',
+                  last_name: 'Beans',
+                  email: 'roger@example.com',
+                  password: 'yupneatobean')
+    end
+
+    it 'pulls the first and last name of the user' do
+      expect(user.name).to eq('Roger Beans')
+    end
+
+    it 'pulls the first name of the user if no last name exists' do
+      user.last_name = nil
+      expect(user.name).to eq('Roger')
+    end
+
+    it 'pulls the last name of the user if no first name exists' do
+      user.first_name = nil
+      expect(user.name).to eq('Beans')
+    end
+
+    it 'returns a message for no name for the user' do
+      user.first_name = nil
+      user.last_name = nil
+      expect(user.name).to eq('No name')
+    end
   end
 
   context '#emails' do
