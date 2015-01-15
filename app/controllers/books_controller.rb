@@ -1,13 +1,15 @@
 class BooksController < ApplicationController
   before_filter :find_book, except: [:index, :create, :new]
   before_action :authenticate_user!
+  helper_method :sort_column, :sort_direction
+
 
   def index
     if params[:query].present?
       books = Book.search(params[:query])
-      @books = Kaminari.paginate_array(books.results).page(params[:page]).per(15)
+      @books = Kaminari.paginate_array(books.results).page(params[:page]).per(15).order(sort_column + " " + sort_direction)
     else
-      @books = Book.order(:created_at).page(params[:page]).per(15)
+      @books = Book.page(params[:page]).per(15).order(sort_column + " " + sort_direction)
     end
   end
 
@@ -82,5 +84,13 @@ class BooksController < ApplicationController
         :description,
         :user_id
       )
+  end
+
+  def sort_column
+    Book.column_names.include?(params[:sort]) ? params[:sort] : "title"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

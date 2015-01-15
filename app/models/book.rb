@@ -6,6 +6,10 @@ class Book < ActiveRecord::Base
   has_many :borrowers, class_name: 'Loan', foreign_key: :book_id
   after_destroy :delete_associated_loans
 
+  before_save do
+    self.isbn = self.isbn.to_s.gsub(/\D/, '')
+  end
+
   def author_name
     name = [author_first_name, author_last_name].map(&:to_s).join(' ').strip
     name.empty? ? 'No author name given' : name

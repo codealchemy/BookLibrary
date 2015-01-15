@@ -13,9 +13,9 @@
 <div class="panel panel-default">
 <% end %>
   <table class="table table-hover">
-    <thead class="active">
-      <th width="15%">Title (<small>and subtitle</small>)</th>
-      <th width="15%">Author</th>
+    <thead class="nav nav-tabs">
+      <th role="presentation" class="<%= params['sort'] == 'title' ? 'active' : '' %>" width="15%"><%= sortable "title" %></th>
+      <th role="presentation" class="<%= params['sort'] == 'author_last_name' ? 'active' : '' %>" width="15%"><%= sortable "author_last_name", "Author" %></th>
       <th width="30%">Description</th>
       <th width="10%">Owner</th>
       <th width="10%">Borrower</th>

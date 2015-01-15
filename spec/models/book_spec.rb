@@ -2,14 +2,20 @@ require 'rails_helper'
 
 RSpec.describe Book, type: :model do
   context '#validations' do
+    let(:book) { book = Book.new(title: 'Working', isbn: '42-456-134-3') }
+
     it 'is not valid without a title AND isbn' do
-      book = Book.new(title: 'Something')
-      expect(book.valid?).to be(false)
+      book2 = Book.new(title: 'Something')
+      expect(book2.valid?).to be(false)
     end
 
     it 'is valid with a title and ISBN' do
-      book = Book.new(title: 'Working', isbn: '42-456-134-3')
       expect(book.valid?).to be(true)
+    end
+
+    it 'normalizes the isbn on save' do
+      book.save
+      expect(book.isbn).to eq('424561343')
     end
   end
 
