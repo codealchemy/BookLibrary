@@ -16,7 +16,7 @@
       <p><%= @book.description %></p>
     </blockquote>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-4 text-center">
     <% if @links.image_link %>
       <%= image_tag @links.image_link %>
     <% else %>
@@ -31,6 +31,15 @@
     <% end %>
     <% if @book.owner %>
     <h5><%= link_to @book.owner.name, users_admin_path(@book.owner) %> contributed this book to the library</h5>
+    <% end %>
+    <br>
+      <p><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Check for ebook versions of this title at the Los Angeles public library <a href="http://ls2pac.lapl.org/?section=search&term=isbn:<%= @book.isbn %>" target='new_window'>here!</a></p><br>
+    <% if @book.borrowed? && @book.borrower != current_user%>
+      This book is currently borrowed by <%= link_to @book.borrower.name, users_admin_path(@book.borrower) %>
+    <% elsif @book.borrower == current_user %>
+      <%= button_to 'Return book', { action: :check_in, id: @book.id, method: :post }, data: { confirm: 'Please add the book back to the shelf, thank you!' }, class: 'btn btn-default' %>
+    <% else %>
+      <%= button_to "Check out", { action: :check_out, id: @book.id, method: :post }, data: { confirm: 'Great! Please click "ok" to confirm book checkout' }, class: 'btn btn-primary' %>
     <% end %>
     <br>
   </div>
