@@ -1,4 +1,11 @@
 module ApplicationHelper
+
+  def sortable(column, title=nil)
+    title ||= column.titleize
+    direction = column == params[:sort] && params[:direction] == "asc" ? "desc" : "asc"
+    link_to title, sort: column, direction: direction
+  end
+
   def borrowed_books_count
     Book.checked_out_books.count
   end
