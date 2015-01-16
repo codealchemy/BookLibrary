@@ -3,11 +3,18 @@
 <h4>Admin Panel</h4>
 </div>
 <br>
+  <div class="text-center">
+    <ul class="btn-group-vertical list-unstyled" role="group">
+      <li><span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+      <%= link_to "Add book", new_book_path, class: "btn btn-default" %></li><br>
+      <li><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+      <%= link_to "Add user", new_users_admin_path, class: "btn btn-default" %></li><br>
+      <li><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+      <%= link_to "Edit users", users_admin_index_path, class: "btn btn-default" %></li>
+      <br>
+    </ul>
+  </div>
   <ul class="menu list-unstyled text-center" role="menu">
-    <li><%= link_to "Add book", new_book_path, class: "btn btn-default" %></li><br>
-    <li><%= link_to "Add user", new_users_admin_path, class: "btn btn-default" %></li><br>
-    <li><%= link_to "Edit users", users_admin_index_path, class: "btn btn-default" %></li>
-    <br>
     <li>Books checked out</li>
     <span class="badge"><%= borrowed_books_count %>/<%= total_book_count %></span>
     <br>
