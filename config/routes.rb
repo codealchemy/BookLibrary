@@ -13,4 +13,6 @@ Rails.application.routes.draw do
     post :make_admin, on: :collection
     post :remove_admin, on: :collection
   end
+
+  resources :locations
 end
