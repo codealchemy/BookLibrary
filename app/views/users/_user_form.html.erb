@@ -8,9 +8,10 @@
         <%= f.input :email, placeholder: " Email (required)", label: false, input_html: { class: "form-control" }, required: true %>
         <%= f.input :password, placeholder: " Password (required)", label: false, input_html: { class: "form-control" }, required: true %>
         <%= f.input :password_confrimation, placeholder: " Password Confirmation (required)", label: false, input_html: { class: "form-control" }, required: true %>
-        <%= f.input :admin, as: :boolean, html: { class: 'radio-inline' } %>
-        <%= f.collection_select :location_id, locations, :id, :name, prompt: 'Select location', options: {}, html_options: {
-          class: 'btn btn-default dropdown-toggle' } %>
+        <div>
+          <div style="float:left"><%= f.collection_select :location_id, locations, :id, :name, { prompt: 'Select location' }, class: 'btn btn-default dropdown-toggle' %></div>
+          <div style="float:right"><%= f.input :admin, as: :boolean, class: 'radio' %></div>
+        </div>
       <% end %>
     </div>
     <div class="actions">

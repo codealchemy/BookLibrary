@@ -49,6 +49,7 @@
   <div class="col-md-4 text-center">
     <h2 class="text-center"><%= current_user.admin? ? link_to(@user.name, edit_users_admin_path) : @user.name %></h2>
     <h4 class="text-center"><%= @user.email %></h4><br>
+    <h4>Location: <%= @user.location.name if @user.location %></h4>
     <div class="well">
       <h4>Books contributed:</h4>
       <% @user.books_owned.each do |book| %>
