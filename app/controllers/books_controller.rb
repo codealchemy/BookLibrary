@@ -10,6 +10,10 @@ class BooksController < ApplicationController
       @books = Kaminari.paginate_array(books.results).page(params[:page]).per(15)
     else
       @books = Book.page(params[:page]).per(15).order(sort_column + " " + sort_direction)
+      respond_to do |format|
+        format.js
+        format.html
+      end
     end
   end
 
@@ -44,7 +48,7 @@ class BooksController < ApplicationController
     @book.update(book_params)
     if @book.save
       flash[:notice] = 'Book saved'
-      redirect_to books_path
+      redirect_to book_path(@book)
     else
       flash[:alert] = 'There\'s an error - please check the required fields'
       redirect_to new_book_path
@@ -82,7 +86,8 @@ class BooksController < ApplicationController
         :author_first_name,
         :author_last_name,
         :description,
-        :user_id
+        :user_id,
+        :location_id
       )
   end
 

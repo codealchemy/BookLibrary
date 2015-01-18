@@ -1,0 +1,7 @@
+<tr>
+  <td><%= link_to user.name, users_admin_path(user) %></td>
+  <td><%= user.email %></td>
+  <td class="text-center"><%= user.books_borrowed.count %></td>
+  <td class="text-center"><%= user.books_owned.count %></td>
+</tr>
+

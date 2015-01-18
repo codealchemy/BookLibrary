@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :books_owned, class_name: 'Book', foreign_key: :user_id, dependent: :destroy
   has_many :loans, dependent: :destroy
   has_many :books, through: :loans
+  belongs_to :location
 
   def make_admin
     update(admin: true)

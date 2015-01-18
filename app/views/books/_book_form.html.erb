@@ -9,7 +9,8 @@
         <%= f.input :author_last_name, placeholder: "Author Last Name", label: false, input_html: { class: "form-control" } %>
         <%= f.input :isbn, placeholder: "ISBN (required)", label: false, input_html: { class: "form-control" } %>
         <%= f.input :description, placeholder: "Description", label: false, input_html: { class: "form-control" } %>
-        <%= f.collection_select :user_id, all_users, :id, :name, prompt: 'Select book owner', options: {}, html_options: { class: 'btn btn-default dropdown-toggle' } %>
+        <%= f.collection_select :user_id, all_users, :id, :name, { include_blank: true, prompt: 'Select book owner' }, class: 'btn btn-default dropdown-toggle' %>
+        <%= f.collection_select :location_id, locations, :id, :name, { prompt: 'Select location' }, class: 'btn btn-default dropdown-toggle' %>
       <% end %>
     </div>
     <div class="actions">

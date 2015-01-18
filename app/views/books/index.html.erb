@@ -7,7 +7,7 @@
 <% end %>
 <br>
 <% if current_user.admin? %>
-<%= render :partial => "books/admin_panel" %>
+<%= render partial: 'books/admin_panel' %>
 <div class="panel panel-default col-md-9">
 <% else %>
 <div class="panel panel-default">
@@ -17,31 +17,16 @@
       <th role="presentation" class="<%= params['sort'] == 'title' ? 'active' : '' %>" width="15%"><%= sortable "title" %></th>
       <th role="presentation" class="<%= params['sort'] == 'author_last_name' ? 'active' : '' %>" width="15%"><%= sortable "author_last_name", "Author" %></th>
       <th width="30%">Description</th>
-      <th width="10%">Owner</th>
-      <th width="10%">Borrower</th>
-      <th width="10%">Status?</th>
+      <th>Owner</th>
+      <th>Borrower</th>
+      <th>Location</th>
+      <th>Status?</th>
     </thead>
-    <% @books.each do |book| %>
-    <tbody>
-      <td><%= link_to book.title, book_path(book.id) %><br>
-      <small><%= book.subtitle %></small></td>
-      <td><%= book.author_name %></td>
-      <td width="30%"><%= truncate(book.description, length: 100) %></td>
-      <td><%= link_to book.owner.name, users_admin_path(book.owner) if book.owner %></td>
-      <td><%= link_to book.borrower.name, users_admin_path(book.borrower) if book.borrowed? %></td>
-      <td>
-        <% if book.borrowed? && book.borrower != current_user%>
-          Borrowed
-        <% elsif book.borrower == current_user %>
-          <%= button_to 'Return book', { action: :check_in, id: book, method: :post }, data: { confirm: 'Please add the book back to the shelf, thank you!' }, class: 'btn btn-default' %>
-        <% else %>
-          <%= button_to "Check out", { action: :check_out, id: book, method: :post }, data: { confirm: 'Great! Please click "ok" to confirm book checkout' }, class: 'btn btn-primary' %>
-        <% end %>
-      </td>
+    <tbody id="books">
+      <%= render @books %>
     </tbody>
-    <% end %>
   </table>
-  <div class="text-center">
-    <%= paginate @books %>
+  <div class="text-center" id="paginator">
+    <%= paginate @books, remote: true %>
   </div>
 </div>
