@@ -2,6 +2,7 @@ class Book < ActiveRecord::Base
   searchkick
   validates :title, :isbn, presence: true
   belongs_to :user
+  belongs_to :location
   has_many :loans
   has_many :borrowers, class_name: 'Loan', foreign_key: :book_id
   after_destroy :delete_associated_loans
