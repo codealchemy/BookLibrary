@@ -8,25 +8,50 @@ class NbService
     match['person'] ? @user_nbid = match['person']['id'] : @user_nbid = nil
   end
 
-  def self.find_checkout_id(in_or_out)
-    if in_or_out =~ /in/
-      @type_id = ENV['NATION_CHECKIN_ID']
-    else
-      @type_id = ENV['NATION_CHECKOUT_ID']
+  def self.find_signup_image(user_email)
+    CLIENT.call(:people, :push, person: { email: user_email })['person']['profile_image_url_ssl']
+  end
+
+  def self.find_self_in_nation
+    @token_owner_id = CLIENT.call(:people, :me)['person']['id']
+  end
+
+  def self.find_contact_type_id(contact_type)
+    background do
+      index = CLIENT.call(:contact_types, :index, per_page: 100)
+      index['results'].each do |result|
+        if result['name'] == contact_type
+          @type_id = result['id']
+        else
+          create_contact_type(contact_type)
+        end
+      end
     end
   end
 
-  def self.borrow_contact(loan, in_or_out)
-    find_nbid_in_nation(loan.user)
-    find_checkout_id(in_or_out)
+  def self.create_contact_type(name)
+    background do
+      type = CLIENT.call(:contact_types,
+                         :create,
+                         contact_type: {
+                           name: name
+                         })
+      @type_id = type['contact_type']['id'] if type['contact_types']
+    end
+  end
+
+  def self.log_contact(loan, contact_type)
+    find_nbid_in_nation(loan.user.email)
+    find_contact_type_id(contact_type)
+    find_self_in_nation
     background do
       CLIENT.call(:contacts, :create, person_id: @user_nbid, contact:
       {
-        sender_id: ENV['NATION_SENDER_ID'],
+        sender_id: @token_owner_id,
         broadcaster_id: ENV['NATION_BROADCASTER_ID'],
         method: 'other',
         type_id: @type_id,
-        note: "Checked #{in_or_out} book '#{loan.book.title}'"
+        note: "#{contact_type} - Title '#{loan.book.title}' by #{loan.book.author_name}"
       })
     end
   end

@@ -58,7 +58,7 @@ class BooksController < ApplicationController
   def check_out
     current_user.check_out(@book)
     loan = Loan.where(user: current_user, book: @book, checked_in_at: nil).last
-    NbService.borrow_contact(loan, 'out')
+    NbService.log_contact(loan, 'Book check-out')
     flash[:notice] = "You have checked out #{@book.title}, hope you enjoy it!"
     redirect_to books_path
   end
@@ -66,7 +66,7 @@ class BooksController < ApplicationController
   def check_in
     current_user.check_in(@book)
     loan = Loan.where(user: current_user, book: @book).last
-    NbService.borrow_contact(loan, 'in')
+    NbService.log_contact(loan, 'Book check-in')
     flash[:notice] = "You have checked in #{@book.title}, thanks!"
     redirect_to books_path
   end
