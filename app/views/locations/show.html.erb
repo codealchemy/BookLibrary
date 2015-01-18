@@ -4,8 +4,42 @@
     <div class="text-center">
     <%= link_to "Edit location", edit_location_path(@location), class: "btn btn-default text-center" if current_user.try(:admin?) %>
     </div>
-    <%= render partial: "locations/users_list" %> 
+    <h3 class="text-center">Users</h3>
+    <div class="panel panel-default">
+      <table class="table table-hover well">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th class="text-center">Books checked out</th>
+            <th class="text-center">Books contributed</th>
+          </tr>
+        </thead>
+        <tbody id="users">
+          <%= render partial: "locations/users_list", collection: @users, as: :user %> 
+        </tbody>
+      </table>
+      <div class="text-center" id="firstpaginator">
+      <%= paginate @users, remote: true %>
+      </div>
+    </div>
     <br>
-    <%= render partial: "locations/books_list" %> 
+    <h3 class="text-center">Books</h3>
+    <div class="panel panel-default">
+      <table class="table table-hover well">
+        <thead>
+          <tr>
+            <th>Title and subtitle</th>
+            <th>Author</th>
+            <th class="text-center">Checked out?</th>
+            <th>Owner</th>
+            <th>Borrower</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render partial: 'locations/books_list', collection: @books, as: :book %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

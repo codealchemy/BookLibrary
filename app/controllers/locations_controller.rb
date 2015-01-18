@@ -23,6 +23,10 @@ class LocationsController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def destroy
@@ -46,7 +50,7 @@ class LocationsController < ApplicationController
 
   def find_location
     @location = Location.find(params[:id])
-    @users = @location.users
+    @users = @location.users.page(params[:page]).per(10)
     @books = @location.books
   end
 

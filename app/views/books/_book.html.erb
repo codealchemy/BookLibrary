@@ -11,9 +11,9 @@
   <% if book.borrowed? && book.borrower != current_user%>
     Borrowed
   <% elsif book.borrower == current_user %>
-    <%= button_to 'Return book', { action: :check_in, id: book, method: :post }, data: { confirm: 'Please add the book back to the shelf, thank you!' }, class: 'btn btn-default' %>
+    <%= button_to 'Return book', { action: :check_in, controller: :books, id: book, method: :post }, data: { confirm: 'Please add the book back to the shelf, thank you!' }, class: 'btn btn-default' %>
   <% else %>
-    <%= button_to "Check out", { action: :check_out, id: book, method: :post }, data: { confirm: 'Great! Please click "ok" to confirm book checkout' }, class: 'btn btn-primary' %>
+    <%= button_to "Check out", { action: :check_out, controller: :books, id: book, method: :post }, data: { confirm: 'Great! Please click "ok" to confirm book checkout' }, class: 'btn btn-primary' %>
   <% end %>
 </td>
 </tr>
