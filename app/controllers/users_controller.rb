@@ -59,6 +59,7 @@ class UsersController < ApplicationController
 
   def find_user
     @user = User.find(params[:id])
+    @profile_image = NbService.find_signup_image(@user.email)
   end
 
   def user_params
