@@ -1,0 +1,23 @@
+<h3 class="text-center">Users</h3>
+<div>
+  <table class="table table-hover well">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th class="text-center">Books checked out</th>
+        <th class="text-center">Books contributed</th>
+      </tr>
+    </thead>
+    <% @users.each do |user| %>
+    <tbody>
+      <tr>
+        <td><%= link_to user.name, users_admin_path(user) %></td>
+        <td><%= user.email %></td>
+        <td class="text-center"><%= user.books_borrowed.count %></td>
+        <td class="text-center"><%= user.books_owned.count %></td>
+      </tr>
+    </tbody>
+    <% end %>
+  </table>
+</div>

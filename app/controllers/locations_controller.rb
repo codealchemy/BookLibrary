@@ -46,6 +46,8 @@ class LocationsController < ApplicationController
 
   def find_location
     @location = Location.find(params[:id])
+    @users = @location.users
+    @books = @location.books
   end
 
   def location_params
