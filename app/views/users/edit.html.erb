@@ -14,7 +14,7 @@
       <%= f.email_field :email, placeholder: "Email", class: "form-control" %>
     </div>
     <div>
-      <%= f.collection_select :location_id, locations, :id, :name, { prompt: 'Select location' }, class: 'btn btn-default dropdown-toggle' %>
+      <%= f.collection_select :location_id, locations, :id, :name, { include_blank: true, prompt: 'Select location' }, class: 'btn btn-default dropdown-toggle' %>
     </div>
     <br>
     <div class="actions">

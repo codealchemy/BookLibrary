@@ -9,6 +9,7 @@
         <%= f.input :address2, placeholder: " Address (line 2)", label: false, input_html: { class: "form-control" } %>
         <%= f.input :city, placeholder: " City", label: false, input_html: { class: "form-control" } %>
         <%= f.input :state, placeholder: " State or Province", label: false, input_html: { class: "form-control" } %>
+        <%= f.input :zip, placeholder: " Zip", label: false, input_html: { class: "form-control" } %>
         <%= f.input :country, only: ['US', 'CA', 'GB'], selected: 'US', label: false, input_html: { class: "form-control" } %>
       <% end %>
     </div>
