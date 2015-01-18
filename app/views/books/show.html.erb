@@ -1,7 +1,7 @@
+<br>
 <div class="row">
   <div class="col-md-8">
-    <h1 class="text-center"><%= @book.title %></h1>
-    <h3 class="text-center"><%= @book.subtitle %></h3>
+    <h1 class="text-center"><%= @book.title %> <%= link_to "(#{@book.location.name})", location_path(@book.location) if @book.location %><br><small><%= @book.subtitle %></small></h1>
     <% if current_user.admin? %>
     <div class="text-center">
       <div class="btn-group">

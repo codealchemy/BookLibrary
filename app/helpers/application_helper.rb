@@ -10,6 +10,10 @@ module ApplicationHelper
     end
   end
 
+  def locations
+    Location.all
+  end
+
   def borrowed_books_count
     Book.checked_out_books.count
   end

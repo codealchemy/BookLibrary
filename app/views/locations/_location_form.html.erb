@@ -1,7 +1,8 @@
+<br>
 <div class="col-md-4 col-md-offset-4 text-center">
   <%= semantic_form_for @location, html: {class: "form-group"} do |f| %>
     <div class="form-group">
-      <%= f.inputs :name => "New Location", class: "text-center" do %>
+      <%= f.inputs name: @location.name, class: "text-center" do %>
       <br>
         <%= f.input :name, placeholder: " Name", label: false, input_html: { class: "form-control" } %>
         <%= f.input :address1, placeholder: " Address (line 1)", label: false, input_html: { class: "form-control" } %>

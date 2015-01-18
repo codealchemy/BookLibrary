@@ -17,9 +17,10 @@
       <th role="presentation" class="<%= params['sort'] == 'title' ? 'active' : '' %>" width="15%"><%= sortable "title" %></th>
       <th role="presentation" class="<%= params['sort'] == 'author_last_name' ? 'active' : '' %>" width="15%"><%= sortable "author_last_name", "Author" %></th>
       <th width="30%">Description</th>
-      <th width="10%">Owner</th>
-      <th width="10%">Borrower</th>
-      <th width="10%">Status?</th>
+      <th>Owner</th>
+      <th>Borrower</th>
+      <th>Location</th>
+      <th>Status?</th>
     </thead>
     <% @books.each do |book| %>
     <tbody>
@@ -29,6 +30,7 @@
       <td width="30%"><%= truncate(book.description, length: 100) %></td>
       <td><%= link_to book.owner.name, users_admin_path(book.owner) if book.owner %></td>
       <td><%= link_to book.borrower.name, users_admin_path(book.borrower) if book.borrowed? %></td>
+      <td><%= link_to book.location.name, location_path(book.location) if book.location %></td>
       <td>
         <% if book.borrowed? && book.borrower != current_user%>
           Borrowed

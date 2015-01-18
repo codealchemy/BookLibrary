@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :loans, dependent: :destroy
   has_many :books, through: :loans
   belongs_to :location
+  accepts_nested_attributes_for :location
 
   def make_admin
     update(admin: true)
