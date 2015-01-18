@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1 class="text-center"><%= @location.name %></h1>
+    <div class="text-center">
+    <%= link_to "Edit location", edit_location_path(@location), class: "btn btn-default text-center" if current_user.try(:admin?) %>
+    </div>
+    <%= render partial: "locations/users_list" %> 
+    <br>
+    <%= render partial: "locations/books_list" %> 
+  </div>
+</div>
