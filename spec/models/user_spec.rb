@@ -2,25 +2,20 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   context '#user names' do
-    let(:user) do
-      User.create(first_name: 'Roger',
-                  last_name: 'Beans',
-                  email: 'roger@example.com',
-                  password: 'yupneatobean')
-    end
+    let(:user) { build(:user) }
 
     it 'pulls the first and last name of the user' do
-      expect(user.name).to eq('Roger Beans')
+      expect(user.name).to eq('Abraham Lincoln')
     end
 
     it 'pulls the first name of the user if no last name exists' do
       user.last_name = nil
-      expect(user.name).to eq('Roger')
+      expect(user.name).to eq('Abraham')
     end
 
     it 'pulls the last name of the user if no first name exists' do
       user.first_name = nil
-      expect(user.name).to eq('Beans')
+      expect(user.name).to eq('Lincoln')
     end
 
     it 'returns a message for no name for the user' do
@@ -31,10 +26,7 @@ RSpec.describe User, type: :model do
   end
 
   context '#emails' do
-    let(:user) do
-      User.create(email: 'alchemitt@example.com',
-                  password: 'rogerrabbit')
-    end
+    let(:user) { build(:user) }
 
     it 'sends a signup email' do
       expect { user.send_signup_email }.to(
@@ -50,11 +42,8 @@ RSpec.describe User, type: :model do
   end
 
   context '#borrowing' do
-    let(:user) do
-      User.create(email: 'alchemitt@example.com',
-                  password: 'rogerrabbit')
-    end
-    let(:book) { Book.create(title: 'A new start', isbn: '234-432-55-123') }
+    let(:user) { create(:user) }
+    let(:book) { create(:book) }
 
     before do 
       user.check_out(book)
