@@ -1,0 +1,23 @@
+<tr>
+  <td><%= link_to user.name, users_admin_path(user.id) %></td>
+  <td><%= user.email %></td>
+  <td><%= time_ago_in_words(user.last_sign_in_at) if user.last_sign_in_at %></td>
+  <td class="text-center"><%= user.books_owned.count %></td>
+  <td class="text-center"><%= user.books_borrowed.count %></td>
+  <td class="text-center"><%= user.overdue_books.count %></td>
+  <td class="text-center">
+    <% if user.admin? && user != current_user %>
+      <%= button_to "Remove admin", { action: :remove_admin, id: user.id, method: :post }, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-sm' %>
+    <% elsif user.admin? == false && current_user.admin? %>
+      <%= button_to 'Make admin', { action: :make_admin, id: user.id, method: :post }, data: { confirm: 'Are you sure? This gives them the ability to create books and change admin perissions (even yours!)' }, class: 'btn btn-danger btn-sm' %>
+    <% else %>
+      <%= human_boolean(user.admin?) %>
+    <% end %>
+  </td>
+  <td class="text-center">
+  <div class="btn-group">
+    <%= link_to 'Edit', edit_users_admin_path(user), class: 'btn btn-default' %>
+    <%= link_to 'Delete', users_admin_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+  </div>
+  </td>
+</tr>
