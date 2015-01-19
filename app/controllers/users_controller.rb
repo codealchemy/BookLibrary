@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      NbService.add_tag(@user.email, 'Library_account_active')
+      Nb::People.add_tag(@user.email, 'Library_account_active')
       flash[:notice] = 'User saved'
       redirect_to users_admin_index_path
     else
@@ -35,21 +35,21 @@ class UsersController < ApplicationController
 
   def make_admin
     @user.make_admin
-    NbService.add_tag(@user.email, 'Library_Admin')
+    Nb::People.add_tag(@user.email, 'Library_Admin')
     flash[:notice] = "#{@user.name} is now an admin"
     redirect_to users_admin_index_path
   end
 
   def remove_admin
     @user.remove_admin
-    NbService.remove_tag(@user.email, 'Library_Admin')
+    Nb::People.remove_tag(@user.email, 'Library_Admin')
     flash[:notice] = "#{@user.name} is no longer an admin"
     redirect_to users_admin_index_path
   end
 
   def destroy
-    NbService.remove_tag(@user.email, 'Library_account_active')
-    NbService.add_tag(@user.email, 'Library_account_deleted')
+    Nb::People.remove_tag(@user.email, 'Library_account_active')
+    Nb::People.add_tag(@user.email, 'Library_account_deleted')
     @user.destroy
     flash[:notice] = 'User has been deleted'
     redirect_to users_admin_index_path
@@ -59,7 +59,7 @@ class UsersController < ApplicationController
 
   def find_user
     @user = User.find(params[:id])
-    @profile_image = NbService.find_signup_image(@user.email)
+    @profile_image = Nb::People.find_signup_image(@user.email)
   end
 
   def user_params
