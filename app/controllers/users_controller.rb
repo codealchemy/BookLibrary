@@ -4,6 +4,10 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all.page(params[:page]).per(15)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
