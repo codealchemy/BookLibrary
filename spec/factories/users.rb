@@ -5,4 +5,12 @@ FactoryGirl.define do
     f.email 'candidate@abeforprez.com'
     f.password 'grandideas'
   end
+
+  factory :admin do |f|
+    f.first_name 'Stephen'
+    f.last_name 'Douglas'
+    f.email 'duggie@dugforprez.com'
+    f.password 'granderideas'
+    f.admin 'true'
+  end
 end
