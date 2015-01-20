@@ -6,7 +6,7 @@ FactoryGirl.define do
     f.password 'grandideas'
   end
 
-  factory :admin do |f|
+  factory :admin, parent: :user do |f|
     f.first_name 'Stephen'
     f.last_name 'Douglas'
     f.email 'duggie@dugforprez.com'

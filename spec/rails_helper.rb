@@ -4,6 +4,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'factory_girl'
 require 'capybara/rails'
+require 'pry'
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
