@@ -2,6 +2,7 @@ class BooksController < ApplicationController
   before_filter :find_book, except: [:index, :create, :new]
   before_action :authenticate_user!
   helper_method :sort_column, :sort_direction
+  before_filter :authorize_admin, only: [:destroy, :update, :edit, :create, :new]
 
 
   def index
