@@ -2,10 +2,17 @@ ENV['RAILS_ENV'] ||= 'test'
 require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
+require 'webmock/rspec'
 require 'factory_girl'
 require 'capybara/rails'
 require 'pry'
 ActiveRecord::Migration.maintain_test_schema!
+
+VCR.configure do |c|
+  c.cassette_library_dir     = 'spec/cassettes'
+  c.hook_into                :webmock
+  c.configure_rspec_metadata!
+end
 
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -27,5 +34,10 @@ RSpec.configure do |config|
   end
   config.after(:each) do
     DatabaseCleaner.clean
+  end
+  config.before(:each) do
+    stub_request(:get, /ecs.amazonaws.com/)
+    .with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'})
+    .to_return(status: 200, body: "stubbed response", headers: {})
   end
 end

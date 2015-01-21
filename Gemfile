@@ -48,6 +48,7 @@ end
 
 group :test do
   gem 'webmock'
+  gem 'vcr'
 end
 
 # Use Capistrano for deployment
