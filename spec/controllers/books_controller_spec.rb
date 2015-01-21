@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe BooksController, type: :controller do
   let(:user) { create(:user) }
   let(:admin) { create(:admin) }
+  let(:test_book) { create(:book) }
 
   describe 'GET #index' do
     it 'renders the :index template for users' do
@@ -41,7 +42,6 @@ RSpec.describe BooksController, type: :controller do
         get :new
         expect(response).to render_template(:new)
       end
-      it 'creates new book'
     end
 
     context 'as user' do
@@ -86,26 +86,42 @@ RSpec.describe BooksController, type: :controller do
   end
 
   describe 'POST #check_out' do
-    before do
+    before(:each) do
       sign_in(user)
     end
 
-    it 'checks out a book for a user'
-    it 'redirects to books index after checkout'
-    it 'flashes checkout success'
+    it 'checks out a book for a user' do
+      post :check_out, id: test_book.id
+      expect(user.books_checked_out).to include(test_book)
+    end
+    it 'creates a new loan for the check-out' do
+      expect {
+        post :check_out, id: test_book.id
+      }.to change { Loan.count }.by(1)
+    end
+    it 'redirects to books index after checkout' do
+      post :check_out, id: test_book.id
+      expect(response).to redirect_to(books_path)
+    end
   end
 
   describe 'POST #check_in' do
     before do
       sign_in(user)
+      user.check_out(test_book)
     end
 
-    it 'checks in a book for the user'
-    it 'redirects to books index after checkin'
-    it 'flashes checkin success'
+    it 'checks in a book for the user' do
+      post :check_in, id: test_book.id
+      expect(user.books_checked_out).not_to include(test_book)
+    end
+    it 'redirects to books index after check-in' do
+      post :check_in, id: test_book.id
+      expect(response).to redirect_to(books_path)
+    end
   end
 
-  describe '#destroy/:id' do
+  describe 'DELETE #destroy/:id' do
     before do
       sign_in(admin)
     end
