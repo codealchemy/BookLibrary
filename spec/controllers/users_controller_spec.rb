@@ -75,9 +75,9 @@ RSpec.describe UsersController, type: :controller do
 
     describe 'GET #show' do
       it 'renders the :show template', vcr: vcr_options do
-          user_test = create(:user, email: 'faveabe@example.com')
-          get :show, id: user_test.id
-          expect(response).to render_template(:show)
+        user_test = create(:user, email: 'faveabe@example.com')
+        get :show, id: user_test.id
+        expect(response).to render_template(:show)
       end
     end
 
