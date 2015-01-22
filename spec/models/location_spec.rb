@@ -2,16 +2,17 @@ require 'rails_helper'
 
 RSpec.describe Location, type: :model do
   context '#books' do
-    let(:location) { Location.create(name: 'Test office') }
-    let(:user) do
-      location.users.create(email: 'roger@rabbit.com', password: 'asdfasdf')
+    let(:location) { create(:location) }
+    let(:user) { create(:user) }
+    let(:book1) { create(:book, location: location) }
+    let(:book2) do
+      create(:book, 
+             title: 'Autobio', 
+             isbn: '978-0312404154',
+             location: location)
     end
-    let(:book1) do
-      location.books.create(title: 'Another', isbn: '234-537-5342')
-    end
-    let(:book2) { location.books.create(title: 'One', isbn: '234-5436-234') }
 
-    before do 
+    before do
       user.check_out(book1)
       user.check_out(book2)
       user.check_in(book2)

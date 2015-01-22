@@ -2,11 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Loan, type: :model do
   context '#validations' do
-    let(:user) do
-      User.create(email: 'alex@example.com',
-                  password: 'abc1das23456')
-    end
-    let(:book) { Book.create(title: 'A new start', isbn: '234-432-55-123') }
+    let(:user) { create(:user) }
+    let(:book) { create(:book) }
 
     it 'is invalid without a book' do
       loan = Loan.new(user: user)
