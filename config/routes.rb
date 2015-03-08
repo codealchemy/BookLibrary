@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :books do
     post :check_out, on: :collection
     post :check_in, on: :collection
+    patch :check_out_on_behalf_of, on: :member
+    post :check_in_on_behalf_of, on: :member
   end
 
   resources :users_admin, controller: 'users' do
