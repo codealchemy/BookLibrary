@@ -37,8 +37,10 @@
     <% if @book.borrowed? && @book.borrower != current_user%>
       This book is currently borrowed by <%= link_to @book.borrower.name, users_admin_path(@book.borrower) %>
       <% if current_user.try(:admin?) && @borrower %>
-        <br>
-        <%= button_to 'Return book for user', { action: :check_in_on_behalf_of, id: @book.id, method: :post }, data: { confirm: 'Please add the book back to the shelf, thank you!' }, class: 'btn btn-default' %>
+        <div class="well">
+        <h4>Admin only</h4>
+        <%= button_to "Return book for #{@borrower.name}", { action: :check_in_on_behalf_of, id: @book.id, method: :post }, data: { confirm: 'Please add the book back to the shelf, thank you!' }, class: 'btn btn-default' %>
+        </div>
       <% end %>
     <% elsif @book.borrower == current_user %>
       <%= button_to 'Return book', { action: :check_in, id: @book.id, method: :post }, data: { confirm: 'Please add the book back to the shelf, thank you!' }, class: 'btn btn-default' %>
@@ -46,12 +48,15 @@
       <%= button_to "Check out", { action: :check_out, id: @book.id, method: :post }, data: { confirm: 'Great! Please click "ok" to confirm book checkout' }, class: 'btn btn-primary' %>
       <br>
       <% if current_user.try(:admin?) %>
-        <%= semantic_form_for @book, url: check_out_on_behalf_of_book_path do |f| %>
-          <%= f.input :user_id, as: :select, label: false, collection: User.all(&:name) %><br>
-          <%= f.actions do %>
-            <%= f.action :submit, as: :button, label: 'Check out book for user', button_html: { class: "btn btn-default" } %>
+        <div class="block-center well">
+          <h4>Admin only</h4><br>
+          <%= semantic_form_for @book, url: check_out_on_behalf_of_book_path do |f| %>
+            <%= f.input :user_id, as: :select, label: false, collection: User.all(&:name), input_html: { class: "btn btn-default dropdown-toggle" } %>
+            <%= f.actions do %>
+              <%= f.action :submit, as: :button, label: 'Check out book for user', button_html: { class: "btn btn-default" } %>
+            <% end %>
           <% end %>
-        <% end %>
+      </div>
       <% end %>
     <% end %>
   </div>
