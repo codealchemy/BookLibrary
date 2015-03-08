@@ -31,11 +31,7 @@ class Book < ActiveRecord::Base
   end
 
   def borrower
-    if Loan.where(book: self, checked_in_at: nil).empty?
-      nil
-    else
-      Loan.where(book: self, checked_in_at: nil).last.user
-    end
+    Loan.where(book: self, checked_in_at: nil).last.user unless Loan.where(book: self, checked_in_at: nil).empty?
   end
 
   def self.checked_out_books
