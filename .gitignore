@@ -18,3 +18,5 @@
 config/local_env.yml
 
 *.rdb
+
+coverage/*

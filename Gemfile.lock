@@ -52,6 +52,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    codeclimate-test-reporter (0.4.7)
+      simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -75,6 +77,7 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    docile (1.1.5)
     elasticsearch (1.0.6)
       elasticsearch-api (= 1.0.6)
       elasticsearch-transport (= 1.0.6)
@@ -102,9 +105,6 @@ GEM
     hike (1.2.3)
     httpclient (2.4.0)
     i18n (0.7.0)
-    jbuilder (2.2.6)
-      activesupport (>= 3.0.0, < 5)
-      multi_json (~> 1.2)
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -157,8 +157,6 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
-    rdoc (4.2.0)
-      json (~> 1.4)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
     rspec (3.1.0)
@@ -190,15 +188,17 @@ GEM
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 3.0)
       sprockets-rails (~> 2.0)
-    sdoc (0.4.1)
-      json (~> 1.7, >= 1.7.7)
-      rdoc (~> 4.0)
     searchkick (0.8.5)
       activemodel
       elasticsearch (>= 1)
       hashie
     sendgrid (1.2.0)
       json
+    simplecov (0.10.0)
+      docile (~> 1.1.0)
+      json (~> 1.8)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     slop (3.6.0)
     spring (1.2.0)
     sprockets (2.12.3)
@@ -242,6 +242,7 @@ DEPENDENCIES
   awesome_print
   bootstrap-sass (~> 3.3.1)
   capybara
+  codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
   country_select!
   database_cleaner
@@ -249,18 +250,16 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   formtastic
   fuubar
-  jbuilder (~> 2.0)
   jquery-rails
   kaminari
   nationbuilder-rb
   newrelic_rpm
   pg
   pry-rails
-  rails (= 4.1.8)
+  rails (~> 4.1)
   rails_12factor
   rspec-rails (~> 3.0)
   sass-rails (~> 4.0.3)
-  sdoc (~> 0.4.0)
   searchkick
   sendgrid
   spring
