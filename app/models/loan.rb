@@ -9,4 +9,5 @@ class Loan < ActiveRecord::Base
 
   # Scopes
   scope :active, -> { where(checked_in_at: nil) }
+  scope :overdue, -> { where('due_date IS NOT NULL AND due_date < ?', Date.today) }
 end

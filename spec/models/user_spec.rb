@@ -18,14 +18,14 @@ RSpec.describe User, type: :model do
       expect(user.name).to eq('Lincoln')
     end
 
-    it 'returns a message for no name for the user' do
+    it 'returns an empty string if no first or last name is given' do
       user.first_name = nil
       user.last_name = nil
-      expect(user.name).to eq('No name')
+      expect(user.name).to eq('')
     end
   end
 
-  context '#emails' do
+  context 'emails' do
     let(:user) { build(:user) }
 
     it 'sends a signup email' do
@@ -41,16 +41,22 @@ RSpec.describe User, type: :model do
     end
   end
 
-  context '#borrowing' do
+  context 'borrowing' do
     let(:user) { create(:user) }
     let(:book) { create(:book) }
 
-    before do 
+    before do
       user.check_out(book)
     end
 
-    it 'pulls a list of borrowed books for user' do
-      expect(user.books_borrowed).to include(book)
+    it 'returns a list of borrowed books for user' do
+      expect(user.books_checked_out).to include(book)
+    end
+
+    it 'returns a list of overdue books for user' do
+      user.loans.active.first.update_attributes(due_date: Date.yesterday)
+
+      expect(user.books_overdue).to include(book)
     end
 
     it 'checks out a book' do
@@ -62,6 +68,26 @@ RSpec.describe User, type: :model do
     it 'checks in a book' do
       user.check_in(book)
       expect(book.borrowed?).to eq(false)
+    end
+  end
+
+  context 'permissions' do
+    let(:user) { build(:user) }
+
+    context 'make_admin' do
+      it 'grants the user admin access' do
+        user.make_admin
+        expect(user.admin?).to eq(true)
+      end
+    end
+
+    context 'remove_admin' do
+      before { user.make_admin }
+
+      it 'removes admin access from the user' do
+        user.remove_admin
+        expect(user.admin?).to eq(false)
+      end
     end
   end
 end
