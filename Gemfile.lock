@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:stefanpenner/country_select.git
+  remote: https://github.com/stefanpenner/country_select.git
   revision: 46548db15844f987b9ea0d248f9c27cf6db9dd8e
   specs:
     country_select (2.5.2)
