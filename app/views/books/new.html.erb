@@ -1,1 +1,7 @@
-<%= render :partial => "books/book_form" %> 
+<%=
+  render partial: "books/book_form",
+  locals: {
+    all_users: @all_users,
+    locations: @locations 
+  }
+%>

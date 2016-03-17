@@ -1,16 +1,15 @@
 class BooksController < ApplicationController
   before_filter :find_book, except: [:index, :create, :new]
   before_action :authenticate_user!
-  helper_method :sort_column, :sort_direction
   before_filter :authorize_admin, only: [:destroy, :update, :edit, :create, :new]
 
-
   def index
+    load_associated_counts
     if params[:query].present?
       books = Book.search(params[:query])
       @books = Kaminari.paginate_array(books.results).page(params[:page]).per(15)
     else
-      @books = Book.page(params[:page]).per(15).order(sort_column + " " + sort_direction)
+      @books = Book.page(params[:page]).per(15)
       respond_to do |format|
         format.js
         format.html
@@ -20,6 +19,8 @@ class BooksController < ApplicationController
 
   def new
     @book = Book.new
+    @all_users = User.all
+    @locations = Location.all
   end
 
   def create
@@ -28,7 +29,7 @@ class BooksController < ApplicationController
       flash[:notice] = 'Book saved'
       redirect_to books_path
     else
-      flash[:alert] = 'There\'s an error - please check the required fields'
+      flash[:alert] = "There's an error - please check the required fields"
       redirect_to new_book_path
     end
   end
@@ -38,6 +39,8 @@ class BooksController < ApplicationController
   end
 
   def edit
+    @all_users = User.all
+    @locations = Location.all
   end
 
   def destroy
@@ -52,7 +55,7 @@ class BooksController < ApplicationController
       flash[:notice] = 'Book saved'
       redirect_to book_path(@book)
     else
-      flash[:alert] = 'There\'s an error - please check the required fields'
+      flash[:alert] = "There's an error - please check the required fields"
       redirect_to new_book_path
     end
   end
@@ -85,7 +88,15 @@ class BooksController < ApplicationController
     flash[:notice] = "Thank you for returning #{@book.title} for #{@borrower.name}"
     redirect_to books_path
   end
+
   private
+
+  def load_associated_counts
+    @total_book_count ||= Book.count
+    @total_user_count ||= User.count
+    @borrowed_books_count ||= Book.checked_out.count
+    @users_with_books_count ||= User.with_books.count
+  end
 
   def find_book
     @book = Book.find(params[:id])
@@ -103,13 +114,5 @@ class BooksController < ApplicationController
         :user_id,
         :location_id
       )
-  end
-
-  def sort_column
-    Book.column_names.include?(params[:sort]) ? params[:sort] : "title"
-  end
-
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

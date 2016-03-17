@@ -1,5 +1,5 @@
 <% if current_user.sign_in_count <= 2 %>
-<div class="alert jumbotron text-center fade in row"> 
+<div class="alert jumbotron text-center fade in row">
   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
   <div class="col-xs-4 col-md-2"><%= image_tag('giraffe.png') %></div>
   <div class="col-xs-8 col-md-10"><p>Welcome to the library! Check out all the books that people have contributed below (and on the bookshelf) - to add any books, please get in touch with your friendly community librarian.</p></div>
@@ -7,15 +7,23 @@
 <% end %>
 <br>
 <% if current_user.admin? %>
-<%= render partial: 'books/admin_panel' %>
+<%=
+  render partial: 'books/admin_panel',
+  locals: {
+    total_book_count: @total_book_count,
+    total_user_count: @total_user_count,
+    borrowed_books_count: @borrowed_books_count,
+    users_with_books_count: @users_with_books_count
+  }
+%>
 <div class="panel panel-default col-md-9">
 <% else %>
 <div class="panel panel-default">
 <% end %>
   <table class="table table-hover">
     <thead class="nav nav-tabs">
-      <th role="presentation" class="<%= params['sort'] == 'title' ? 'active' : '' %>" width="15%"><%= sortable "title" %></th>
-      <th role="presentation" class="<%= params['sort'] == 'author_last_name' ? 'active' : '' %>" width="15%"><%= sortable "author_last_name", "Author" %></th>
+      <th role="presentation" width="15%">Title</th>
+      <th role="presentation" width="15%">Author</th>
       <th width="30%">Description</th>
       <th>Location</th>
       <th>Status?</th>

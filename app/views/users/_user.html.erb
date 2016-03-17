@@ -4,7 +4,7 @@
   <td><%= time_ago_in_words(user.last_sign_in_at) if user.last_sign_in_at %></td>
   <td class="text-center"><%= user.books_owned.count %></td>
   <td class="text-center"><%= user.books_borrowed.count %></td>
-  <td class="text-center"><%= user.overdue_books.count %></td>
+  <td class="text-center"><%= user.books_overdue.count %></td>
   <td class="text-center">
     <% if user.admin? && user != current_user %>
       <%= button_to "Remove admin", { action: :remove_admin, id: user.id, method: :post }, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-sm' %>

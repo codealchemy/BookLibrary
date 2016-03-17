@@ -80,7 +80,7 @@ RSpec.describe BooksController, type: :controller do
       end
       it 're-renders the :new template' do
         post :create, book: FactoryGirl.attributes_for(:book, isbn: nil)
-        expect(flash[:alert]).to eq('There\'s an error - please check the required fields')
+        expect(flash[:alert]).to eq("There's an error - please check the required fields")
         expect(response).to redirect_to(new_book_path)
       end
     end

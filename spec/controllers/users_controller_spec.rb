@@ -53,7 +53,7 @@ RSpec.describe UsersController, type: :controller do
         end
         it 're-renders the :new template' do
           post :create, user: FactoryGirl.attributes_for(:user, password: nil)
-          expect(flash[:alert]).to eq('There\'s an error - please check the required fields')
+          expect(flash[:alert]).to eq("There's an error - please check the required fields")
           expect(response).to redirect_to(new_users_admin_path)
         end
       end
@@ -66,9 +66,9 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'GET #index' do
-      it 'doesn\'t render the :index view' do
+      it "doesn't render the :index view" do
         get :index
-        expect(flash[:alert]).to eq('That\'s off limits!')
+        expect(flash[:alert]).to eq("That's off limits!")
         expect(response).to redirect_to(root_path)
       end
     end
@@ -84,7 +84,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'GET #new' do
       it 'renders the :new template' do
         get :new
-        expect(flash[:alert]).to eq('That\'s off limits!')
+        expect(flash[:alert]).to eq("That's off limits!")
         expect(response).to redirect_to(root_path)
       end
     end
