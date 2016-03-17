@@ -6,6 +6,10 @@ class BooksController < ApplicationController
 
 
   def index
+    @total_book_count = Book.count
+    @total_user_count = User.count
+    @borrowed_books_count = Book.checked_out_books.count
+    @users_with_books_count = User.with_books.count
     if params[:query].present?
       books = Book.search(params[:query])
       @books = Kaminari.paginate_array(books.results).page(params[:page]).per(15)
@@ -20,6 +24,8 @@ class BooksController < ApplicationController
 
   def new
     @book = Book.new
+    @all_users = User.all
+    @locations = Location.all
   end
 
   def create
@@ -38,6 +44,8 @@ class BooksController < ApplicationController
   end
 
   def edit
+    @all_users = User.all
+    @locations = Location.all
   end
 
   def destroy
