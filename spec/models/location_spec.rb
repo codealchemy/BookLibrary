@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Location, type: :model do
-  context '#books' do
+  context 'books' do
     let(:location) { create(:location) }
     let(:user) { create(:user) }
     let(:book1) { create(:book, location: location) }
     let(:book2) do
-      create(:book, 
-             title: 'Autobio', 
+      create(:book,
+             title: 'Autobio',
              isbn: '978-0312404154',
              location: location)
     end
@@ -18,7 +18,7 @@ RSpec.describe Location, type: :model do
       user.check_in(book2)
     end
 
-    it 'doesn\'t show checked-out books' do
+    it "doesn't show checked-out books" do
       expect(location.available_books).not_to include(book1)
     end
 

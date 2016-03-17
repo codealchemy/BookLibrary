@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Loan, type: :model do
-  context '#validations' do
+  context 'validations' do
     let(:user) { create(:user) }
     let(:book) { create(:book) }
 

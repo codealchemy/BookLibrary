@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Book, type: :model do
-  context '#validations' do
+  context 'validations' do
     let(:book) { book = Book.new(title: 'Working', isbn: '42-456-134-3') }
 
     it 'is not valid without a title AND isbn' do
@@ -19,7 +19,7 @@ RSpec.describe Book, type: :model do
     end
   end
 
-  context '#author names' do
+  context 'author names' do
     let(:book) { create(:book, author_first_name: nil, author_last_name: nil) }
 
     it 'returns an empty string for no author' do
@@ -42,7 +42,7 @@ RSpec.describe Book, type: :model do
     end
   end
 
-  context '#owner' do
+  context 'owner' do
     let(:user1) { create(:user, email: 'abe@example.com') }
     let(:user2) { create(:user, email: 'george@example.com') }
     let(:book)  { create(:book, owner: user1) }
@@ -58,7 +58,7 @@ RSpec.describe Book, type: :model do
     end
   end
 
-  context '#borrowing' do
+  context 'borrowing' do
     let(:user) { create(:user) }
     let(:book) { create(:book, owner: user) }
     let(:loan) { user.loans.create(book: book) }
