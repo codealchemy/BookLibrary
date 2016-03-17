@@ -34,7 +34,7 @@ RSpec.describe LocationsController, type: :controller do
     it 'redirects user to root path' do
       sign_in(user)
       get :new
-      expect(flash[:alert]).to eq('That\'s off limits!')
+      expect(flash[:alert]).to eq("That's off limits!")
       expect(response).to redirect_to(root_path)
     end
   end
@@ -65,7 +65,7 @@ RSpec.describe LocationsController, type: :controller do
       end
       it 're-renders the :new template' do
         post :create, location: FactoryGirl.attributes_for(:location, name: nil)
-        expect(flash[:alert]).to eq('There\'s an error - please check the required fields')
+        expect(flash[:alert]).to eq("There's an error - please check the required fields")
         expect(response).to redirect_to(new_location_path)
       end
     end

@@ -32,7 +32,7 @@ class BooksController < ApplicationController
       flash[:notice] = 'Book saved'
       redirect_to books_path
     else
-      flash[:alert] = 'There\'s an error - please check the required fields'
+      flash[:alert] = "There's an error - please check the required fields"
       redirect_to new_book_path
     end
   end
@@ -58,7 +58,7 @@ class BooksController < ApplicationController
       flash[:notice] = 'Book saved'
       redirect_to book_path(@book)
     else
-      flash[:alert] = 'There\'s an error - please check the required fields'
+      flash[:alert] = "There's an error - please check the required fields"
       redirect_to new_book_path
     end
   end
@@ -91,7 +91,7 @@ class BooksController < ApplicationController
     flash[:notice] = "Thank you for returning #{@book.title} for #{@borrower.name}"
     redirect_to books_path
   end
-  
+
   private
 
   def find_book

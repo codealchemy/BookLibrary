@@ -20,7 +20,7 @@ class UsersController < ApplicationController
       flash[:notice] = 'User saved'
       redirect_to users_admin_path(@user)
     else
-      flash[:alert] = 'There\'s an error - please check the required fields'
+      flash[:alert] = "There's an error - please check the required fields"
       redirect_to users_admin_path(@user)
     end
   end
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
       flash[:notice] = 'User saved'
       redirect_to users_admin_index_path
     else
-      flash[:alert] = 'There\'s an error - please check the required fields'
+      flash[:alert] = "There's an error - please check the required fields"
       redirect_to new_users_admin_path
     end
   end

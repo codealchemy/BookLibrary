@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def authorize_admin
     unless current_user.admin?
-      flash[:alert] = 'That\'s off limits!'
+      flash[:alert] = "That's off limits!"
       redirect_to root_path
     end
   end

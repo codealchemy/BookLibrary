@@ -17,7 +17,7 @@ class LocationsController < ApplicationController
       flash[:notice] = 'Location saved'
       redirect_to locations_path
     else
-      flash[:alert] = 'There\'s an error - please check the required fields'
+      flash[:alert] = "There's an error - please check the required fields"
       redirect_to new_location_path
     end
   end
@@ -41,7 +41,7 @@ class LocationsController < ApplicationController
       flash[:notice] = 'Location saved'
       redirect_to location_path(@location)
     else
-      flash[:alert] = 'There\'s an error - please check the required fields'
+      flash[:alert] = "There's an error - please check the required fields"
       redirect_to locations_path
     end
   end
