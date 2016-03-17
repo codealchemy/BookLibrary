@@ -12,7 +12,7 @@ class Book < ActiveRecord::Base
 
   # Scopes
   scope :checked_out, -> { joins(:loans).merge(Loan.active) }
-  scope :available, -> { eager_load(:loans).where('loans.user_id IS NULL') }
+  scope :available, -> { eager_load(:loans).where('loans.book_id IS NULL OR loans.checked_in_at < ?', Time.now) }
 
   before_save do
     self.isbn = self.isbn.to_s.gsub(/\D/, '')

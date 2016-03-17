@@ -6,10 +6,7 @@ RSpec.describe Location, type: :model do
     let(:user) { create(:user) }
     let(:book1) { create(:book, location: location) }
     let(:book2) do
-      create(:book,
-             title: 'Autobio',
-             isbn: '978-0312404154',
-             location: location)
+      create(:book, title: 'Autobio', isbn: '978-0312404154', location: location)
     end
 
     before do

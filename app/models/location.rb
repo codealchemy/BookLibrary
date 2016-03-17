@@ -1,12 +1,13 @@
 class Location < ActiveRecord::Base
+
+  # Associations
   has_many :users
   has_many :books
 
+  # Validations
   validates :name, presence: true
 
   def available_books
-    books = []
-    Book.find_each { |book| book.location == self && book.borrowed? == false ? books << book : next }
-    books
+    books.available
   end
 end
