@@ -1,19 +1,12 @@
+require 'nationbuilder'
+
 module Nb
-  require 'nationbuilder'
-
   class Service
-    private
 
-    CLIENT = NationBuilder::Client.new(ENV['NATION_SLUG'], ENV['NATION_TOKEN'])
-    @lock = Mutex.new
-
-    def self.background(&block)
-      Thread.new do
-        @lock.synchronize do
-          yield
-          ActiveRecord::Base.connection.close
-        end
-      end
+    def self.client
+      @client ||= NationBuilder::Client.new(ENV['NATION_SLUG'], ENV['NATION_TOKEN'])
     end
+
+    private_class_method :client
   end
 end
