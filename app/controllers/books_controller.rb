@@ -1,9 +1,7 @@
 class BooksController < ApplicationController
   before_filter :find_book, except: [:index, :create, :new]
   before_action :authenticate_user!
-  helper_method :sort_column, :sort_direction
   before_filter :authorize_admin, only: [:destroy, :update, :edit, :create, :new]
-
 
   def index
     @total_book_count = Book.count
@@ -14,7 +12,7 @@ class BooksController < ApplicationController
       books = Book.search(params[:query])
       @books = Kaminari.paginate_array(books.results).page(params[:page]).per(15)
     else
-      @books = Book.page(params[:page]).per(15).order(sort_column + " " + sort_direction)
+      @books = Book.page(params[:page]).per(15)
       respond_to do |format|
         format.js
         format.html
@@ -93,6 +91,7 @@ class BooksController < ApplicationController
     flash[:notice] = "Thank you for returning #{@book.title} for #{@borrower.name}"
     redirect_to books_path
   end
+  
   private
 
   def find_book
@@ -111,13 +110,5 @@ class BooksController < ApplicationController
         :user_id,
         :location_id
       )
-  end
-
-  def sort_column
-    Book.column_names.include?(params[:sort]) ? params[:sort] : "title"
-  end
-
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end
