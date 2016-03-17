@@ -8,7 +8,7 @@ class BooksController < ApplicationController
   def index
     @total_book_count = Book.count
     @total_user_count = User.count
-    @borrowed_books_count = Book.checked_out_books.count
+    @borrowed_books_count = Book.checked_out.count
     @users_with_books_count = User.with_books.count
     if params[:query].present?
       books = Book.search(params[:query])

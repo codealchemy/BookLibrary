@@ -20,56 +20,34 @@ RSpec.describe Book, type: :model do
   end
 
   context '#author names' do
-    let(:book) { create(:book) }
-    let(:book_with_first_name) do
-      create(:book, author_first_name: 'Bob', author_last_name: nil)
-    end
-    let(:book_with_last_name) do
-      create(:book, author_last_name: 'Rogers', author_first_name: nil)
-    end
-    let(:book_no_author) do
-      create(:book, author_first_name: nil, author_last_name: nil)
+    let(:book) { create(:book, author_first_name: nil, author_last_name: nil) }
+
+    it 'returns an empty string for no author' do
+      expect(book.author_name).to eq('')
     end
 
-    it 'pulls the first and last name of the author' do
-      expect(book.author_first_name).to eq('Paulo')
-      expect(book.author_last_name).to eq('Coelho')
+    it 'pulls the first and last name of the author if present' do
+      book.update_attributes!(author_first_name: 'Paulo', author_last_name: 'Coelho')
       expect(book.author_name).to eq('Paulo Coelho')
     end
 
-    it 'pulls the first name of the author if last name doesn\'t exist' do
-      expect(book_with_first_name.author_first_name).to eq('Bob')
-      expect(book_with_first_name.author_last_name).to eq(nil)
-      expect(book_with_first_name.author_name).to eq('Bob')
+    it 'pulls the first name of the author if no last name is given' do
+      book.update_attributes!(author_first_name: 'Bob', author_last_name: nil)
+      expect(book.author_name).to eq('Bob')
     end
 
-    it 'pulls the last name of the author' do
-      expect(book_with_last_name.author_last_name).to eq('Rogers')
-      expect(book_with_last_name.author_first_name).to eq(nil)
-      expect(book_with_last_name.author_name).to eq('Rogers')
-    end
-
-    it 'returns a message for no author' do
-      expect(book_no_author.author_name).to eq('No author name given')
+    it 'pulls the last name of the author if no first name is given' do
+      book.update_attributes!(author_first_name: nil, author_last_name: 'Rogers')
+      expect(book.author_name).to eq('Rogers')
     end
   end
 
   context '#owner' do
     let(:user1) { create(:user, email: 'abe@example.com') }
     let(:user2) { create(:user, email: 'george@example.com') }
-    let(:book) { create(:book, user: user1) }
+    let(:book)  { create(:book, owner: user1) }
 
     it 'returns the owner of a book' do
-      expect(book.owner).to eq(user1)
-    end
-
-    it 'changes the owner' do
-      book.change_owner(user2)
-      expect(book.owner).to eq(user2)
-    end
-
-    it 'doesn\'t change owner without argument' do
-      book.change_owner
       expect(book.owner).to eq(user1)
     end
 
@@ -82,7 +60,7 @@ RSpec.describe Book, type: :model do
 
   context '#borrowing' do
     let(:user) { create(:user) }
-    let(:book) { create(:book, user: user) }
+    let(:book) { create(:book, owner: user) }
     let(:loan) { user.loans.create(book: book) }
 
     it 'loans a book to a user and includes them in borrowed books list' do
@@ -94,12 +72,12 @@ RSpec.describe Book, type: :model do
 
     it 'shows a book as available if not loaned out' do
       expect(book.borrowed?).to eq(false)
-      expect(Book.checked_out_books).not_to include(book)
+      expect(Book.checked_out).not_to include(book)
     end
 
     it 'shows a book as unavailable if it is loaned out' do
       expect(loan.book.borrowed?).to eq(true)
-      expect(Book.checked_out_books).to include(book)
+      expect(Book.checked_out).to include(book)
     end
 
     it 'deletes associated loans when book is deleted' do

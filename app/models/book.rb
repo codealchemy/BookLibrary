@@ -1,53 +1,33 @@
 class Book < ActiveRecord::Base
   searchkick
-  validates :title, :isbn, presence: true
-  belongs_to :user
+
+  # Associations
+  belongs_to :owner, class_name: 'User', foreign_key: :user_id
   belongs_to :location
-  has_many :loans
+  has_many :loans, dependent: :destroy
   has_many :borrowers, class_name: 'Loan', foreign_key: :book_id
-  after_destroy :delete_associated_loans
+
+  # Validations
+  validates :title, :isbn, presence: true
+
+  # Scopes
+  scope :checked_out, -> { joins(:loans).merge(Loan.active) }
+  scope :available, -> { eager_load(:loans).where('loans.user_id IS NULL') }
 
   before_save do
     self.isbn = self.isbn.to_s.gsub(/\D/, '')
   end
 
   def author_name
-    name = [author_first_name, author_last_name].map(&:to_s).join(' ').strip
-    name.empty? ? 'No author name given' : name
-  end
-
-  def owner
-    User.find(user_id) if user_id
-  end
-
-  def change_owner(user = nil)
-    return unless user
-    self.user = user
-    save
+    "#{author_first_name} #{author_last_name}".strip
   end
 
   def borrowed?
-    Loan.where(book: self, checked_in_at: nil).empty? ? false : true
+    loans.active.where(book: self).present?
   end
 
   def borrower
-    Loan.where(book: self, checked_in_at: nil).last.user unless Loan.where(book: self, checked_in_at: nil).empty?
-  end
-
-  def self.checked_out_books
-    books = []
-    Book.find_each { |book| book.borrowed? ? books << book : next }
-    books
-  end
-
-  def self.available_books
-    books = []
-    Book.find_each { |book| book.borrowed? ? next : books << book }
-    books
-  end
-
-  def delete_associated_loans
-    Loan.where(book: self).destroy_all
+    loans.active.where(book: self).last.user if borrowed?
   end
 
   def search_data
