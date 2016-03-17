@@ -18,11 +18,11 @@ class User < ActiveRecord::Base
   end
 
   def send_signup_email
-    UserNotifier.send_signup_email(self).deliver
+    UserNotifier.send_signup_email(self).deliver_now
   end
 
   def send_overdue_email
-    UserNotifier.send_overdue_email(self).deliver
+    UserNotifier.send_overdue_email(self).deliver_now
   end
 
   def name
