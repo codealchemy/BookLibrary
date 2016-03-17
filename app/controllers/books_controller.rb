@@ -4,10 +4,7 @@ class BooksController < ApplicationController
   before_filter :authorize_admin, only: [:destroy, :update, :edit, :create, :new]
 
   def index
-    @total_book_count = Book.count
-    @total_user_count = User.count
-    @borrowed_books_count = Book.checked_out.count
-    @users_with_books_count = User.with_books.count
+    load_associated_counts
     if params[:query].present?
       books = Book.search(params[:query])
       @books = Kaminari.paginate_array(books.results).page(params[:page]).per(15)
@@ -93,6 +90,13 @@ class BooksController < ApplicationController
   end
 
   private
+
+  def load_associated_counts
+    @total_book_count ||= Book.count
+    @total_user_count ||= User.count
+    @borrowed_books_count ||= Book.checked_out.count
+    @users_with_books_count ||= User.with_books.count
+  end
 
   def find_book
     @book = Book.find(params[:id])
