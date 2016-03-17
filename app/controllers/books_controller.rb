@@ -34,6 +34,7 @@ class BooksController < ApplicationController
   end
 
   def show
+    @links = AmazonBook.search_by_isbn(@book.isbn)
   end
 
   def edit
@@ -88,7 +89,6 @@ class BooksController < ApplicationController
 
   def find_book
     @book = Book.find(params[:id])
-    @links = AmazonBook.search_by_isbn(@book.isbn)
     @borrower = @book.borrower
   end
 

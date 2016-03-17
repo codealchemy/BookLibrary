@@ -24,6 +24,7 @@ RSpec.describe BooksController, type: :controller do
     end
 
     it 'renders the :show template' do
+      allow(AmazonBook).to receive(:search_by_isbn)
       book = create(:book)
       get :show, id: book.id
       expect(response).to render_template(:show)
