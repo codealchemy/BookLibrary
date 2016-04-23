@@ -15,7 +15,7 @@ RailsAdmin.config do |config|
     show
     edit
     delete
-    # show_in_app
+    show_in_app { except %w(Loan) }
   end
 
   ## == Model configurations ==
@@ -40,6 +40,7 @@ RailsAdmin.config do |config|
     field :isbn
     field :description
     field :owner
+    list { scopes [nil, :checked_out, :available] }
   end
 
   config.model User do
