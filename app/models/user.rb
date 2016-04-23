@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
   scope :with_books, -> { joins(:loans).merge(Loan.active) }
 
   def name
-    "#{first_name} #{last_name}".strip
+    full_name = "#{first_name} #{last_name}".strip
+    full_name.empty? ? email : full_name
   end
 
   def make_admin

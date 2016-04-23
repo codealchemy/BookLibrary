@@ -14,6 +14,10 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def edit
+    @locations = Location.all
+  end
+
   def update
     @user.update_attributes(update_user_params)
     if @user.save
