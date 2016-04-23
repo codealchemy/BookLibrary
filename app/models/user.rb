@@ -18,14 +18,6 @@ class User < ActiveRecord::Base
     full_name.empty? ? email : full_name
   end
 
-  def make_admin
-    update(admin: true)
-  end
-
-  def remove_admin
-    update(admin: false)
-  end
-
   def send_signup_email
     UserNotifier.send_signup_email(self).deliver_now
   end
