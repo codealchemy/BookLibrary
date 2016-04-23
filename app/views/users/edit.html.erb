@@ -1,6 +1,6 @@
 <div class="col-md-12 text-center">
   <h2>
-    <p><%= @user.name %>'s Profile</p>  
+    <p><%= @user.name %>'s Profile</p>
   </h2><br>
   <%= form_for( @user, url: users_admin_path(@user), html: { method: :put, class: "col-md-4 col-md-offset-1" }) do |f| %>
     <br>
@@ -9,12 +9,12 @@
     </div>
     <div class="form-group">
       <%= f.text_field :last_name, placeholder: "Last Name", class: "form-control" %>
-    </div>    
+    </div>
     <div class="form-group">
       <%= f.email_field :email, placeholder: "Email", class: "form-control" %>
     </div>
     <div>
-      <%= f.collection_select :location_id, locations, :id, :name, { include_blank: true, prompt: 'Select location' }, class: 'btn btn-default dropdown-toggle' %>
+      <%= f.collection_select :location_id, @locations, :id, :name, { include_blank: true, prompt: 'Select location' }, class: 'btn btn-default dropdown-toggle' %>
     </div>
     <br>
     <div class="actions">

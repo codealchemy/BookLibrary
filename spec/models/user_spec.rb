@@ -18,10 +18,10 @@ RSpec.describe User, type: :model do
       expect(user.name).to eq('Lincoln')
     end
 
-    it 'returns an empty string if no first or last name is given' do
+    it 'returns the users email if no first or last name is given' do
       user.first_name = nil
       user.last_name = nil
-      expect(user.name).to eq('')
+      expect(user.name).to eq(user.email)
     end
   end
 

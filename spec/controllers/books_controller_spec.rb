@@ -4,6 +4,7 @@ RSpec.describe BooksController, type: :controller do
   let(:user) { create(:user) }
   let(:admin) { create(:admin) }
   let(:test_book) { create(:book) }
+  before { allow_any_instance_of(NationBuilder::Client).to receive(:call) }
 
   describe 'GET #index' do
     it 'renders the :index template for users' do
@@ -11,6 +12,7 @@ RSpec.describe BooksController, type: :controller do
       get :index
       expect(response).to render_template(:index)
     end
+
     it 'redirects to login if user not logged in' do
       get :index
       expect(response).to redirect_to(new_user_session_path)
@@ -29,6 +31,7 @@ RSpec.describe BooksController, type: :controller do
       get :show, id: book.id
       expect(response).to render_template(:show)
     end
+
     it 'raises record not found error with invalid record' do
       expect {
         get :show, id: 'not_existing_book'
@@ -65,6 +68,7 @@ RSpec.describe BooksController, type: :controller do
           post :create, book: FactoryGirl.attributes_for(:book)
         }.to change { Book.count }.by(1)
       end
+
       it 'redirects user to book index' do
         post :create, book: FactoryGirl.attributes_for(:book)
         expect(flash[:notice]).to eq('Book saved')
@@ -78,6 +82,7 @@ RSpec.describe BooksController, type: :controller do
           post :create, book: FactoryGirl.attributes_for(:book, isbn: nil)
         }.not_to change { Book.count }
       end
+
       it 're-renders the :new template' do
         post :create, book: FactoryGirl.attributes_for(:book, isbn: nil)
         expect(flash[:alert]).to eq("There's an error - please check the required fields")
@@ -89,17 +94,20 @@ RSpec.describe BooksController, type: :controller do
   describe 'POST #check_out' do
     before(:each) do
       sign_in(user)
+      allow(Nb::Contacts).to receive(:type_id).and_return(1)
     end
 
     it 'checks out a book for a user' do
       post :check_out, id: test_book.id
       expect(user.books_checked_out).to include(test_book)
     end
+
     it 'creates a new loan for the check-out' do
       expect {
         post :check_out, id: test_book.id
       }.to change { Loan.count }.by(1)
     end
+
     it 'redirects to books index after checkout' do
       post :check_out, id: test_book.id
       expect(response).to redirect_to(books_path)
@@ -110,12 +118,14 @@ RSpec.describe BooksController, type: :controller do
     before do
       sign_in(user)
       user.check_out(test_book)
+      allow(Nb::Contacts).to receive(:type_id).and_return(1)
     end
 
     it 'checks in a book for the user' do
       post :check_in, id: test_book.id
       expect(user.books_checked_out).not_to include(test_book)
     end
+
     it 'redirects to books index after check-in' do
       post :check_in, id: test_book.id
       expect(response).to redirect_to(books_path)

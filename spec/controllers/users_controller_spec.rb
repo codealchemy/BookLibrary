@@ -3,11 +3,11 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   let(:user) { create(:user) }
   let(:admin) { create(:admin) }
-  vcr_options = { cassette_name: 'sample_nb_push_request' }
 
   context 'admin' do
     before(:each) do
       sign_in(admin)
+      allow_any_instance_of(NationBuilder::Client).to receive(:call)
     end
 
     describe 'GET #index' do
@@ -18,7 +18,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'GET #show' do
-      it 'renders the :show template', vcr: vcr_options do
+      it 'renders the :show template' do
         user_test = create(:user, email: 'faveabe@example.com')
         get :show, id: user_test.id
         expect(response).to render_template(:show)
@@ -32,7 +32,7 @@ RSpec.describe UsersController, type: :controller do
       end
     end
 
-    describe 'POST #create', vcr: vcr_options do
+    describe 'POST #create' do
       context 'with valid attributes' do
         it 'creates a new user' do
           expect {
@@ -74,7 +74,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'GET #show' do
-      it 'renders the :show template', vcr: vcr_options do
+      it 'renders the :show template' do
         user_test = create(:user, email: 'faveabe@example.com')
         get :show, id: user_test.id
         expect(response).to render_template(:show)

@@ -1,46 +1,30 @@
 module Nb
   class People < Service
 
-    def self.find_nbid_in_nation(user_email)
-      match = CLIENT.call(:people, :push, person: { email: user_email })
-      match['person']['id']
+    def self.remove_tag(options)
+      user_id = find_nbid_in_nation(options[:email])
+      client.call(:people, :tag_removal, id: user_id, tag: options[:tag_to_remove])
     end
 
-    def self.find_signup_image(user_email)
-      match = CLIENT.call(:people,
-                  :push,
-                  person:
-                  {
-                    email: user_email
-                  })
-      match['person']['profile_image_url_ssl'] if match['person']
+    def self.add_tag(options)
+      user_id = find_nbid_in_nation(options[:email])
+      add_and_tag_person(options) unless user_id
+      client.call(:people, :tag_person, id: user_id, tagging: { tag: options[:tag_to_add] })
     end
 
-    def self.find_self_in_nation
-      @token_owner_id = CLIENT.call(:people, :me)['person']['id']
+    def self.find_nbid_in_nation(email)
+      match = client.call(:people, :match, email: email)
+      @matched_id = match['person']['id'] if match
+    rescue NationBuilder::ClientError
+      # Person doesn't exist in the nation
     end
 
-    def self.remove_tag(user_email, tag_name)
-      user_id = find_nbid_in_nation(user_email)
-      background do
-        CLIENT.call(:people,
-                    :tag_removal,
-                    id: user_id,
-                    tag: tag_name)
-      end
+    # Private class methods
+
+    def self.add_and_tag_person(options)
+      client.call(:people, :add, person: { email: options[:email], tags: options[:tag_to_add] })
     end
 
-    def self.add_tag(user_email, tag_name)
-      user_id = find_nbid_in_nation(user_email)
-      background do
-        CLIENT.call(:people,
-                    :tag_person,
-                    id: user_id,
-                    tagging:
-                    {
-                      tag: tag_name
-                    })
-      end
-    end
+    private_class_method :add_and_tag_person
   end
 end

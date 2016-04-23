@@ -1,16 +1,16 @@
 FactoryGirl.define do
-  factory :user do |f|
-    f.first_name 'Abraham'
-    f.last_name 'Lincoln'
-    f.email 'candidate@abeforprez.com'
-    f.password 'grandideas'
+  factory :user do
+    first_name  { 'Abraham' }
+    last_name   { 'Lincoln' }
+    email       { 'candidate@abeforprez.com' }
+    password    { 'grandideas' }
   end
 
-  factory :admin, parent: :user do |f|
-    f.first_name 'Stephen'
-    f.last_name 'Douglas'
-    f.email 'duggie@dugforprez.com'
-    f.password 'granderideas'
-    f.admin 'true'
+  factory :admin, parent: :user do
+    first_name  { 'Stephen' }
+    last_name   { 'Douglas' }
+    email       { 'duggie@dugforprez.com' }
+    password    { 'granderideas' }
+    admin       { 'true' }
   end
 end

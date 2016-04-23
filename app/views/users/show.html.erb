@@ -48,7 +48,6 @@
     </table>
   </div>
   <div class="col-md-4 text-center">
-    <div><%= render partial: 'users/profile_image' %></div>
     <h2 class="text-center"><%= current_user.admin? ? link_to(@user.name, edit_users_admin_path) : @user.name %></h2>
     <h4 class="text-center"><%= @user.email %></h4><br>
     <h4>Location: <%= @user.location.name if @user.location %></h4>
@@ -60,4 +59,3 @@
     </div>
   </div>
 </div>
-

@@ -1,11 +1,11 @@
 FactoryGirl.define do
-  factory :location do |f|
-    f.name 'DTLA Office'
-    f.address1 '520 S. Grand Ave.'
-    f.address2 '2nd Floor'
-    f.city 'Los Angeles'
-    f.state 'CA'
-    f.zip '90071'
-    f.country 'United States'
+  factory :location do
+    name      { 'DTLA Office' }
+    address1  { '520 S. Grand Ave.' }
+    address2  { '2nd Floor' }
+    city      { 'Los Angeles' }
+    state     { 'CA' }
+    zip       { '90071' }
+    country   { 'United States' }
   end
 end
