@@ -1,2 +1,0 @@
-$('#users').html('<%= escape_javascript render(partial: "locations/users_list", collection: @users, as: :user) %>');
-$('#firstpaginator').html('<%= escape_javascript(paginate(@users, remote: true).to_s) %>');

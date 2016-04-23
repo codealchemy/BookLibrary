@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  context '#user names' do
+  context '#name' do
     let(:user) { build(:user) }
 
     it 'pulls the first and last name of the user' do
@@ -68,26 +68,6 @@ RSpec.describe User, type: :model do
     it 'checks in a book' do
       user.check_in(book)
       expect(book.borrowed?).to eq(false)
-    end
-  end
-
-  context 'permissions' do
-    let(:user) { build(:user) }
-
-    context 'make_admin' do
-      it 'grants the user admin access' do
-        user.make_admin
-        expect(user.admin?).to eq(true)
-      end
-    end
-
-    context 'remove_admin' do
-      before { user.make_admin }
-
-      it 'removes admin access from the user' do
-        user.remove_admin
-        expect(user.admin?).to eq(false)
-      end
     end
   end
 end
