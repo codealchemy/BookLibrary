@@ -7,11 +7,7 @@
 }
 
 body {
-  background: url('background_image.png') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background-color: rgba(200,200,200,0.4);
 }
 
 nav a {
