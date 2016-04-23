@@ -20,4 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  books:
+    check_out: "You have checked out %{book_title}, hope you enjoy it!."
+    check_in: "You have checked in %{book_title}, thanks!"
