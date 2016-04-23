@@ -31,6 +31,7 @@ end
 group :development, :test do
   gem 'capybara'
   gem 'database_cleaner'
+  gem 'dotenv-rails'
   gem 'fuubar'
   gem 'factory_girl_rails', '~> 4.0'
   gem 'rspec-rails', '~> 3.0'
