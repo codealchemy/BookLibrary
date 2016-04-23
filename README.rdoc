@@ -1,11 +1,11 @@
 == README {<img src="https://travis-ci.org/codealchemy/BookLibrary.svg" alt="Build Status" />}[https://travis-ci.org/codealchemy/BookLibrary] {<img src="https://codeclimate.com/github/codealchemy/BookLibrary/badges/gpa.svg" />}[https://codeclimate.com/github/codealchemy/BookLibrary] {<img src="https://codeclimate.com/github/codealchemy/BookLibrary/badges/coverage.svg" />}[https://codeclimate.com/github/codealchemy/BookLibrary/coverage]
 
-BookLibrary is a Ruby on Rails application to manage a library of items that are checked out and in by users. 
+BookLibrary is a Ruby on Rails application to manage a library of items that are checked out and in by users.
 
 Application basics:
 
 * Ruby version: <tt>2.1.2</tt>
-* Rails version: <tt>4.1.8</tt>
+* Rails version: <tt>4.2.5.1</tt>
 
 * Configuration
 - Postgres Database
@@ -17,4 +17,4 @@ Application basics:
 - then <tt>rake db:migrate</tt>
 
 * Deployment instructions
-- keep private keys in a <tt>local_env.yml</tt> file in the config directory (do not include in commits)
+- This project uses dotenv for environment variables, more here: https://github.com/bkeepers/dotenv
