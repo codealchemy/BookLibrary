@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      Nb::People.add_tag(@user.email, 'Library_account_active')
+      Nb::People.add_tag(email: @user.email, tag_to_add: 'Library_account_active')
       flash[:notice] = 'User saved'
       redirect_to users_admin_index_path
     else
@@ -63,7 +63,6 @@ class UsersController < ApplicationController
 
   def find_user
     @user = User.find(params[:id])
-    @profile_image = Nb::People.find_signup_image(@user.email)
   end
 
   def user_params

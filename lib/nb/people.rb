@@ -12,12 +12,6 @@ module Nb
       client.call(:people, :tag_person, id: user_id, tagging: { tag: options[:tag_to_add] })
     end
 
-    # Private class methods
-
-    def self.add_and_tag_person(options)
-      client.call(:people, :add, person: { email: options[:email], tags: options[:tag_to_add] })
-    end
-
     def self.find_nbid_in_nation(email)
       match = client.call(:people, :match, email: email)
       @matched_id = match['person']['id'] if match
@@ -25,6 +19,12 @@ module Nb
       # Person doesn't exist in the nation
     end
 
-    private_class_method :find_nbid_in_nation, :add_and_tag_person
+    # Private class methods
+
+    def self.add_and_tag_person(options)
+      client.call(:people, :add, person: { email: options[:email], tags: options[:tag_to_add] })
+    end
+
+    private_class_method :add_and_tag_person
   end
 end
