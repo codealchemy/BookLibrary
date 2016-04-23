@@ -16,8 +16,8 @@
           <%= render partial: "locations/users_list", collection: @users, as: :user %>
         </tbody>
       </table>
-      <div class="text-center" id="firstpaginator">
-      <%= paginate @users, remote: true %>
+      <div class="text-center" id="userpaginator">
+      <%= paginate @users, param_name: :user_page %>
       </div>
     </div>
     <br>
@@ -37,6 +37,9 @@
           <%= render partial: 'locations/books_list', collection: @books, as: :book %>
         </tbody>
       </table>
+      <div class="text-center" id="bookpaginator">
+      <%= paginate @books, param_name: :book_page %>
+      </div>
     </div>
   </div>
 </div>

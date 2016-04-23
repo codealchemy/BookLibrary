@@ -5,18 +5,8 @@ class LocationsController < ApplicationController
   end
 
   def show
-    find_location
-    respond_to do |format|
-      format.html
-      format.js
-    end
-  end
-
-  private
-
-  def find_location
     @location = Location.find(params[:id])
-    @users = @location.users.page(params[:page]).per(10)
-    @books = @location.books
+    @users = @location.users.page(params[:user_page]).per(10)
+    @books = @location.books.page(params[:book_page]).per(10)
   end
 end
