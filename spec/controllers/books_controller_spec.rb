@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe BooksController, type: :controller do
   let(:user) { create(:user) }
-  let(:admin) { create(:admin) }
   let(:test_book) { create(:book) }
   before { allow_any_instance_of(NationBuilder::Client).to receive(:call) }
 
@@ -36,58 +35,6 @@ RSpec.describe BooksController, type: :controller do
       expect {
         get :show, id: 'not_existing_book'
       }.to raise_exception(ActiveRecord::RecordNotFound)
-    end
-  end
-
-  describe 'GET #new' do
-    context 'as admin' do
-      it 'renders the :new template' do
-        sign_in(admin)
-        get :new
-        expect(response).to render_template(:new)
-      end
-    end
-
-    context 'as user' do
-      it 'redirects non-admins to book index' do
-        sign_in(user)
-        get :new
-        expect(response).to redirect_to(root_path)
-      end
-    end
-  end
-
-  describe 'POST #create' do
-    before do
-      sign_in(admin)
-    end
-
-    context 'with valid attributes' do
-      it 'saves the book in the database' do
-        expect {
-          post :create, book: FactoryGirl.attributes_for(:book)
-        }.to change { Book.count }.by(1)
-      end
-
-      it 'redirects user to book index' do
-        post :create, book: FactoryGirl.attributes_for(:book)
-        expect(flash[:notice]).to eq('Book saved')
-        expect(response).to redirect_to(books_path)
-      end
-    end
-
-    context 'with invalid attributes' do
-      it 'does not save the connection in the database' do
-        expect {
-          post :create, book: FactoryGirl.attributes_for(:book, isbn: nil)
-        }.not_to change { Book.count }
-      end
-
-      it 're-renders the :new template' do
-        post :create, book: FactoryGirl.attributes_for(:book, isbn: nil)
-        expect(flash[:alert]).to eq("There's an error - please check the required fields")
-        expect(response).to redirect_to(new_book_path)
-      end
     end
   end
 
@@ -128,26 +75,6 @@ RSpec.describe BooksController, type: :controller do
 
     it 'redirects to books index after check-in' do
       post :check_in, id: test_book.id
-      expect(response).to redirect_to(books_path)
-    end
-  end
-
-  describe 'DELETE #destroy/:id' do
-    before do
-      sign_in(admin)
-    end
-
-    it 'deletes the requested book' do
-      book = create(:book)
-      expect {
-        delete :destroy, id: book.id
-      }.to change { Book.count }.by(-1)
-    end
-
-    it 'redirects to books list' do
-      book = create(:book)
-      delete :destroy, id: book.id
-      expect(flash[:alert]).to eq('Book has been deleted')
       expect(response).to redirect_to(books_path)
     end
   end

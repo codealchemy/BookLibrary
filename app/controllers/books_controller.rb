@@ -1,10 +1,8 @@
 class BooksController < ApplicationController
-  before_filter :find_book, except: [:index, :create, :new]
+  before_filter :find_book, except: [:index]
   before_action :authenticate_user!
-  before_filter :authorize_admin, only: [:destroy, :update, :edit, :create, :new]
 
   def index
-    load_associated_counts
     if params[:query].present?
       books = Book.search(params[:query])
       @books = Kaminari.paginate_array(books.results).page(params[:page]).per(15)
@@ -17,47 +15,8 @@ class BooksController < ApplicationController
     end
   end
 
-  def new
-    @book = Book.new
-    @all_users = User.all
-    @locations = Location.all
-  end
-
-  def create
-    @book = Book.new(book_params)
-    if @book.save
-      flash[:notice] = 'Book saved'
-      redirect_to books_path
-    else
-      flash[:alert] = "There's an error - please check the required fields"
-      redirect_to new_book_path
-    end
-  end
-
   def show
     @links = AmazonBook.search_by_isbn(@book.isbn)
-  end
-
-  def edit
-    @all_users = User.all
-    @locations = Location.all
-  end
-
-  def destroy
-    @book.destroy
-    flash[:alert] = 'Book has been deleted'
-    redirect_to books_path
-  end
-
-  def update
-    @book.update(book_params)
-    if @book.save
-      flash[:notice] = 'Book saved'
-      redirect_to book_path(@book)
-    else
-      flash[:alert] = "There's an error - please check the required fields"
-      redirect_to new_book_path
-    end
   end
 
   def check_out
@@ -90,13 +49,6 @@ class BooksController < ApplicationController
   end
 
   private
-
-  def load_associated_counts
-    @total_book_count ||= Book.count
-    @total_user_count ||= User.count
-    @borrowed_books_count ||= Book.checked_out.count
-    @users_with_books_count ||= User.with_books.count
-  end
 
   def find_book
     @book = Book.find(params[:id])
