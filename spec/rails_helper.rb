@@ -9,13 +9,6 @@ require 'capybara/rails'
 require 'pry'
 ActiveRecord::Migration.maintain_test_schema!
 
-VCR.configure do |c|
-  c.cassette_library_dir     = 'spec/cassettes'
-  c.hook_into                :webmock
-  c.configure_rspec_metadata!
-  c.ignore_hosts 'codeclimate.com'
-end
-
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.include Devise::TestHelpers, type: :controller
