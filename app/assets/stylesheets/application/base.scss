@@ -1,0 +1,19 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.label {
+    color: black;
+    font-size: 100%;
+}
+
+body {
+  background: url('background_image.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+nav a {
+  color: black;
+}
