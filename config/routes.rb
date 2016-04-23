@@ -12,10 +12,7 @@ Rails.application.routes.draw do
     post :check_in_on_behalf_of, on: :member
   end
 
-  resources :users_admin, controller: 'users' do
-    post :make_admin, on: :collection
-    post :remove_admin, on: :collection
-  end
+  resources :users_admin, only: [:show], controller: 'users'
 
   resources :locations, only: [:index, :show]
 end
