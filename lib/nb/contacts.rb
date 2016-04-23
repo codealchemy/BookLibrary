@@ -17,9 +17,8 @@ module Nb
 
     def self.type_id(contact_type)
       index = client.call(:contact_types, :index, per_page: 100)
-      index['results'].each do |result|
-        result['name'] == contact_type ? result['id'] : create_contact_type(contact_type)
-      end
+      result = index['results'].bsearch { |r| r['name'] == contact_type }
+      result ? result['id'] : create_contact_type(contact_type)
     end
 
     def self.create_contact_type(name)
