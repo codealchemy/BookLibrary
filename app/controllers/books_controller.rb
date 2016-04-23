@@ -54,17 +54,4 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @borrower = @book.borrower
   end
-
-  def book_params
-    params.require(:book).permit(
-        :title,
-        :subtitle,
-        :isbn,
-        :author_first_name,
-        :author_last_name,
-        :description,
-        :user_id,
-        :location_id
-      )
-  end
 end

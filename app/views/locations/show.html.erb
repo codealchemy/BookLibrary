@@ -1,9 +1,6 @@
 <div class="row">
   <div class="col-md-12">
     <h1 class="text-center"><%= @location.name %></h1>
-    <div class="text-center">
-    <%= link_to "Edit location", edit_location_path(@location), class: "btn btn-default text-center" if current_user.try(:admin?) %>
-    </div>
     <h3 class="text-center">Users</h3>
     <div class="panel panel-default">
       <table class="table table-hover well">
@@ -16,7 +13,7 @@
           </tr>
         </thead>
         <tbody id="users">
-          <%= render partial: "locations/users_list", collection: @users, as: :user %> 
+          <%= render partial: "locations/users_list", collection: @users, as: :user %>
         </tbody>
       </table>
       <div class="text-center" id="firstpaginator">

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { sessions: 'users/sessions' }
 
-  resources :books do
+  resources :books, only: [:index, :show] do
     post :check_out, on: :collection
     post :check_in, on: :collection
     patch :check_out_on_behalf_of, on: :member
@@ -17,5 +17,5 @@ Rails.application.routes.draw do
     post :remove_admin, on: :collection
   end
 
-  resources :locations
+  resources :locations, only: [:index, :show]
 end
