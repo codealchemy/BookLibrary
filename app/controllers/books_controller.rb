@@ -3,9 +3,8 @@ class BooksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    if params[:query].present?
-      books = Book.search(params[:query])
-      @books = Kaminari.paginate_array(books.results).page(params[:page]).per(15)
+    if params[:title_search].present?
+      @books = Book.where('title ILIKE ?', "%#{params[:title_search]}%").page(params[:page]).per(15)
     else
       @books = Book.page(params[:page]).per(15)
     end

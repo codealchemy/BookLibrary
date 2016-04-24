@@ -10,7 +10,6 @@ Application basics:
 * Configuration
 - Postgres Database
 - Sendgrid for ActionMailer (sendgrid gem) https://github.com/stephenb/sendgrid
-- Elasticsearch for queries (searchkick gem) https://github.com/ankane/searchkick
 
 * Database creation - to set up the database:
 - run <tt>rake db:create</tt>

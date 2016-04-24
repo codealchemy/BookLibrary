@@ -6,16 +6,32 @@ RSpec.describe BooksController, type: :controller do
   before { allow_any_instance_of(NationBuilder::Client).to receive(:call) }
 
   describe 'GET #index' do
-    it 'renders the :index template for users' do
-      sign_in(user)
-      get :index
-      expect(response).to render_template(:index)
+    context 'logged-in user' do
+      before { sign_in(user) }
+
+      it 'renders the :index template for users' do
+        get :index
+        expect(response).to render_template(:index)
+      end
+
+      it 'defaults to showing all books' do
+        get :index
+        expect(assigns[:books]).to match_array([test_book])
+      end
+
+      it 'includes book matched by the search when provided' do
+        query_book = create(:book, title: 'Find me')
+        get :index, title_search: 'me'
+        expect(assigns[:books]).to match_array([query_book])
+      end
     end
 
-    it 'redirects to login if user not logged in' do
-      get :index
-      expect(response).to redirect_to(new_user_session_path)
-      expect(flash[:alert]).to eq('You need to sign in or sign up before continuing.')
+    context 'user not logged in' do
+      it 'redirects to login' do
+        get :index
+        expect(response).to redirect_to(new_user_session_path)
+        expect(flash[:alert]).to eq('You need to sign in or sign up before continuing.')
+      end
     end
   end
 

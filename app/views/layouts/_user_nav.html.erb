@@ -7,7 +7,7 @@
   <div class="navbar-form navbar-left" role="search">
     <%= form_tag books_path, method: "get" do %>
       <div class="form-group">
-      <%= text_field_tag :query, params[:query], class: "form-control", placeholder: 'Book titles', autocomplete: "off" %>
+      <%= text_field_tag :title_search, params[:title_search], class: "form-control", placeholder: 'Book titles', autocomplete: "off" %>
       </div>
       <%= submit_tag I18n.t('search.button_prompt'), class: "btn btn-default" %>
       <% if params[:query].present? %>

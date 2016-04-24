@@ -16,7 +16,6 @@ gem 'pg'
 gem 'rails_admin'
 gem 'rails_12factor', group: :production
 gem 'sass-rails', '~> 4.0.3'
-gem 'searchkick'
 gem 'sendgrid'
 gem 'thin'
 gem 'turbolinks'

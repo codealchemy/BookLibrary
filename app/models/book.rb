@@ -1,5 +1,4 @@
 class Book < ActiveRecord::Base
-  searchkick
 
   # Associations
   belongs_to :owner, class_name: 'User', foreign_key: :user_id
@@ -28,9 +27,5 @@ class Book < ActiveRecord::Base
 
   def borrower
     loans.active.where(book: self).last.user if borrowed?
-  end
-
-  def search_data
-    as_json only: [:title]
   end
 end
