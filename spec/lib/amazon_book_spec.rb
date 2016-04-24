@@ -79,6 +79,16 @@ RSpec.describe AmazonBook do
     end
   end
 
+  describe 'retrieve_link' do
+    it 'matches the associated link by the provided regex' do
+      expect(amazon_book.send(:retrieve_link, /link/i)).to eq(
+      'http://www.amazon.com/Ruby-Programming-Language-David-Flanagan/dp/tech-data'\
+      '/0596516177%3FSubscriptionId%3D0XQXXC6YV2C85DX1BF02%26tag%3Dws%26linkCode%3'\
+      'Dxm2%26camp%3D2025%26creative%3D386001%26creativeASIN%3D0596516177'
+      )
+    end
+  end
+
   describe 'validate_isbn' do
     it 'is truthy when isbn is valid' do
       expect(amazon_book.send(:validate_isbn, book.isbn)).to be_truthy

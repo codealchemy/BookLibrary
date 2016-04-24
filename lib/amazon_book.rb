@@ -48,17 +48,20 @@ class AmazonBook
   end
 
   def retrieve_marketplace_link
-    raw_link = item.get_array('ItemLink').select { |i| i =~ /all offers/i }.first
-    link = raw_link.match(/<URL>(.*?)<\/URL>/)[1] if raw_link
+    retrieve_link(/all offers/i)
   end
 
   def retrieve_reviews_link
-    raw_link = item.get_array('ItemLink').select { |i| i =~ /reviews/i }.first
-    link = raw_link.match(/<URL>(.*?)<\/URL>/)[1] if raw_link
+    retrieve_link(/reviews/i)
   end
 
   def validate_isbn(isbn)
     length = isbn.to_s.gsub(/\D/,'').length
     isbn if length == 10 || length == 13
+  end
+
+  def retrieve_link(regex)
+    found_link = item.get_array('ItemLink').select { |i| i =~ regex }.first
+    found_link.match(/<URL>(.*?)<\/URL>/)[1] if found_link
   end
 end
