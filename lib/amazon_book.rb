@@ -4,7 +4,7 @@ class AmazonBook
 
   def initialize(isbn)
     @isbn = validate_isbn(isbn)
-    @item = item_lookup
+    @item = item_lookup.items.first
     collect_links
   end
 
@@ -13,7 +13,7 @@ class AmazonBook
   end
 
   def collect_links
-    return unless isbn_and_item
+    return unless isbn && item
     self.main_page_link = retrieve_main_page_link
     self.image_link = retrieve_image_link
     self.reviews_link = retrieve_reviews_link
@@ -21,30 +21,26 @@ class AmazonBook
   end
 
   private
-  def isbn_and_item
-    isbn && item
-  end
 
   def item_lookup
     return unless isbn
-    AMZ.item_lookup(isbn,
+    Amazon::Ecs.item_lookup(isbn,
       {
         id_type: 'ISBN',
         search_index: 'Books',
         include_reviews_summary: true,
         response_group: 'ItemAttributes'
       }
-    ).items.first
+    )
   end
 
   def image_lookup
-    AMZ.item_search(isbn, response_group: 'Images')
+    Amazon::Ecs.item_search(isbn, response_group: 'Images')
   end
 
   def retrieve_image_link
     image = image_lookup.items.first
-    return unless image
-    image.get_element('LargeImage/URL').to_s.gsub(/<URL>|<\/URL>/,'')
+    image.get_element('LargeImage/URL').to_s.gsub(/<URL>|<\/URL>/,'') if image
   end
 
   def retrieve_main_page_link
@@ -52,12 +48,12 @@ class AmazonBook
   end
 
   def retrieve_marketplace_link
-    raw_link = item.get_array('ItemLink').select{|i| i =~ /all offers/i }.first
+    raw_link = item.get_array('ItemLink').select { |i| i =~ /all offers/i }.first
     link = raw_link.match(/<URL>(.*?)<\/URL>/)[1] if raw_link
   end
 
   def retrieve_reviews_link
-    raw_link = item.get_array('ItemLink').select{|i| i =~ /reviews/i }.first
+    raw_link = item.get_array('ItemLink').select { |i| i =~ /reviews/i }.first
     link = raw_link.match(/<URL>(.*?)<\/URL>/)[1] if raw_link
   end
 

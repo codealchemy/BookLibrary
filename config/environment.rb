@@ -19,5 +19,3 @@ Amazon::Ecs.options = {
   AWS_access_key_id: ENV['AMAZON_KEY_ID'],
   AWS_secret_key: ENV['AMAZON_SECRET_ID']
 }
-
-AMZ = Amazon::Ecs
