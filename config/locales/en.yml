@@ -5,6 +5,11 @@ en:
     button_prompt: "Search"
     clear_search: "Clear"
   books:
+    borrowed: "Borrowed"
+    check_in_action: "Return book"
+    check_in_confirm: "Please add the book back to the shelf, thank you!"
+    check_out_action: "Check out"
+    check_out_confirm: "Great! Please click 'ok' to confirm book checkout"
     main_link: "Books"
     check_out: "You have checked out %{book_title}, hope you enjoy it!."
     check_in: "You have checked in %{book_title}, thanks!"

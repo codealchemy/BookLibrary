@@ -11,7 +11,6 @@
   <div class="container-fluid">
     <nav class="navbar">
     <div class="container-fluid">
-
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
           <span class="sr-only">Toggle navigation</span>
@@ -22,16 +21,16 @@
         <a class="navbar-brand" href="#">Library</a>
       </div>
       <% if user_signed_in? %>
-        <%= render :partial => "layouts/user_nav" %> 
+        <%= render :partial => "layouts/user_nav" %>
       <% else %>
         <%= render :partial => "layouts/loggedout_nav" %>
       <% end %>
-    </div><!-- /.container-fluid -->
+    </div>
     </nav>
   </div>
 </header>
 <body>
-  <div class="container-fluid">
+  <div class="container">
     <%= render partial: 'layouts/flash' %>
     <%= yield %>
   </div>
