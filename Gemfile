@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby ENV['RUBY_VERSION'] || '2.3.1'
+ruby '2.3.1'
 gem 'rails', '~> 4.2.7.1'
 
 gem 'amazon-ecs'
