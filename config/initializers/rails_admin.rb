@@ -15,10 +15,12 @@ RailsAdmin.config do |config|
     show
     edit
     delete
-    show_in_app { except %w(Loan) }
+    show_in_app { except %w(Loan Author) }
   end
 
   ## == Model configurations ==
+
+  config.excluded_models << Authorship
 
   config.model Location do
     field :name
@@ -32,11 +34,17 @@ RailsAdmin.config do |config|
     field :books
   end
 
+  config.model Author do
+    parent Location
+    field :first_name
+    field :last_name
+    field :books
+  end
+
   config.model Book do
     parent Location
     field :title
-    field :author_first_name
-    field :author_last_name
+    field :authors
     field :isbn
     field :description
     field :owner
