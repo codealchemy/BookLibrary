@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160911004639) do
+ActiveRecord::Schema.define(version: 20160911030615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,10 +33,8 @@ ActiveRecord::Schema.define(version: 20160911004639) do
   create_table "books", force: :cascade do |t|
     t.string   "title"
     t.string   "subtitle"
-    t.string   "author_first_name"
-    t.string   "author_last_name"
     t.string   "publisher"
-    t.string   "isbn",              limit: 18
+    t.string   "isbn",        limit: 18
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
