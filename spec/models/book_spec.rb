@@ -19,29 +19,6 @@ RSpec.describe Book, type: :model do
     end
   end
 
-  context 'author names' do
-    let(:book) { create(:book, author_first_name: nil, author_last_name: nil) }
-
-    it 'returns an empty string for no author' do
-      expect(book.author_name).to eq('')
-    end
-
-    it 'pulls the first and last name of the author if present' do
-      book.update_attributes!(author_first_name: 'Paulo', author_last_name: 'Coelho')
-      expect(book.author_name).to eq('Paulo Coelho')
-    end
-
-    it 'pulls the first name of the author if no last name is given' do
-      book.update_attributes!(author_first_name: 'Bob', author_last_name: nil)
-      expect(book.author_name).to eq('Bob')
-    end
-
-    it 'pulls the last name of the author if no first name is given' do
-      book.update_attributes!(author_first_name: nil, author_last_name: 'Rogers')
-      expect(book.author_name).to eq('Rogers')
-    end
-  end
-
   context 'owner' do
     let(:user1) { create(:user, email: 'abe@example.com') }
     let(:user2) { create(:user, email: 'george@example.com') }

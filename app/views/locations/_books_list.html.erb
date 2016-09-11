@@ -1,6 +1,6 @@
 <tr>
   <td><%= link_to book.title, book_path(book.id) %></td>
-  <td><%= book.author_name %></td>
+  <td><%= author_names(book) %></td>
   <td class="text-center"><%= human_boolean(book.borrowed?) %></td>
   <td><%= link_to book.owner.name, users_admin_path(book.owner) if book.owner %></td>
   <td><%= link_to book.borrower.name, users_admin_path(book.borrower) if book.borrowed? %></td>

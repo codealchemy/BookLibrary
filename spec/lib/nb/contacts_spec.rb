@@ -12,7 +12,7 @@ RSpec.describe Nb::Contacts do
           broadcaster_id: '1',
           method: 'other',
           type_id: 1,
-          note: "Book check-out - Title '#{loan.book.title}' by #{loan.book.author_name}"
+          note: "Book check-out - Title '#{loan.book.title}'"
         }
       }
     end

@@ -9,7 +9,7 @@ module Nb
                                         broadcaster_id: ENV['NATION_BROADCASTER_ID'],
                                         method: 'other',
                                         type_id: type_id(contact_type),
-                                        note: "#{contact_type} - Title '#{loan.book.title}' by #{loan.book.author_name}"
+                                        note: "#{contact_type} - Title '#{loan.book.title}'"
                                       })
     end
 

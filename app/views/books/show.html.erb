@@ -3,7 +3,7 @@
   <div class="col-md-8">
     <h1 class="text-center"><%= @book.title %> <%= link_to "(#{@book.location.name})", location_path(@book.location) if @book.location %><br><small><%= @book.subtitle %></small></h1>
     <br>
-    <h3><%= @book.author_name %></h3>
+    <h3><%= author_names(@book) %></h3>
     <blockquote>
       <p><%= @book.description %></p>
     </blockquote>
