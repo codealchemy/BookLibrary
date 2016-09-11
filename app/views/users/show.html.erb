@@ -16,7 +16,7 @@
       <tbody>
         <tr>
           <td><%= link_to book.title, book_path(book.id) %></td>
-          <td><%= book.author_name %></td>
+          <td><%= author_names(book) %></td>
           <td><%= time_tag(loan(@user, book).checked_out_at) %></td>
           <td><%= time_with_book(@user, book) %></td>
         </tr>
@@ -39,7 +39,7 @@
       <tbody>
         <tr>
           <td><%= link_to book.title, book_path(book.id) %></td>
-          <td><%= book.author_name %></td>
+          <td><%= author_names(book) %></td>
           <td><%= time_tag(loan(@user, book).checked_out_at) %></td>
           <td><%= loan(@user, book).checked_in_at? ? time_tag(loan(@user, book).checked_in_at) : 'Still reading...' %></td>
         </tr>
@@ -54,7 +54,7 @@
     <div class="well">
       <h4>Books contributed:</h4>
       <% @user.books_owned.each do |book| %>
-        <p><%= link_to book.title, book_path(book.id) %> by <%= book.author_name %></p>
+        <p><%= link_to book.title, book_path(book.id) %> by <%= author_names(book) %></p>
       <% end %>
     </div>
   </div>
