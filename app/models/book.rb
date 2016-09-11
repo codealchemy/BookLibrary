@@ -5,6 +5,8 @@ class Book < ActiveRecord::Base
   belongs_to :location
   has_many :loans, dependent: :destroy
   has_many :borrowers, class_name: 'Loan', foreign_key: :book_id
+  has_many :authorships, dependent: :destroy
+  has_many :authors, through: :authorships
 
   # Validations
   validates :title, :isbn, presence: true
@@ -15,10 +17,6 @@ class Book < ActiveRecord::Base
 
   before_save do
     self.isbn = self.isbn.to_s.gsub(/\D/, '')
-  end
-
-  def author_name
-    "#{author_first_name} #{author_last_name}".strip
   end
 
   def borrowed?
