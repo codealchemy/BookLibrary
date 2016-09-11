@@ -20,6 +20,22 @@ RSpec.describe RailsAdmin do
   describe 'Configured actions' do
     configured_actions = %w(show list edit export)
 
+    context 'Authors' do
+      let(:subject) { RailsAdmin::AbstractModel.new(Author) }
+
+      configured_actions.each do |action|
+        describe action do
+          it "#{action} the configured fields for the model" do
+            action_fields = subject.config.show.visible_fields
+            expect(action_fields.count).to eq(3)
+            expect(action_fields.map(&:name)).to match_array([
+              :first_name, :last_name, :books
+            ])
+          end
+        end
+      end
+    end
+
     context 'Books' do
       let(:subject) { RailsAdmin::AbstractModel.new(Book) }
 
@@ -27,9 +43,9 @@ RSpec.describe RailsAdmin do
         describe action do
           it "#{action} the configured fields for the model" do
             action_fields = subject.config.show.visible_fields
-            expect(action_fields.count).to eq(6)
+            expect(action_fields.count).to eq(5)
             expect(action_fields.map(&:name)).to match_array([
-              :title, :author_first_name, :author_last_name, :isbn, :description, :owner
+              :title, :authors, :isbn, :description, :owner
             ])
           end
         end
