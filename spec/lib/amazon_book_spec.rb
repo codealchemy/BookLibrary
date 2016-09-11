@@ -7,7 +7,9 @@ RSpec.describe AmazonBook do
     allow(Amazon::Ecs).to receive(:item_search).and_return(amazon_response)
   end
 
-  let(:amazon_response) { Amazon::Ecs::Response.new(File.read(File.expand_path('../../fixtures/item_search.xml', __FILE__))) }
+  let(:amazon_response) do
+    Amazon::Ecs::Response.new(File.read(File.expand_path('../../fixtures/item_search.xml', __FILE__)))
+  end
   let!(:book) { create(:book, isbn: '9780596523008') }
   let(:amazon_book) { described_class.new(book.isbn) }
 
@@ -23,6 +25,7 @@ RSpec.describe AmazonBook do
   describe '#search_by_isbn' do
     it 'instantiates a new AmazonBook and queries Amazon' do
       expect(described_class).to receive(:new).with(book.isbn)
+
       described_class.search_by_isbn(book.isbn)
     end
   end

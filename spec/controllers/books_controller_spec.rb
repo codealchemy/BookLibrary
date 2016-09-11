@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe BooksController, type: :controller do
   let(:user) { create(:user) }
-  let(:test_book) { create(:book) }
+  let(:test_book) { create(:book, title: 'Find me') }
   before { allow_any_instance_of(NationBuilder::Client).to receive(:call) }
 
   describe 'GET #index' do
@@ -11,24 +11,27 @@ RSpec.describe BooksController, type: :controller do
 
       it 'renders the :index template for users' do
         get :index
+
         expect(response).to render_template(:index)
       end
 
       it 'defaults to showing all books' do
         get :index
+
         expect(assigns[:books]).to match_array([test_book])
       end
 
       it 'includes book matched by the search when provided' do
-        query_book = create(:book, title: 'Find me')
         get :index, title_search: 'me'
-        expect(assigns[:books]).to match_array([query_book])
+
+        expect(assigns[:books]).to match_array([test_book])
       end
     end
 
     context 'user not logged in' do
       it 'redirects to login' do
         get :index
+
         expect(response).to redirect_to(new_user_session_path)
         expect(flash[:alert]).to eq('You need to sign in or sign up before continuing.')
       end
@@ -42,8 +45,9 @@ RSpec.describe BooksController, type: :controller do
 
     it 'renders the :show template' do
       allow(AmazonBook).to receive(:search_by_isbn)
-      book = create(:book)
-      get :show, id: book.id
+
+      get :show, id: test_book.id
+
       expect(response).to render_template(:show)
     end
 
@@ -55,13 +59,14 @@ RSpec.describe BooksController, type: :controller do
   end
 
   describe 'POST #check_out' do
-    before(:each) do
+    before do
       sign_in(user)
       allow(Nb::Contacts).to receive(:type_id).and_return(1)
     end
 
     it 'checks out a book for a user' do
       post :check_out, id: test_book.id
+
       expect(user.books_checked_out).to include(test_book)
     end
 
@@ -73,6 +78,7 @@ RSpec.describe BooksController, type: :controller do
 
     it 'redirects to books index after checkout' do
       post :check_out, id: test_book.id
+
       expect(response).to redirect_to(books_path)
     end
   end
@@ -86,11 +92,13 @@ RSpec.describe BooksController, type: :controller do
 
     it 'checks in a book for the user' do
       post :check_in, id: test_book.id
+
       expect(user.books_checked_out).not_to include(test_book)
     end
 
     it 'redirects to books index after check-in' do
       post :check_in, id: test_book.id
+
       expect(response).to redirect_to(books_path)
     end
   end

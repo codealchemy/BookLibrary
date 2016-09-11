@@ -11,6 +11,7 @@ RSpec.describe Nb::People do
 
       expect_any_instance_of(NationBuilder::Client).to receive(:call)
         .with(:people, :tag_person, id: 1, tagging: { tag: 'check this out' })
+
       described_class.add_tag(params_with_tag)
     end
   end
@@ -22,6 +23,7 @@ RSpec.describe Nb::People do
 
       expect_any_instance_of(NationBuilder::Client).to receive(:call)
         .with(:people, :tag_removal, id: 1, tag: 'get rid of this')
+
       described_class.remove_tag(params_with_tag)
     end
   end
@@ -58,6 +60,7 @@ RSpec.describe Nb::People do
 
       expect_any_instance_of(NationBuilder::Client).to receive(:call)
         .with(:people, :add, person: expected_params)
+
       described_class.send(:add_and_tag_person, params_with_tag)
     end
 
@@ -66,6 +69,7 @@ RSpec.describe Nb::People do
 
       allow_any_instance_of(NationBuilder::Client).to receive(:call)
         .and_return('person' => { 'id' => 1 })
+
       described_class.send(:add_and_tag_person, params_with_tag)
     end
   end

@@ -11,8 +11,9 @@ RSpec.describe RailsAdmin do
     end
 
     it 'sets the current_user_method to :current_user' do
-      example_user = create(:user)
+      example_user     = create(:user)
       example_receiver = OpenStruct.new(current_user: example_user)
+
       expect(RailsAdmin::Config.current_user_method.call(example_receiver)).to eq(example_user)
     end
   end

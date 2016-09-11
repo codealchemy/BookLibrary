@@ -7,11 +7,13 @@ RSpec.describe UsersController, type: :controller do
 
     it 'renders the :show template' do
       get :show, id: user_test.id
+
       expect(response).to render_template(:show)
     end
 
     it 'assigns the user to an instance variable' do
       get :show, id: user_test.id
+
       expect(assigns[:user]).to eq(user_test)
     end
   end

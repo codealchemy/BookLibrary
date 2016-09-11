@@ -2,20 +2,36 @@ require 'rails_helper'
 
 RSpec.describe Book, type: :model do
   context 'validations' do
-    let(:book) { book = Book.new(title: 'Working', isbn: '42-456-134-3') }
+    let(:book) { build(:book, title: 'Working') }
 
-    it 'is not valid without a title AND isbn' do
-      book2 = Book.new(title: 'Something')
-      expect(book2.valid?).to be(false)
+    it 'is not valid without an isbn' do
+      book.isbn = nil
+
+      expect(book).to be_invalid
+      expect(book.errors[:isbn]).to include("can't be blank")
+    end
+
+    it 'is not valid without a title' do
+      book.title = nil
+
+      expect(book).to be_invalid
+      expect(book.errors[:title]).to include("can't be blank")
     end
 
     it 'is valid with a title and ISBN' do
-      expect(book.valid?).to be(true)
+      book.assign_attributes(title: 'Title', isbn: '123456789-0')
+
+      expect(book).to be_valid
     end
+  end
+
+  context 'before_save callbacks' do
+    let(:book) { build(:book, isbn: '42-456-134-3') }
 
     it 'normalizes the isbn on save' do
       book.save
-      expect(book.isbn).to eq('424561343')
+
+      expect(book.reload.isbn).to eq('424561343')
     end
   end
 
@@ -29,9 +45,9 @@ RSpec.describe Book, type: :model do
     end
 
     it 'deletes associated books when owner is deleted' do
-      user_id = user1.id
       user1.destroy
-      expect(Book.where(user_id: user_id).empty?).to eq(true)
+
+      expect(Book.where(user_id: user1.id)).to be_empty
     end
   end
 
@@ -48,19 +64,19 @@ RSpec.describe Book, type: :model do
     end
 
     it 'shows a book as available if not loaned out' do
-      expect(book.borrowed?).to eq(false)
+      expect(book.borrowed?).to be_falsey
       expect(Book.checked_out).not_to include(book)
     end
 
     it 'shows a book as unavailable if it is loaned out' do
-      expect(loan.book.borrowed?).to eq(true)
+      expect(loan.book.borrowed?).to be_truthy
       expect(Book.checked_out).to include(book)
     end
 
     it 'deletes associated loans when book is deleted' do
-      book_id = book.id
       book.destroy
-      expect(Loan.where(book_id: book_id).empty?).to eq(true)
+
+      expect(Loan.where(book_id: book.id)).to be_truthy
     end
   end
 end

@@ -44,6 +44,7 @@ RSpec.describe Nb::Contacts do
         expect_any_instance_of(NationBuilder::Client).to receive(:call).with(
           :contact_types, :create, contact_type: { name: 'Book anomaly' }
         )
+
         described_class.send(:create_contact_type, 'Book anomaly')
       end
     end
