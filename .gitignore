@@ -5,6 +5,7 @@
 /log/*.log
 /tmp
 
+*.swp
 *.env
 *.rdb
 *.DS_Store
