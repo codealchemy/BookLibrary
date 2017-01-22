@@ -92,9 +92,9 @@ RSpec.describe RailsAdmin do
         describe action do
           it "#{action} the configured fields for the model" do
             action_fields = subject.config.public_send(action.to_sym).visible_fields
-            expect(action_fields.count).to eq(7)
+            expect(action_fields.count).to eq(8)
             expect(action_fields.map(&:name)).to match_array([
-              :email, :admin, :first_name, :last_name, :location, :books_owned, :books_borrowed
+              :email, :admin, :password, :first_name, :last_name, :location, :books_owned, :books_borrowed
             ])
           end
         end

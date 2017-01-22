@@ -60,6 +60,7 @@ RailsAdmin.config do |config|
     field :last_name
     field :email
     field :admin
+    field :password
     field :location
     field :books_borrowed
     field :books_owned
