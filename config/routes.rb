@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
-  root 'books#index'
   mount RailsAdmin::Engine => '/app', as: 'rails_admin'
+  root 'application#index'
 
   devise_for :users, controllers: { sessions: 'users/sessions' }
 
