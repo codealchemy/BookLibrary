@@ -1,21 +1,24 @@
 RailsAdmin.config do |config|
 
+  config.main_app_name = ['Library', '']
+  config.parent_controller = '::ApplicationController'
+
   ## == Devise ==
   config.authenticate_with do
     warden.authenticate! scope: :user
   end
   config.current_user_method(&:current_user)
+  config.authorize_with(:cancan)
 
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
-    new
-    export
-    bulk_delete
     show
-    edit
-    delete
-    show_in_app { except %w(Loan Author) }
+    new         { authorization_key :admin }
+    edit        { authorization_key :admin }
+    export      { authorization_key :admin }
+    delete      { authorization_key :admin }
+    bulk_delete { authorization_key :admin }
   end
 
   ## == Model configurations ==
