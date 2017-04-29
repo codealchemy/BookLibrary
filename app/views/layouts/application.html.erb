@@ -20,11 +20,6 @@
         </button>
         <a class="navbar-brand" href="#">Library</a>
       </div>
-      <% if user_signed_in? %>
-        <%= render partial: "layouts/user_nav" %>
-      <% else %>
-        <%= render partial: "layouts/loggedout_nav" %>
-      <% end %>
     </div>
     </nav>
   </div>
