@@ -274,14 +274,12 @@ DEPENDENCIES
   cancancan
   capybara
   codeclimate-test-reporter
-  coffee-rails (~> 4.0.0)
   database_cleaner
   devise
   dotenv-rails
   factory_girl_rails (~> 4.0)
   fuubar
   jquery-rails
-  kaminari
   nationbuilder-rb
   newrelic_rpm
   pg
