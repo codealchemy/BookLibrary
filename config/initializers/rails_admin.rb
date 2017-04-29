@@ -14,8 +14,8 @@ RailsAdmin.config do |config|
     dashboard                     # mandatory
     index                         # mandatory
     show
+    edit
     new         { authorization_key :admin }
-    edit        { authorization_key :admin }
     export      { authorization_key :admin }
     delete      { authorization_key :admin }
     bulk_delete { authorization_key :admin }
@@ -26,47 +26,62 @@ RailsAdmin.config do |config|
   config.excluded_models << Authorship
 
   config.model Location do
+    admin_only
+    weight(-1)
     field :name
-    field :address1
-    field :address2
-    field :city
-    field :state
-    field :zip
-    field :country
     field :users
-    field :books
+    field :books_available
+    field :books_checked_out
+    edit do
+      field :books
+      field :address1
+      field :address2
+      field :city
+      field :state
+      field :zip
+      field :country
+      exclude_fields :books_available,
+                     :books_checked_out
+    end
   end
 
   config.model Author do
-    parent Location
+    admin_only
     field :first_name
     field :last_name
     field :books
   end
 
   config.model Book do
-    parent Location
     field :title
     field :authors
-    field :isbn
+    field :location
     field :description
-    field :owner
-    list { scopes [nil, :checked_out, :available] }
+    show do
+      field :owner
+      field :isbn
+    end
+    list { scopes [:available, :checked_out] }
   end
 
   config.model User do
-    parent Location
+    admin_only
     field :first_name
     field :last_name
     field :email
-    field :admin
-    field :password
     field :location
-    field :books_borrowed
-    field :books_owned
+    show do
+      field :admin
+      field :books_borrowed
+      field :books_owned
+    end
+    edit do
+      field :password
+    end
   end
 
   config.model Loan do
+    admin_only
     parent User
     field :user
     field :book
@@ -74,5 +89,11 @@ RailsAdmin.config do |config|
     field :checked_in_at
     field :due_date
     list { scopes [nil, :active, :overdue] }
+  end
+
+  private
+
+  def admin_only
+    visible { bindings[:controller]._current_user.admin? }
   end
 end
