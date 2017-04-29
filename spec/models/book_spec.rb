@@ -50,33 +50,4 @@ RSpec.describe Book, type: :model do
       expect(Book.where(user_id: user1.id)).to be_empty
     end
   end
-
-  context 'borrowing' do
-    let(:user) { create(:user) }
-    let(:book) { create(:book, owner: user) }
-    let(:loan) { user.loans.create(book: book) }
-
-    it 'loans a book to a user and includes them in borrowed books list' do
-      expect(loan.user).to eq(user)
-      expect(loan.book).to eq(book)
-      expect(book.borrower).to eq(user)
-      expect(user.books_borrowed).to include(book)
-    end
-
-    it 'shows a book as available if not loaned out' do
-      expect(book.borrowed?).to be_falsey
-      expect(Book.checked_out).not_to include(book)
-    end
-
-    it 'shows a book as unavailable if it is loaned out' do
-      expect(loan.book.borrowed?).to be_truthy
-      expect(Book.checked_out).to include(book)
-    end
-
-    it 'deletes associated loans when book is deleted' do
-      book.destroy
-
-      expect(Loan.where(book_id: book.id)).to be_truthy
-    end
-  end
 end

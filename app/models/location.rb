@@ -6,8 +6,4 @@ class Location < ActiveRecord::Base
 
   # Validations
   validates :name, presence: true
-
-  def available_books
-    books.available
-  end
 end
