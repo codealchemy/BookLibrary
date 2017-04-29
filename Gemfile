@@ -17,11 +17,9 @@ gem 'thin'
 group :development do
   gem 'awesome_print'
   gem 'pry-rails'
-  gem 'spring'
 end
 
 group :development, :test do
-  gem 'capybara'
   gem 'database_cleaner'
   gem 'dotenv-rails'
   gem 'fuubar'

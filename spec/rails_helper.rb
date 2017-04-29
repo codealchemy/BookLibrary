@@ -5,7 +5,6 @@ require 'rspec/rails'
 require 'webmock/rspec'
 require 'nationbuilder'
 require 'factory_girl'
-require 'capybara/rails'
 require 'pry'
 ActiveRecord::Migration.maintain_test_schema!
 
