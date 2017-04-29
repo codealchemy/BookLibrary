@@ -27,11 +27,11 @@ RSpec.describe RailsAdmin do
       configured_actions.each do |action|
         describe action do
           it "#{action} the configured fields for the model" do
-            action_fields = subject.config.show.visible_fields
-            expect(action_fields.count).to eq(3)
-            expect(action_fields.map(&:name)).to match_array([
-              :first_name, :last_name, :books
-            ])
+            fields = subject.config.show.fields
+            fields.each { |field| expect(field).to be_visible }
+            expect(fields.map(&:name)).to match_array(%i(
+              first_name last_name books
+            ))
           end
         end
       end
@@ -43,11 +43,11 @@ RSpec.describe RailsAdmin do
       configured_actions.each do |action|
         describe action do
           it "#{action} the configured fields for the model" do
-            action_fields = subject.config.show.visible_fields
-            expect(action_fields.count).to eq(5)
-            expect(action_fields.map(&:name)).to match_array([
-              :title, :authors, :isbn, :description, :owner
-            ])
+            fields = subject.config.show.fields
+            fields.each { |field| expect(field).to be_visible }
+            expect(fields.map(&:name)).to match_array(%i(
+              title authors isbn description owner
+            ))
           end
         end
       end
@@ -59,11 +59,11 @@ RSpec.describe RailsAdmin do
       configured_actions.each do |action|
         describe action do
           it "#{action} the configured fields for the model" do
-            action_fields = subject.config.show.visible_fields
-            expect(action_fields.count).to eq(9)
-            expect(action_fields.map(&:name)).to match_array([
-              :name, :address1, :address2, :city, :state, :zip, :country, :users, :books
-            ])
+            fields = subject.config.show.fields
+            fields.each { |field| expect(field).to be_visible }
+            expect(fields.map(&:name)).to match_array(%i(
+              name address1 address2 city state zip country users books
+            ))
           end
         end
       end
@@ -75,11 +75,11 @@ RSpec.describe RailsAdmin do
       configured_actions.each do |action|
         describe action do
           it "#{action} the configured fields for the model" do
-            action_fields = subject.config.show.visible_fields
-            expect(action_fields.count).to eq(5)
-            expect(action_fields.map(&:name)).to match_array([
-              :user, :book, :checked_out_at, :checked_in_at, :due_date
-            ])
+            fields = subject.config.show.fields
+            fields.each { |field| expect(field).to be_visible }
+            expect(fields.map(&:name)).to match_array(%i(
+              user book checked_out_at checked_in_at due_date
+            ))
           end
         end
       end
@@ -91,11 +91,11 @@ RSpec.describe RailsAdmin do
       configured_actions.each do |action|
         describe action do
           it "#{action} the configured fields for the model" do
-            action_fields = subject.config.public_send(action.to_sym).visible_fields
-            expect(action_fields.count).to eq(8)
-            expect(action_fields.map(&:name)).to match_array([
-              :email, :admin, :password, :first_name, :last_name, :location, :books_owned, :books_borrowed
-            ])
+            fields = subject.config.public_send(action.to_sym).fields
+            fields.each { |field| expect(field).to be_visible }
+            expect(fields.map(&:name)).to match_array(%i(
+              email admin password first_name last_name location books_owned books_borrowed
+            ))
           end
         end
       end
