@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  mount RailsAdmin::Engine => "/app", as: :rails_admin
-  root to: redirect("/app")
+  mount RailsAdmin::Engine => "/dashboard", as: :rails_admin
+  root to: redirect("/dashboard")
 
   devise_for :users
 end
