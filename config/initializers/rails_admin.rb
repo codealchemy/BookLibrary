@@ -22,6 +22,7 @@ RailsAdmin.config do |config|
     delete      { authorization_key :admin }
     bulk_delete { authorization_key :admin }
     checkout    { only %w(Book) }
+    check_in    { only %w(Book) }
   end
 
   ## == Model configurations ==

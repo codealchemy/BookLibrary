@@ -8,6 +8,13 @@ en:
         breadcrumb: "Checkout"
         success: "Book '%{title}' checked out, please return it on or before %{due_date}"
         submit_button: "Check out '%{title}'"
+      check_in:
+        title: "Check In Book '%{object_label}'"
+        menu: "Check In"
+        breadcrumb: "Check In"
+        success: "Thank you for returning '%{title}'!"
+        error: "There was an error returning the book, please reach out to an admin for support"
+        submit_button: "Check in '%{title}'"
   users:
     edit_profile: "Edit my profile"
   account:

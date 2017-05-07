@@ -10,6 +10,7 @@ class Ability
       can :read, :all
       can :edit, user
       can :checkout, Book
+      can :check_in, Book
     end
   end
 end
