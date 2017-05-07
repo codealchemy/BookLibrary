@@ -19,11 +19,4 @@ class Book < ActiveRecord::Base
     self.isbn = self.isbn.to_s.gsub(/\D/, '')
   end
 
-  def available?
-    !checked_out?
-  end
-
-  def checked_out?
-    loans.active.where(book: self).exists?
-  end
 end

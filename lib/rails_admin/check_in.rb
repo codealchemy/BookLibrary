@@ -7,8 +7,8 @@ module RailsAdmin
         RailsAdmin::Config::Actions.register(self)
 
         register_instance_option :visible? do
-          bindings[:object].try(:checked_out?) &&
-            bindings[:object].loans.active.last.user == bindings[:controller].current_user
+          LoanManager.new(bindings[:object], bindings[:controller].current_user)
+                     .user_has_book?
         end
 
         register_instance_option :link_icon do
@@ -25,6 +25,8 @@ module RailsAdmin
 
         register_instance_option :controller do
           proc do
+            @loan_manager = LoanManager.new(@object, current_user)
+
             if request.post?
               loan = @object.loans.active.find_by(user: current_user)
 

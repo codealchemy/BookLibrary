@@ -10,6 +10,6 @@
 <%= form_tag(checkout_path, method: 'post') do %>
   <%= submit_tag I18n.t("admin.actions.checkout.submit_button", title: @object.title),
                  class: 'btn btn-info',
-                 disabled: @object.checked_out? %>
+                 disabled: !@loan_manager.can_check_out? %>
 <% end %>
 </div>

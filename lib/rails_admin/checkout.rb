@@ -7,7 +7,8 @@ module RailsAdmin
         RailsAdmin::Config::Actions.register(self)
 
         register_instance_option :visible? do
-          bindings[:object].try(:available?)
+          LoanManager.new(bindings[:object], bindings[:controller].current_user)
+                     .can_check_out?
         end
 
         register_instance_option :link_icon do
@@ -24,6 +25,8 @@ module RailsAdmin
 
         register_instance_option :controller do
           proc do
+            @loan_manager = LoanManager.new(@object, current_user)
+
             if request.post?
               loan = @object.loans.new(user: current_user,
                                        checked_out_at: Time.zone.now,
