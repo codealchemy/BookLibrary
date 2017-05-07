@@ -11,7 +11,7 @@ module RailsAdmin
         end
 
         register_instance_option :link_icon do
-          "icon-download"
+          "icon-shopping-cart"
         end
 
         register_instance_option :member? do
