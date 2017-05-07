@@ -7,8 +7,9 @@ module RailsAdmin
         RailsAdmin::Config::Actions.register(self)
 
         register_instance_option :visible? do
-          LoanManager.new(bindings[:object], bindings[:controller].current_user)
-                     .can_check_out?
+          bindings[:object].class == Book &&
+            LoanManager.new(bindings[:object], bindings[:controller].current_user)
+                       .can_check_out?
         end
 
         register_instance_option :link_icon do
