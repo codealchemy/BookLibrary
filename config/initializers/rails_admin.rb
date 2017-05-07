@@ -1,3 +1,5 @@
+Dir["#{Rails.root}/lib/rails_admin/*.rb"].each { |file| require file }
+
 RailsAdmin.config do |config|
 
   config.main_app_name = ['Library', '']
@@ -19,10 +21,10 @@ RailsAdmin.config do |config|
     export      { authorization_key :admin }
     delete      { authorization_key :admin }
     bulk_delete { authorization_key :admin }
+    checkout    { only %w(Book) }
   end
 
   ## == Model configurations ==
-
   config.excluded_models << Authorship
 
   config.model Location do

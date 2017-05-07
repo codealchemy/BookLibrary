@@ -28,6 +28,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'capybara'
   gem 'codeclimate-test-reporter', require: nil
   gem 'webmock'
 end

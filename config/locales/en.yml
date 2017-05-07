@@ -1,6 +1,13 @@
 en:
   admin:
     dashboard: "App dashboard"
+    actions:
+      checkout:
+        title: "Checkout Book '%{object_label}'"
+        menu: "Checkout"
+        breadcrumb: "Checkout"
+        success: "Book '%{title}' checked out, please return it on or before %{due_date}"
+        submit_button: "Check out '%{title}'"
   users:
     edit_profile: "Edit my profile"
   account:

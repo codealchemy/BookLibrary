@@ -9,6 +9,7 @@ class Ability
       can :dashboard
       can :read, :all
       can :edit, user
+      can :checkout, Book
     end
   end
 end
