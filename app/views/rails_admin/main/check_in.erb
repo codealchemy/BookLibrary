@@ -1,0 +1,7 @@
+<div class="pull-left">
+<%= form_tag(check_in_path, method: 'post') do %>
+  <%= submit_tag I18n.t("admin.actions.check_in.submit_button", title: @object.title),
+                 class: 'btn btn-info',
+                 disabled: !@loan_manager.user_has_book? %>
+<% end %>
+</div>

@@ -1,16 +1,6 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => "/dashboard", as: :rails_admin
+  root to: redirect("/dashboard")
 
-  authenticated :user, -> (user) { user.admin? } { mount RailsAdmin::Engine => '/admin', as: 'rails_admin' }
-  root 'books#index'
-
-  devise_for :users, controllers: { sessions: 'users/sessions' }
-
-  resources :books, only: [:index, :show] do
-    post :check_out, on: :collection
-    post :check_in, on: :collection
-  end
-
-  resources :users_admin, only: [:show], controller: 'users'
-
-  resources :locations, only: [:index, :show]
+  devise_for :users
 end

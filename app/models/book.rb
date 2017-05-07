@@ -19,11 +19,4 @@ class Book < ActiveRecord::Base
     self.isbn = self.isbn.to_s.gsub(/\D/, '')
   end
 
-  def borrowed?
-    loans.active.where(book: self).present?
-  end
-
-  def borrower
-    loans.active.where(book: self).last.user if borrowed?
-  end
 end

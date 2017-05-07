@@ -40,34 +40,4 @@ RSpec.describe User, type: :model do
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
   end
-
-  context 'borrowing' do
-    let(:book) { create(:book) }
-
-    before do
-      user.check_out(book)
-    end
-
-    it 'returns a list of borrowed books for user' do
-      expect(user.books_checked_out).to include(book)
-    end
-
-    it 'returns a list of overdue books for user' do
-      user.loans.active.first.update_attributes(due_date: Date.yesterday)
-
-      expect(user.books_overdue).to include(book)
-    end
-
-    it 'checks out a book' do
-      expect(book.borrowed?).to eq(true)
-      expect(book.borrower).to eq(user)
-      expect { user.check_out(book) }.to change { Loan.count }.by(1)
-    end
-
-    it 'checks in a book' do
-      user.check_in(book)
-
-      expect(book.borrowed?).to eq(false)
-    end
-  end
 end

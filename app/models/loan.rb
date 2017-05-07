@@ -1,4 +1,5 @@
 class Loan < ActiveRecord::Base
+  DEFAULT_CHECKOUT_PERIOD = 2.weeks
 
   # Associations
   belongs_to :user

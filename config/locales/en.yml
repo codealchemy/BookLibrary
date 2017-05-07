@@ -1,20 +1,20 @@
 en:
   admin:
-    dashboard: "Admin dashboard"
-  search:
-    button_prompt: "Search"
-    clear_search: "Clear"
-  books:
-    borrowed: "Borrowed"
-    check_in_action: "Return book"
-    check_in_confirm: "Please add the book back to the shelf, thank you!"
-    check_out_action: "Check out"
-    check_out_confirm: "Great! Please click 'ok' to confirm book checkout"
-    main_link: "Books"
-    check_out: "You have checked out %{book_title}, hope you enjoy it!."
-    check_in: "You have checked in %{book_title}, thanks!"
-  locations:
-    main_link: "Locations"
+    dashboard: "App dashboard"
+    actions:
+      checkout:
+        title: "Checkout Book '%{object_label}'"
+        menu: "Checkout"
+        breadcrumb: "Checkout"
+        success: "Book '%{title}' checked out, please return it on or before %{due_date}"
+        submit_button: "Check out '%{title}'"
+      check_in:
+        title: "Check In Book '%{object_label}'"
+        menu: "Check In"
+        breadcrumb: "Check In"
+        success: "Thank you for returning '%{title}'!"
+        error: "There was an error returning the book, please reach out to an admin for support"
+        submit_button: "Check in '%{title}'"
   users:
     edit_profile: "Edit my profile"
   account:

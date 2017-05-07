@@ -25,21 +25,4 @@ class User < ActiveRecord::Base
   def send_overdue_email
     UserNotifier.send_overdue_email(self).deliver_now
   end
-
-  def books_checked_out
-    loans.active.map(&:book)
-  end
-
-  def books_overdue
-    loans.overdue.map(&:book)
-  end
-
-  def check_out(book)
-    loans.create(book: book, checked_out_at: Time.now)
-  end
-
-  def check_in(book)
-    loan = loans.active.find_by_book_id(book.id)
-    loan.update(checked_in_at: Time.now)
-  end
 end
