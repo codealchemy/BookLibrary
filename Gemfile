@@ -7,7 +7,6 @@ gem 'amazon-ecs'
 gem 'cancancan'
 gem 'devise'
 gem 'nationbuilder-rb'
-gem 'newrelic_rpm'
 gem 'pg'
 gem 'rails_admin'
 gem 'rails_12factor', group: :production
