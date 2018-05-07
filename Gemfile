@@ -1,13 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
-gem 'rails', '~> 4.2.7.1'
+ruby '2.5.1'
+gem 'rails', '~> 4.2'
 
 gem 'amazon-ecs'
 gem 'cancancan'
 gem 'devise'
 gem 'nationbuilder-rb'
-gem 'newrelic_rpm'
 gem 'pg'
 gem 'rails_admin'
 gem 'rails_12factor', group: :production

@@ -5,8 +5,8 @@ are checked out and in by users.
 
 Application basics:
 
-*   Ruby version: `2.3.1`
-*   Rails version: `4.2.7.1`
+*   Ruby version: `2.5`
+*   Rails version: `4.2`
 
 *   Configuration
 *   Postgres Database
