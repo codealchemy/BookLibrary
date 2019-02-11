@@ -1,9 +1,9 @@
 # Ignore bundler config.
-/.bundle
+ruby/.bundle
 
 # Ignore all logfiles and tempfiles.
-/log/*.log
-/tmp
+*.log
+ruby/tmp*
 
 *.swp
 *.env

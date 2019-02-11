@@ -4,7 +4,8 @@ rvm:
 env:
   - DB=postgresql
 before_script:
+  - cd ruby
   - cp config/database.yml.travis config/database.yml
   - psql -c 'create database travis_ci_test;' -U postgres
 before_install:
-  - gem install bundler
+  - cd ruby && gem install bundler
