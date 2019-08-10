@@ -6,7 +6,7 @@ class Ability
       can :manage, :all
     else
       can :access, :rails_admin
-      can :dashboard
+      can :dashboard, :all
       can :read, :all
       can :edit, user
       can :checkout, Book
