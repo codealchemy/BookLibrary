@@ -7,7 +7,7 @@ gem 'amazon-ecs'
 gem 'cancancan'
 gem 'devise'
 gem 'nationbuilder-rb'
-gem 'pg'
+gem 'pg', '~> 0.21'
 gem 'rails_admin'
 gem 'rails_12factor', group: :production
 gem 'sendgrid'
