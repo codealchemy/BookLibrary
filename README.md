@@ -5,7 +5,7 @@ are checked out and in by users.
 
 Application basics:
 
-*   Ruby version: `2.5`
+*   Ruby version: `2.6`
 *   Rails version: `4.2`
 
 *   Configuration
