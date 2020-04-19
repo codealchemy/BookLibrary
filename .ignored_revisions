@@ -1,0 +1,8 @@
+# Add to git config with:
+# git config --local blame.ignoreRevsFile .ignored_revisions
+
+# Moves the Rails app within a language-specific directory.
+560c0a9edd5b7bf493d8fad298bbdd2ee7514798
+
+# Moves the Rails app back to the root directory.
+708cb01fc9ecbbaba29e26c0623a981be2b8839c
