@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.5.3'
+ruby '2.6.6'
 gem 'rails', '~> 4.2'
 
 gem 'amazon-ecs'
@@ -22,7 +22,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'dotenv-rails'
   gem 'fuubar'
-  gem 'factory_girl_rails', '~> 4.0'
+  gem 'factory_bot_rails', '~> 5.1'
   gem 'rspec-rails', '~> 3.0'
 end
 
