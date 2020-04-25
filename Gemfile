@@ -15,6 +15,7 @@ gem 'thin'
 
 group :development do
   gem 'awesome_print'
+  gem 'listen'
   gem 'pry-rails'
 end
 
