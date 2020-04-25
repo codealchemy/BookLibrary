@@ -4,6 +4,7 @@ FactoryBot.define do
     last_name   { 'Lincoln' }
     email       { 'candidate@abeforprez.com' }
     password    { 'grandideas' }
+    location    { build(:location) }
   end
 
   factory :admin, parent: :user do
@@ -12,5 +13,6 @@ FactoryBot.define do
     email       { 'duggie@dugforprez.com' }
     password    { 'granderideas' }
     admin       { 'true' }
+    location    { build(:location) }
   end
 end

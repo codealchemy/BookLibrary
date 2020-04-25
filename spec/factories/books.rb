@@ -10,5 +10,7 @@ FactoryBot.define do
       "Tangiers and across the Egyptian desert to a fateful "\
       "encounter with the alchemist."
     end
+    location { build(:location) }
+    owner { build(:user, email: "bookowner@example.test" ) }
   end
 end
