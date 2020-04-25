@@ -9,7 +9,7 @@ require 'pry'
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_path = Rails.root.join("/spec/fixtures")
   config.include Devise::Test::IntegrationHelpers
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
