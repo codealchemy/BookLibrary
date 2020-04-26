@@ -27,11 +27,13 @@ jobs:
       env:
         PGHOST: localhost
         PGPORT: ${{ job.services.postgres.ports[5432] }}
+        PGPASSWORD: ${{ secrets.BOOKLIBRARY_DATABASE_PASSWORD }}
         RAILS_ENV: test
       run: bundle exec rake db:setup
     - name: 'Run tests.'
       env:
         PGHOST: localhost
         PGPORT: ${{ job.services.postgres.ports[5432] }}
+        PGPASSWORD: ${{ secrets.BOOKLIBRARY_DATABASE_PASSWORD }}
         RAILS_ENV: test
       run: bundle exec rspec
