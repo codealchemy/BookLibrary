@@ -1,4 +1,4 @@
-## README [![Build Status](https://travis-ci.org/codealchemy/BookLibrary.svg?branch=master)](https://travis-ci.org/codealchemy/BookLibrary) [![Code Climate](https://codeclimate.com/github/codealchemy/BookLibrary/badges/gpa.svg)](https://codeclimate.com/github/codealchemy/BookLibrary)
+## README ![CI](https://github.com/codealchemy/BookLibrary/workflows/CI/badge.svg) [![Code Climate](https://codeclimate.com/github/codealchemy/BookLibrary/badges/gpa.svg)](https://codeclimate.com/github/codealchemy/BookLibrary)
 
 BookLibrary is a Ruby on Rails application to manage a library of items that
 are checked out and in by users.
