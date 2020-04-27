@@ -30,7 +30,7 @@ jobs:
         PGUSER: BookLibrary
         PGPASSWORD: ${{ secrets.BOOKLIBRARY_DATABASE_PASSWORD }}
         RAILS_ENV: test
-      run: bundle exec rake db:setup
+      run: bundle exec rake db:migrate
     - name: 'Run tests.'
       env:
         PGHOST: localhost
