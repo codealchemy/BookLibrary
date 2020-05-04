@@ -6,7 +6,7 @@ are checked out and in by users.
 Application basics:
 
 *   Ruby version: `2.6`
-*   Rails version: `5.2`
+*   Rails version: `6.0`
 
 *   Configuration
 *   Postgres Database
