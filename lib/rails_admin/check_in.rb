@@ -31,7 +31,7 @@ module RailsAdmin
             if request.post?
               loan = @object.loans.active.find_by(user: current_user)
 
-              if loan.update_attributes(checked_in_at: Time.zone.now)
+              if loan.update(checked_in_at: Time.zone.now)
                 flash[:success] = I18n.t("admin.actions.check_in.success", title: @object.title)
                 redirect_to index_path(model_name: :book)
               else
