@@ -24,7 +24,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'fuubar'
   gem 'factory_bot_rails', '~> 5.1'
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails', '~> 4.0'
 end
 
 group :test do
