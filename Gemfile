@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '2.7.1'
-gem 'rails', '~> 6.0.3.5'
+gem 'rails', '~> 6.0.3.7'
 
 gem 'amazon-ecs'
 gem 'cancancan'
