@@ -26,8 +26,10 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7.1
+        ruby-version: 2.7.4
         bundler-cache: true
+      env:
+        MAKE: make --jobs 4
     - name: 'Setup database for tests.'
       env:
         PGHOST: localhost
